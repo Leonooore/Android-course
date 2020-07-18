@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">hw_1_localization</string>
+    <string name="app_name" translatable="false">hw_1</string>
+    <string name="country">Change localization (de, fr, it, pl, ru)</string>
 </resources>
