@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">hw_2_layouts</string>
+    <string name="app_name_poi">POI</string>
+    <string name="text_folder">Attractions</string>
+    <string name="text_dining">Dining</string>
+    <string name="text_edu">Education</string>
+    <string name="text_people">Family</string>
+    <string name="text_health">Health</string>
+    <string name="text_office">Office</string>
+    <string name="text_promotion">Promotions</string>
+    <string name="text_radio">Radio</string>
+    <string name="text_recipes">Recipes</string>
+    <string name="text_sport">Sports</string>
 </resources>
