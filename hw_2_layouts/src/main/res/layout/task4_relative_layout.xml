@@ -179,7 +179,7 @@
 
         <ImageView
             android:id="@+id/img6"
-            android:layout_width="93dp"
+            android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="15dp"
             android:contentDescription="@string/photo"
