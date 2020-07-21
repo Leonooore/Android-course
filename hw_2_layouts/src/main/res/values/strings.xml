@@ -26,4 +26,19 @@
     <string name="checkbox_text">Remember</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="just_sign_in">* Just sign in</string>
+    <string name="android">Android</string>
+    <string name="text_posts">125</string>
+    <string name="title_posts">Posts</string>
+    <string name="text_followers">20K</string>
+    <string name="title_followers">Followers</string>
+    <string name="text_following">22</string>
+    <string name="title_following">Following</string>
+    <string name="username">Username</string>
+    <string name="photo">Photo</string>
+    <string name="address">Address</string>
+    <string name="directions">directions</string>
+    <string name="call">call</string>
+    <string name="save">save</string>
+    <string name="website">website</string>
+    <string name="line">Line</string>
 </resources>

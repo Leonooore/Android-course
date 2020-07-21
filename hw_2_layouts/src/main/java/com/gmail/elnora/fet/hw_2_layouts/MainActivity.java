@@ -11,12 +11,13 @@ import static com.gmail.elnora.fet.hw_2_layouts.R.layout.task2_relative_layout;
 import static com.gmail.elnora.fet.hw_2_layouts.R.layout.task3_constraint_layout;
 import static com.gmail.elnora.fet.hw_2_layouts.R.layout.task3_linear_layout;
 import static com.gmail.elnora.fet.hw_2_layouts.R.layout.task3_relative_layout;
+import static com.gmail.elnora.fet.hw_2_layouts.R.layout.task4_linear_layout;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(task3_relative_layout);
+        setContentView(task4_linear_layout);
     }
 }
