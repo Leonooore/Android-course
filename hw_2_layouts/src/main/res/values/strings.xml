@@ -41,4 +41,9 @@
     <string name="save">save</string>
     <string name="website">website</string>
     <string name="line">Line</string>
+    <string name="certificated">Certificated</string>
+    <string name="like">Like</string>
+    <string name="share">Share</string>
+    <string name="layouts">Layouts</string>
+    <string name="views">Views</string>
 </resources>
