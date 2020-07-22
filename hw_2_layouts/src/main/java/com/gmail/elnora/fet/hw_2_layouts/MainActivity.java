@@ -15,12 +15,15 @@ import static com.gmail.elnora.fet.hw_2_layouts.R.layout.task4_constraint_layout
 import static com.gmail.elnora.fet.hw_2_layouts.R.layout.task4_linear_layout;
 import static com.gmail.elnora.fet.hw_2_layouts.R.layout.task4_relative_layout;
 import static com.gmail.elnora.fet.hw_2_layouts.R.layout.task5;
+import static com.gmail.elnora.fet.hw_2_layouts.R.layout.task6_custom_view;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(task5);
+        //setContentView(R.layout.task6_custom_view);
+        setContentView(new DrawView(this));
     }
+
 }
