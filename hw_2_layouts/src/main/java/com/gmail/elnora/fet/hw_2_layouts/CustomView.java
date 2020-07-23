@@ -1,5 +1,6 @@
 package com.gmail.elnora.fet.hw_2_layouts;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -34,38 +35,38 @@ public class CustomView extends View  {
 
     public CustomView(Context context) {
         super(context);
-        init(null);
+        init();
     }
 
     public CustomView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init(attrs);
+        init();
     }
 
     public CustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(attrs);
+        init();
     }
 
     public CustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init(attrs);
+        init();
     }
 
-    private void init(AttributeSet attrs) {
-        paintLeftTopSector = new Paint();
+    private void init() {
+        paintLeftTopSector = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintLeftTopSector.setColor(Color.RED);
 
-        paintRightTopSector = new Paint();
+        paintRightTopSector = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintRightTopSector.setColor(Color.GREEN);
 
-        paintLeftBottomSector = new Paint();
+        paintLeftBottomSector = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintLeftBottomSector.setColor(Color.BLUE);
 
-        paintRightBottomSector = new Paint();
+        paintRightBottomSector = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintRightBottomSector.setColor(Color.YELLOW);
 
-        paintCenterCircle = new Paint();
+        paintCenterCircle = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintCenterCircle.setColor(getRandomColor());
     }
 
@@ -73,7 +74,7 @@ public class CustomView extends View  {
     public boolean onTouchEvent(MotionEvent event) {
         float eventX = event.getX();
         float eventY = event.getY();
-        colorChange(eventX, eventY);
+        changeColor(eventX, eventY);
         if (listener != null) {
             listener.onTouchEvent(eventX, eventY);
         }
@@ -81,7 +82,7 @@ public class CustomView extends View  {
         return super.onTouchEvent(event);
     }
 
-    private void colorChange(float eventX, float eventY) {
+    private void changeColor(float eventX, float eventY) {
         //if touched the center circle -> change color in all sectors including center circle
         if ((eventX > centerX - centerCircleRadius && eventX < centerX + centerCircleRadius) && (eventY > centerY - centerCircleRadius && eventY < centerY + centerCircleRadius)) {
             paintRightBottomSector.setColor(getRandomColor());

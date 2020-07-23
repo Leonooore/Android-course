@@ -17,7 +17,8 @@ public class MainActivity extends AppCompatActivity {
         customView.setListener(new CustomView.OnTouchEvent() {
             @Override
             public void onTouchEvent(float eventX, float eventY) {
-
+                String message = String.format(Locale.getDefault(), "Нажаты координаты [%.0f;%.0f]", eventX, eventY);
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
     }
