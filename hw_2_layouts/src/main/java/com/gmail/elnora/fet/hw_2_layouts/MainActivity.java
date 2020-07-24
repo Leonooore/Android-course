@@ -3,7 +3,6 @@ package com.gmail.elnora.fet.hw_2_layouts;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {

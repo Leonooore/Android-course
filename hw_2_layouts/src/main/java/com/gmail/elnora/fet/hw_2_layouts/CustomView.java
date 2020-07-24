@@ -1,6 +1,5 @@
 package com.gmail.elnora.fet.hw_2_layouts;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
