@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">hw_3_contacts</string>
+    <string name="editTextSearchContacts">Search contacts</string>
+    <string name="textViewNoContacts">No contacts. Please add</string>
 </resources>
