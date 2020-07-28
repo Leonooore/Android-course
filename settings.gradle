@@ -1,5 +1,4 @@
 include ':hw_3_contacts'
-include ':hw_2_layouts'
 include ':hw_1_localization'
 include ':app'
 rootProject.name = "AndroidCourse"

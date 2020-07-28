@@ -2,4 +2,9 @@
     <string name="app_name">hw_3_contacts</string>
     <string name="editTextSearchContacts">Search contacts</string>
     <string name="textViewNoContacts">No contacts. Please add</string>
+    <string name="contact_phone">Contact phone</string>
+    <string name="contact_email">Contact email</string>
+    <string name="contactName">Contact name</string>
+    <string name="contactPhoneNumber">Phone number</string>
+    <string name="contactEmail">Email</string>
 </resources>
