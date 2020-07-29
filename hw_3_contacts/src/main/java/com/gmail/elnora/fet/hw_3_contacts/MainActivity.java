@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
     FloatingActionButton buttonAddContact;
+    Contact contact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 18000 && resultCode == Activity.RESULT_OK && data != null) {
-            String name = data.getStringExtra("ADD_CONTACT");
-            Log.d("MainActivity", "Name: " + name);
+            contact = (Contact)data.getSerializableExtra("ADD_CONTACT");
+            Log.d("MainActivity", "Name: " + contact.getName() + " | Data: " + contact.getData());
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

@@ -7,15 +7,22 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.UUID;
 
 public class AddContactActivity extends AppCompatActivity {
     ImageButton buttonBack;
     ImageButton buttonAdd;
+    RadioGroup radioGroup;
     RadioButton radioButtonPhoneNumber;
     RadioButton radioButtonEmail;
     EditText editTextName;
     EditText editTextData;
+    Contact contact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +31,7 @@ public class AddContactActivity extends AppCompatActivity {
 
         buttonBack = findViewById(R.id.buttonBack);
         buttonAdd = findViewById(R.id.buttonAdd);
+        radioGroup = findViewById(R.id.radioButtonGroup);
         radioButtonPhoneNumber = findViewById(R.id.radioButtonPhoneNumber);
         radioButtonEmail = findViewById(R.id.radioButtonEmail);
         editTextName = findViewById(R.id.editTextName);
@@ -35,8 +43,7 @@ public class AddContactActivity extends AppCompatActivity {
     private void setListeners() {
         setButtonBackListener();
         setButtonAddListener();
-        setRadioButtonPhoneNumberListener();
-        setRadioButtonEmailListener();
+        setRadioGroupListener();
     }
 
     private void setButtonBackListener() {
@@ -54,10 +61,37 @@ public class AddContactActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String name = editTextName.getText().toString();
                 String data = editTextData.getText().toString();
-                Intent result = new Intent(AddContactActivity.this, MainActivity.class);
-                result.putExtra("ADD_CONTACT", name);
-                setResult(RESULT_OK, result);
-                finish();
+                String id = String.valueOf(UUID.randomUUID());
+
+                if (name.isEmpty() || data.isEmpty()) {
+                    String message = "Please input all information!";
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                } else {
+                    contact = new Contact(id, name, data);
+                    Intent intent = new Intent(AddContactActivity.this, MainActivity.class);
+                    intent.putExtra("ADD_CONTACT", contact);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            }
+        });
+    }
+
+    private void setRadioGroupListener() {
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.radioButtonPhoneNumber:
+                        setRadioButtonPhoneNumberListener();
+                        break;
+                    case R.id.radioButtonEmail:
+                        setRadioButtonEmailListener();
+                        break;
+                    default:
+                        break;
+                }
             }
         });
     }
