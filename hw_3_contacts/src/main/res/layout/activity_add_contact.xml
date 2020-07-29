@@ -42,7 +42,7 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageButton
-                android:id="@+id/buttonCheck"
+                android:id="@+id/buttonAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_check_32"
@@ -65,27 +65,35 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/addContact">
-        
-        <RadioButton
-            android:id="@+id/radioButtonPhoneNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/contactPhoneNumber"
-            android:textSize="@dimen/defaultTextSize"
-            android:fontFamily="sans-serif-medium"
-            android:paddingStart="@dimen/defaultPadding"/>
 
-        <RadioButton
-            android:id="@+id/radioButtonEmail"
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:id="@+id/radioButtonGroup"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="false"
-            android:text="@string/contactEmail"
-            android:textSize="@dimen/defaultTextSize"
-            android:fontFamily="sans-serif-medium"
-            android:paddingStart="@dimen/defaultPadding"
-            android:layout_marginTop="@dimen/smallMargin"/>
+            android:orientation="vertical">
+        
+            <RadioButton
+                android:id="@+id/radioButtonPhoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/contactPhoneNumber"
+                android:textSize="@dimen/defaultTextSize"
+                android:fontFamily="sans-serif-medium"
+                android:paddingStart="@dimen/defaultPadding"/>
+
+            <RadioButton
+                android:id="@+id/radioButtonEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/contactEmail"
+                android:textSize="@dimen/defaultTextSize"
+                android:fontFamily="sans-serif-medium"
+                android:paddingStart="@dimen/defaultPadding"
+                android:layout_marginTop="@dimen/smallMargin"/>
+
+        </RadioGroup>
 
         <EditText
             android:id="@+id/editTextName"
@@ -97,24 +105,13 @@
             android:autofillHints="@string/name" />
 
         <EditText
-            android:id="@+id/editTextPhoneNumber"
+            android:id="@+id/editTextData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
             android:hint="@string/contactPhoneNumber"
             android:inputType="phone"
             android:layout_marginTop="@dimen/defaultMargin"
-            android:autofillHints="@string/contact_phone"/>
-
-        <EditText
-            android:id="@+id/editTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:hint="@string/contactEmail"
-            android:inputType="textEmailAddress"
-            android:layout_marginTop="@dimen/defaultMargin"
-            android:autofillHints="@string/contact_email" />
+            android:autofillHints="@string/contact_data"/>
 
     </LinearLayout>
 
