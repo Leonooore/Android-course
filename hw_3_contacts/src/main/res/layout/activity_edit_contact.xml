@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/editContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:padding="@dimen/defaultPadding"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/buttonBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_arrow_back_32"
+                android:background="@color/colorPrimary"
+                android:contentDescription="@string/button_back" />
+
+            <TextView
+                android:id="@+id/textViewEditContactTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/editContactTitle"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/titleTextSize"
+                android:layout_marginStart="@dimen/bigMargin"/>
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/groupEditContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/defaultPadding"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editContact">
+
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name"
+            android:textColorHint="@color/colorBlack"
+            android:inputType="text"
+            android:layout_marginTop="@dimen/bigMargin"
+            android:autofillHints="@string/name" />
+
+        <EditText
+            android:id="@+id/editTextPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:hint="@string/contactPhoneNumber"
+            android:textColorHint="@color/colorBlack"
+            android:inputType="phone"
+            android:layout_marginTop="@dimen/bigMargin"
+            android:autofillHints="@string/contact_phone"/>
+
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:hint="@string/contactEmail"
+            android:textColorHint="@color/colorBlack"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="@dimen/bigMargin"
+            android:autofillHints="@string/contact_email" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonRemove"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/defaultTextSize"
+        android:background="@drawable/remove_button_border"
+        android:text="@string/button_remove"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/titleTextSize"
+        android:fontFamily="sans-serif-medium"
+        android:textAllCaps="false"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/groupEditContact"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
