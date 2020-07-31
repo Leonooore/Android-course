@@ -63,7 +63,7 @@
             android:autofillHints="@string/name" />
 
         <EditText
-            android:id="@+id/editTextPhoneNumber"
+            android:id="@+id/editTextData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="visible"
@@ -72,17 +72,6 @@
             android:inputType="phone"
             android:layout_marginTop="@dimen/bigMargin"
             android:autofillHints="@string/contact_phone"/>
-
-        <EditText
-            android:id="@+id/editTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:hint="@string/contactEmail"
-            android:textColorHint="@color/colorBlack"
-            android:inputType="textEmailAddress"
-            android:layout_marginTop="@dimen/bigMargin"
-            android:autofillHints="@string/contact_email" />
 
     </LinearLayout>
 
