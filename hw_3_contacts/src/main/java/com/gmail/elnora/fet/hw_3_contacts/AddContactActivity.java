@@ -15,14 +15,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.UUID;
 
 public class AddContactActivity extends AppCompatActivity {
-    ImageButton buttonBack;
-    ImageButton buttonAdd;
-    RadioGroup radioGroup;
-    RadioButton radioButtonPhoneNumber;
-    RadioButton radioButtonEmail;
-    EditText editTextName;
-    EditText editTextData;
-    Contact contact;
+    private ImageButton buttonBack;
+    private ImageButton buttonAdd;
+    private RadioGroup radioGroup;
+    private RadioButton radioButtonPhoneNumber;
+    private RadioButton radioButtonEmail;
+    private EditText editTextName;
+    private EditText editTextData;
+    private Contact contact;
+    private DataType dataType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,8 @@ public class AddContactActivity extends AppCompatActivity {
         radioButtonPhoneNumber = findViewById(R.id.radioButtonPhoneNumber);
         radioButtonEmail = findViewById(R.id.radioButtonEmail);
         editTextName = findViewById(R.id.editTextName);
-        editTextData= findViewById(R.id.editTextData);
+        editTextData = findViewById(R.id.editTextData);
+        dataType = DataType.PHONE;
 
         setListeners();
     }
@@ -67,7 +69,7 @@ public class AddContactActivity extends AppCompatActivity {
                     String message = "Please input all information!";
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                 } else {
-                    contact = new Contact(id, name, data);
+                    contact = new Contact(id, name, data, dataType);
                     Intent intent = new Intent(AddContactActivity.this, MainActivity.class);
                     intent.putExtra("ADD_CONTACT", contact);
                     setResult(RESULT_OK, intent);
@@ -102,6 +104,7 @@ public class AddContactActivity extends AppCompatActivity {
             public void onClick(View v) {
                 editTextData.setHint(R.string.contactPhoneNumber);
                 editTextData.setInputType(InputType.TYPE_CLASS_PHONE);
+                dataType = DataType.PHONE;
             }
         });
     }
@@ -112,6 +115,7 @@ public class AddContactActivity extends AppCompatActivity {
             public void onClick(View v) {
                 editTextData.setHint(R.string.contactEmail);
                 editTextData.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                dataType = DataType.EMAIL;
             }
         });
     }
