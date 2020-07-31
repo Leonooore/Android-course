@@ -2,12 +2,17 @@ package com.gmail.elnora.fet.hw_3_contacts;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,8 +32,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ContactListAdapter adapter;
     private TextView textViewNoContacts;
-    private final static int ADD_REQUEST_CODE = 111;
-    private final static int EDIT_REQUEST_CODE = 222;
+    private Toolbar toolbar;
+    private static final int ADD_REQUEST_CODE = 111;
+    private static final int EDIT_REQUEST_CODE = 222;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +42,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.contactList);
-        recyclerView.setAdapter(new ContactListAdapter());
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        textViewNoContacts = findViewById(R.id.textViewNoContacts);
+        if (savedInstanceState != null) {
+            recyclerView.setAdapter((ContactListAdapter) savedInstanceState.getParcelable("ADAPTER"));
+            textViewNoContacts.setVisibility(savedInstanceState.getInt("VISIBLE"));
+        } else {
+            recyclerView.setAdapter(new ContactListAdapter());
+        }
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        }
         adapter = (ContactListAdapter) recyclerView.getAdapter();
 
-        textViewNoContacts = findViewById(R.id.textViewNoContacts);
+        toolbar = (Toolbar) findViewById(R.id.searchContacts);
+        setSupportActionBar(toolbar);
 
         setButtonAddContactListener();
-
     }
 
     private void setButtonAddContactListener() {
@@ -78,8 +95,20 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> {
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        TextView textViewNoContacts = findViewById(R.id.textViewNoContacts);
+        outState.putInt("VISIBLE", textViewNoContacts.getVisibility());
+        outState.putParcelable("ADAPTER", adapter);
+        super.onSaveInstanceState(outState);
+    }
+
+    /*ContactListAdapter*/
+    public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> implements Parcelable {
         private List<Contact> contactList = new ArrayList<>();
+
+        public ContactListAdapter() {}
+        public ContactListAdapter(Parcel in) {}
 
         @NonNull
         @Override
@@ -126,6 +155,29 @@ public class MainActivity extends AppCompatActivity {
             notifyDataSetChanged();
         }
 
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeSerializable((Serializable) contactList);
+        }
+
+        public final Creator<ContactListAdapter> CREATOR = new Creator<ContactListAdapter>() {
+            @Override
+            public ContactListAdapter createFromParcel(Parcel in) {
+                return new ContactListAdapter(in);
+            }
+
+            @Override
+            public ContactListAdapter[] newArray(int size) {
+                return new ContactListAdapter[size];
+            }
+        };
+
+        /*ContactViewHolder*/
         public class ContactViewHolder extends RecyclerView.ViewHolder {
             private ImageView contactIcon;
             private TextView contactName;
