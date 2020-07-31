@@ -16,7 +16,6 @@ public class EditContactActivity extends AppCompatActivity {
     private EditText editTextName;
     private EditText editTextData;
     private Contact contact;
-    private Contact changedContact;
     private Button buttonRemoveContact;
 
     @Override

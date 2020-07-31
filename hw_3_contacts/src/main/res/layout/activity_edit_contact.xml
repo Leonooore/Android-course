@@ -71,7 +71,8 @@
             android:textColorHint="@color/colorBlack"
             android:inputType="phone"
             android:layout_marginTop="@dimen/bigMargin"
-            android:autofillHints="@string/contact_phone"/>
+            android:autofillHints="@string/contact_phone"
+            android:layout_marginBottom="@dimen/bigMargin"/>
 
     </LinearLayout>
 
@@ -79,7 +80,7 @@
         android:id="@+id/buttonRemove"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:padding="@dimen/defaultTextSize"
+        android:padding="@dimen/defaultPadding"
         android:background="@drawable/remove_button_border"
         android:text="@string/button_remove"
         android:textColor="@color/colorWhite"
