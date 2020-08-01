@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ContactListAdapter adapter;
     private FloatingActionButton fabAddContact;
     private TextView textViewNoContacts;
-    TextView textSearchView;
+    private TextView textSearchView;
     private Toolbar toolbar;
     private SearchView searchView;
     private static final int ADD_REQUEST_CODE = 111;
