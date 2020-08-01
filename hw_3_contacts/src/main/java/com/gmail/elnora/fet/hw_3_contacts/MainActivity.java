@@ -2,11 +2,13 @@ package com.gmail.elnora.fet.hw_3_contacts;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -17,6 +19,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,12 +31,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private FloatingActionButton buttonAddContact;
     private Contact contact;
     private RecyclerView recyclerView;
     private ContactListAdapter adapter;
+    private FloatingActionButton fabAddContact;
     private TextView textViewNoContacts;
+    TextView textSearchView;
     private Toolbar toolbar;
+    private SearchView searchView;
     private static final int ADD_REQUEST_CODE = 111;
     private static final int EDIT_REQUEST_CODE = 222;
 
@@ -41,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.contactList);
+        recyclerView = findViewById(R.id.contactListRecyclerView);
         textViewNoContacts = findViewById(R.id.textViewNoContacts);
         if (savedInstanceState != null) {
             recyclerView.setAdapter((ContactListAdapter) savedInstanceState.getParcelable("ADAPTER"));
@@ -57,19 +63,50 @@ public class MainActivity extends AppCompatActivity {
         }
         adapter = (ContactListAdapter) recyclerView.getAdapter();
 
-        toolbar = (Toolbar) findViewById(R.id.searchContacts);
-        setSupportActionBar(toolbar);
-
         setButtonAddContactListener();
+
+        toolbar = (Toolbar) findViewById(R.id.searchContactsToolbar);
+        setSupportActionBar(toolbar);
+        setSearchViewListener();
     }
 
     private void setButtonAddContactListener() {
-        buttonAddContact = findViewById(R.id.buttonAddContact);
-        buttonAddContact.setOnClickListener(new View.OnClickListener() {
+        fabAddContact = findViewById(R.id.buttonAddContact);
+        fabAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddContactActivity.class);
                 startActivityForResult(intent, ADD_REQUEST_CODE);
+            }
+        });
+    }
+
+    private void setSearchViewListener() {
+        textSearchView = findViewById(R.id.textSearchView);
+        searchView = findViewById(R.id.searchContact);
+        searchView.setOnSearchClickListener(new SearchView.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textSearchView.setVisibility(View.INVISIBLE);
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                textSearchView.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
             }
         });
     }
@@ -85,11 +122,11 @@ public class MainActivity extends AppCompatActivity {
         } else if (requestCode == EDIT_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             Contact changeContact;
             changeContact = (Contact)data.getSerializableExtra("CHANGE_CONTACT");
-            contact = (Contact)data.getSerializableExtra("REMOVE_CONTACT");
+            Contact deleteContact = (Contact)data.getSerializableExtra("REMOVE_CONTACT");
             if (changeContact != null) {
                 adapter.editContact(changeContact);
-            } else if (contact != null) {
-                adapter.removeContact(contact);
+            } else if (deleteContact != null) {
+                adapter.removeContact(deleteContact);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -104,11 +141,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*ContactListAdapter*/
-    public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> implements Parcelable {
+    @SuppressLint("ParcelCreator")
+    public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> implements Parcelable, Filterable {
         private List<Contact> contactList = new ArrayList<>();
+        private ArrayList<Contact> contacts = new ArrayList<>();
 
         public ContactListAdapter() {}
-        public ContactListAdapter(Parcel in) {}
 
         @NonNull
         @Override
@@ -124,12 +162,18 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return contactList.size();
+            if (contactList != null) {
+                return contactList.size();
+            } else if (contacts != null) {
+                return contacts.size();
+            } else
+                return 0;
         }
 
         public void addContact(@NonNull Contact contact) {
             contactList.add(contact);
-            notifyItemChanged(contactList.indexOf(contact));
+            contacts.add(contact);
+            notifyDataSetChanged();
         }
 
         void editContact(Contact changeContact) {
@@ -141,6 +185,13 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 }
             }
+            for (int i = 0; i < contacts.size(); i++) {
+                if (contacts.get(i).getId().equals(contactId)) {
+                    contacts.remove(i);
+                    contacts.add(i, changeContact);
+                    break;
+                }
+            }
             notifyDataSetChanged();
         }
 
@@ -149,6 +200,12 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < contactList.size(); i++) {
                 if (contactList.get(i).getId().equals(contactId)) {
                     contactList.remove(i);
+                    break;
+                }
+            }
+            for (int i = 0; i < contacts.size(); i++) {
+                if (contacts.get(i).getId().equals(contactId)) {
+                    contacts.remove(i);
                     break;
                 }
             }
@@ -165,17 +222,35 @@ public class MainActivity extends AppCompatActivity {
             parcel.writeSerializable((Serializable) contactList);
         }
 
-        public final Creator<ContactListAdapter> CREATOR = new Creator<ContactListAdapter>() {
-            @Override
-            public ContactListAdapter createFromParcel(Parcel in) {
-                return new ContactListAdapter(in);
-            }
+        @Override
+        public Filter getFilter() {
+            return new Filter() {
+                @Override
+                protected FilterResults performFiltering(CharSequence charSequence) {
+                    List<Contact> filteredList = new ArrayList<>();
+                    if (charSequence.length() == 0) {
+                        filteredList.addAll(contacts);
+                    } else {
+                        String filterPattern = charSequence.toString().toLowerCase().trim();
+                        for (Contact contact : contacts) {
+                            if (contact.getName().toLowerCase().contains(filterPattern) || contact.getData().toLowerCase().contains(filterPattern)) {
+                                filteredList.add(contact);
+                            }
+                        }
+                    }
+                    FilterResults results = new FilterResults();
+                    results.values = filteredList;
+                    return results;
+                }
 
-            @Override
-            public ContactListAdapter[] newArray(int size) {
-                return new ContactListAdapter[size];
-            }
-        };
+                @Override
+                protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                    contactList.clear();
+                    contactList.addAll((ArrayList<Contact>) filterResults.values);
+                    notifyDataSetChanged();
+                }
+            };
+        }
 
         /*ContactViewHolder*/
         public class ContactViewHolder extends RecyclerView.ViewHolder {

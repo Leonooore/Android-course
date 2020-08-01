@@ -7,29 +7,41 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/searchContacts"
+        android:id="@+id/searchContactsToolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         android:padding="@dimen/smallPadding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/editTextSearchContacts"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"
-            android:autofillHints="@string/editTextSearchContacts"
-            android:background="@drawable/shadow"
-            android:drawableStart="@drawable/ic_baseline_search_24"
-            android:drawablePadding="@dimen/bigPadding"
-            android:hint="@string/editTextSearchContacts"
-            android:inputType="text"
-            android:padding="@dimen/defaultPadding"
-            android:paddingStart="@dimen/bigPadding"
-            android:paddingEnd="@dimen/bigPadding"/>
+            android:orientation="horizontal"
+            android:background="@drawable/shadow">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchContact"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:queryHint="@string/textSearchContacts"
+                app:defaultQueryHint="@string/textSearchContacts"
+                android:iconifiedByDefault="false"/>
+            <TextView
+                android:id="@+id/textSearchView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:text="@string/textSearchContacts"
+                android:textSize="@dimen/defaultTextSize"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/searchTextMargin"/>
+        </FrameLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -40,17 +52,17 @@
         android:text="@string/textViewNoContacts"
         android:textSize="@dimen/defaultTextSize"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/searchContacts"
+        app:layout_constraintTop_toBottomOf="@id/searchContactsToolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/contactList"
+        android:id="@+id/contactListRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="@dimen/defaultPadding"
-        app:layout_constraintTop_toBottomOf="@id/searchContacts"
+        app:layout_constraintTop_toBottomOf="@id/searchContactsToolbar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

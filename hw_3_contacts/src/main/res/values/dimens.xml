@@ -8,4 +8,5 @@
     <dimen name="smallMargin">8dp</dimen>
     <dimen name="defaultTextSize">18sp</dimen>
     <dimen name="titleTextSize">24sp</dimen>
+    <dimen name="searchTextMargin">50dp</dimen>
 </resources>

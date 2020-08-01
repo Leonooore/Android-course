@@ -66,7 +66,7 @@ public class AddContactActivity extends AppCompatActivity {
                 String id = String.valueOf(UUID.randomUUID());
 
                 if (name.isEmpty() || data.isEmpty()) {
-                    String message = "Please input all information!";
+                    String message = "Please input data into all fields!";
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                 } else {
                     contact = new Contact(id, name, data, dataType);
