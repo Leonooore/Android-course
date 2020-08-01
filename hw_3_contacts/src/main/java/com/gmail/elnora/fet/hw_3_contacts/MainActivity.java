@@ -15,7 +15,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -144,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("ParcelCreator")
     public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> implements Parcelable, Filterable {
         private List<Contact> contactList = new ArrayList<>();
-        private ArrayList<Contact> contacts = new ArrayList<>();
+        private ArrayList<Contact> contactsFilter = new ArrayList<>();
 
         public ContactListAdapter() {}
 
@@ -164,15 +163,15 @@ public class MainActivity extends AppCompatActivity {
         public int getItemCount() {
             if (contactList != null) {
                 return contactList.size();
-            } else if (contacts != null) {
-                return contacts.size();
+            } else if (contactsFilter != null) {
+                return contactsFilter.size();
             } else
                 return 0;
         }
 
         public void addContact(@NonNull Contact contact) {
             contactList.add(contact);
-            contacts.add(contact);
+            contactsFilter.add(contact);
             notifyDataSetChanged();
         }
 
@@ -185,10 +184,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 }
             }
-            for (int i = 0; i < contacts.size(); i++) {
-                if (contacts.get(i).getId().equals(contactId)) {
-                    contacts.remove(i);
-                    contacts.add(i, changeContact);
+            for (int i = 0; i < contactsFilter.size(); i++) {
+                if (contactsFilter.get(i).getId().equals(contactId)) {
+                    contactsFilter.remove(i);
+                    contactsFilter.add(i, changeContact);
                     break;
                 }
             }
@@ -203,9 +202,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 }
             }
-            for (int i = 0; i < contacts.size(); i++) {
-                if (contacts.get(i).getId().equals(contactId)) {
-                    contacts.remove(i);
+            for (int i = 0; i < contactsFilter.size(); i++) {
+                if (contactsFilter.get(i).getId().equals(contactId)) {
+                    contactsFilter.remove(i);
                     break;
                 }
             }
@@ -229,10 +228,10 @@ public class MainActivity extends AppCompatActivity {
                 protected FilterResults performFiltering(CharSequence charSequence) {
                     List<Contact> filteredList = new ArrayList<>();
                     if (charSequence.length() == 0) {
-                        filteredList.addAll(contacts);
+                        filteredList.addAll(contactsFilter);
                     } else {
                         String filterPattern = charSequence.toString().toLowerCase().trim();
-                        for (Contact contact : contacts) {
+                        for (Contact contact : contactsFilter) {
                             if (contact.getName().toLowerCase().contains(filterPattern) || contact.getData().toLowerCase().contains(filterPattern)) {
                                 filteredList.add(contact);
                             }
@@ -282,7 +281,6 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, EditContactActivity.class);
                         intent.putExtra("EDIT_CONTACT", (Serializable) contactList.get(position));
                         startActivityForResult(intent, EDIT_REQUEST_CODE );
-                        Log.d("MSG", "Checking  onclick contact item");
                     }
                 });
             }
