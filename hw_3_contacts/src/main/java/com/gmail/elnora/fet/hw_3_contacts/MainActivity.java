@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private Contact contact;
+    private List<Contact> contacts = new ArrayList<>();
     private RecyclerView recyclerView;
     private ContactListAdapter adapter;
     private FloatingActionButton fabAddContact;
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setAdapter((ContactListAdapter) savedInstanceState.getParcelable("ADAPTER"));
             textViewNoContacts.setVisibility(savedInstanceState.getInt("VISIBLE"));
         } else {
-            recyclerView.setAdapter(new ContactListAdapter());
+            recyclerView.setAdapter(new ContactListAdapter(contacts));
         }
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ADD_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
-            contact = (Contact)data.getSerializableExtra("ADD_CONTACT");
+            Contact contact = (Contact)data.getSerializableExtra("ADD_CONTACT");
             if (contact != null) {
                 adapter.addContact(contact);
                 textViewNoContacts.setVisibility(View.INVISIBLE);
@@ -142,10 +142,12 @@ public class MainActivity extends AppCompatActivity {
     /*ContactListAdapter*/
     @SuppressLint("ParcelCreator")
     public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> implements Parcelable, Filterable {
-        private List<Contact> contactList = new ArrayList<>();
-        private ArrayList<Contact> contactsFilter = new ArrayList<>();
+        private List<Contact> contactList;
+        private List<Contact> contactsFilter = new ArrayList<>();
 
-        public ContactListAdapter() {}
+        public ContactListAdapter(List<Contact> contactList) {
+            this.contactList = contactList;
+        }
 
         @NonNull
         @Override
@@ -245,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
                     contactList.clear();
-                    contactList.addAll((ArrayList<Contact>) filterResults.values);
+                    contactList.addAll((ArrayList<Contact>)filterResults.values);
                     notifyDataSetChanged();
                 }
             };
