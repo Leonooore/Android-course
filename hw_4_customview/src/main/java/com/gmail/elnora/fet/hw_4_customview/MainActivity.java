@@ -1,9 +1,7 @@
 package com.gmail.elnora.fet.hw_4_customview;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.webkit.WebChromeClient.CustomViewCallback;
 
 public class MainActivity extends AppCompatActivity {
     private CustomView customView;
@@ -14,6 +12,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         customView = findViewById(R.id.customView);
+        customView.setOnTouchEventListener(new CustomView.OnTouchEventListener() {
+            @Override
+            public void onTouchDown(int x, int y) {
 
+            }
+        });
     }
 }

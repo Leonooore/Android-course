@@ -7,10 +7,13 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-
 import androidx.annotation.Nullable;
 
 public class CustomView extends View {
+
+    public interface OnTouchEventListener {
+        void onTouchDown(int x, int y);
+    }
 
     private Paint paintLeftTopSector = new Paint();
     private Paint paintRightTopSector = new Paint();
@@ -25,6 +28,8 @@ public class CustomView extends View {
     private int rightSideBigCircle;
     private int topSideBigCircle;
     private int bottomSideBigCircle;
+
+    private OnTouchEventListener onTouchEventListener;
 
     public CustomView(Context context) {
         super(context);
@@ -130,8 +135,17 @@ public class CustomView extends View {
         int eventX = (int) event.getX();
         int eventY = (int) event.getY();
         changeColor(eventX, eventY);
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (onTouchEventListener != null) {
+                onTouchEventListener.onTouchDown(eventX, eventY);
+            }
+        }
         invalidate();
         return super.onTouchEvent(event);
+    }
+
+    public void setOnTouchEventListener(OnTouchEventListener onTouchEventListener) {
+        this.onTouchEventListener = onTouchEventListener;
     }
 
 }
