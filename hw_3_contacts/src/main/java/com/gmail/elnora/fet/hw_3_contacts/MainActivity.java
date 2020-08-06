@@ -7,8 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -22,9 +20,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +28,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private List<Contact> contacts = new ArrayList<>();
     private RecyclerView recyclerView;
-    private ContactListAdapter adapter;
+    private ContactAdapter adapter;
     private FloatingActionButton fabAddContact;
     private TextView textViewNoContacts;
     private TextView textSearchView;
@@ -49,10 +45,17 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.contactListRecyclerView);
         textViewNoContacts = findViewById(R.id.textViewNoContacts);
         if (savedInstanceState != null) {
-            recyclerView.setAdapter((ContactListAdapter) savedInstanceState.getParcelable("ADAPTER"));
+            recyclerView.setAdapter((ContactAdapter) savedInstanceState.getParcelable("ADAPTER"));
             textViewNoContacts.setVisibility(savedInstanceState.getInt("VISIBLE"));
         } else {
-            recyclerView.setAdapter(new ContactListAdapter(contacts));
+            recyclerView.setAdapter(new ContactAdapter(contacts, new ContactAdapter.OnContactClickListener() {
+                @Override
+                public void onContactClick(Contact contact) {
+                    Intent intent = new Intent(MainActivity.this, EditContactActivity.class);
+                    intent.putExtra("EDIT_CONTACT", contact);
+                    startActivityForResult(intent, EDIT_REQUEST_CODE );
+                }
+            }));
         }
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -60,11 +63,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         }
-        adapter = (ContactListAdapter) recyclerView.getAdapter();
+        adapter = (ContactAdapter) recyclerView.getAdapter();
 
         setButtonAddContactListener();
 
-        toolbar = (Toolbar) findViewById(R.id.searchContactsToolbar);
+        toolbar = findViewById(R.id.searchContactsToolbar);
         setSupportActionBar(toolbar);
         setSearchViewListener();
     }
@@ -139,26 +142,46 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
-    /*ContactListAdapter*/
-    @SuppressLint("ParcelCreator")
-    public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> implements Parcelable, Filterable {
+    /*ContactAdapter*/
+    public static class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> implements Parcelable, Filterable {
+
+        interface OnContactClickListener {
+            void onContactClick(Contact contact);
+        }
+
         private List<Contact> contactList;
         private List<Contact> contactsFilter = new ArrayList<>();
+        private OnContactClickListener contactListener;
 
-        public ContactListAdapter(List<Contact> contactList) {
+        public ContactAdapter(List<Contact> contactList, OnContactClickListener contactListener) {
             this.contactList = contactList;
+            this.contactListener = contactListener;
         }
+
+        protected ContactAdapter(Parcel in) {}
+
+        public static final Creator<ContactAdapter> CREATOR = new Creator<ContactAdapter>() {
+            @Override
+            public ContactAdapter createFromParcel(Parcel in) {
+                return new ContactAdapter(in);
+            }
+
+            @Override
+            public ContactAdapter[] newArray(int size) {
+                return new ContactAdapter[size];
+            }
+        };
 
         @NonNull
         @Override
-        public ContactListAdapter.ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public ContactAdapter.ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contact, parent, false);
-            return new ContactListAdapter.ContactViewHolder(view);
+            return new ContactAdapter.ContactViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ContactListAdapter.ContactViewHolder holder, int position) {
-            holder.bind(contactList.get(position));
+        public void onBindViewHolder(@NonNull ContactAdapter.ContactViewHolder holder, int position) {
+            holder.bind(contactList.get(position), contactListener);
         }
 
         @Override
@@ -254,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /*ContactViewHolder*/
-        public class ContactViewHolder extends RecyclerView.ViewHolder {
+        public static class ContactViewHolder extends RecyclerView.ViewHolder {
             private ImageView contactIcon;
             private TextView contactName;
             private TextView contactData;
@@ -266,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
                 contactData = itemView.findViewById(R.id.textViewContactPhone);
             }
 
-            public void bind(final Contact contact) {
+            public void bind(final Contact contact, final OnContactClickListener contactListener) {
                 contactName.setText(contact.getName());
                 contactData.setText(contact.getData());
 
@@ -279,10 +302,7 @@ public class MainActivity extends AppCompatActivity {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int position = getAdapterPosition();
-                        Intent intent = new Intent(MainActivity.this, EditContactActivity.class);
-                        intent.putExtra("EDIT_CONTACT", (Serializable) contactList.get(position));
-                        startActivityForResult(intent, EDIT_REQUEST_CODE );
+                        contactListener.onContactClick(contact);
                     }
                 });
             }
