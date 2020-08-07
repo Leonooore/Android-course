@@ -2,11 +2,15 @@ package com.gmail.elnora.fet.hw_4_customview;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -25,16 +29,24 @@ public class SettingActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        buttonBack = findViewById(R.id.buttonBack);
-        setButtonBackListener();
-
-        switchShowMessage = findViewById(R.id.switchShowMessage);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         onOff = loadSetting();
+        switchShowMessage = findViewById(R.id.switchShowMessage);
         switchShowMessage.setChecked(onOff);
 
         setOnCheckedChangeListener();
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setOnCheckedChangeListener() {
@@ -57,15 +69,6 @@ public class SettingActivity extends AppCompatActivity {
     private boolean loadSetting() {
         SharedPreferences shared = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         return shared.getBoolean(PREF_SAVE_KEY, false);
-    }
-
-    private void setButtonBackListener() {
-        buttonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
     }
 
 }
