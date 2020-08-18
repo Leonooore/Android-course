@@ -11,11 +11,11 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 public class CustomView extends View  {
-    Paint paintLeftTopSector;
-    Paint paintRightTopSector;
-    Paint paintLeftBottomSector;
-    Paint paintRightBottomSector;
-    Paint paintCenterCircle;
+    private Paint paintLeftTopSector;
+    private Paint paintRightTopSector;
+    private Paint paintLeftBottomSector;
+    private Paint paintRightBottomSector;
+    private Paint paintCenterCircle;
 
     private int bigCircleRadius;
     private int centerCircleRadius;
