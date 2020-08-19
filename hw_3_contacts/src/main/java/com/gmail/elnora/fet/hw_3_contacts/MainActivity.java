@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int ADD_REQUEST_CODE = 111;
+    private static final int EDIT_REQUEST_CODE = 222;
     private List<Contact> contacts = new ArrayList<>();
     private RecyclerView recyclerView;
     private ContactAdapter adapter;
@@ -34,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView textSearchView;
     private Toolbar toolbar;
     private SearchView searchView;
-    private static final int ADD_REQUEST_CODE = 111;
-    private static final int EDIT_REQUEST_CODE = 222;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

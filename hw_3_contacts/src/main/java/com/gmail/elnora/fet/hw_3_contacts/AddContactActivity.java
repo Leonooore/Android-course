@@ -23,7 +23,7 @@ public class AddContactActivity extends AppCompatActivity {
     private EditText editTextName;
     private EditText editTextData;
     private Contact contact;
-    private DataType dataType;
+    private DataType dataType = DataType.PHONE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,6 @@ public class AddContactActivity extends AppCompatActivity {
         radioButtonEmail = findViewById(R.id.radioButtonEmail);
         editTextName = findViewById(R.id.editTextName);
         editTextData = findViewById(R.id.editTextData);
-        dataType = DataType.PHONE;
 
         setListeners();
     }
@@ -99,25 +98,15 @@ public class AddContactActivity extends AppCompatActivity {
     }
 
     private void setRadioButtonPhoneNumberListener() {
-        radioButtonPhoneNumber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editTextData.setHint(R.string.contactPhoneNumber);
-                editTextData.setInputType(InputType.TYPE_CLASS_PHONE);
-                dataType = DataType.PHONE;
-            }
-        });
+        editTextData.setHint(R.string.contactPhoneNumber);
+        editTextData.setInputType(InputType.TYPE_CLASS_PHONE);
+        dataType = DataType.PHONE;
     }
 
     private void setRadioButtonEmailListener() {
-        radioButtonEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editTextData.setHint(R.string.contactEmail);
-                editTextData.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-                dataType = DataType.EMAIL;
-            }
-        });
+        editTextData.setHint(R.string.contactEmail);
+        editTextData.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        dataType = DataType.EMAIL;
     }
 
 }

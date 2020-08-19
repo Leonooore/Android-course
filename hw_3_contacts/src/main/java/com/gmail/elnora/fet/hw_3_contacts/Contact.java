@@ -3,7 +3,7 @@ package com.gmail.elnora.fet.hw_3_contacts;
 import java.io.Serializable;
 
 public class Contact implements Serializable {
-    private String id;
+    private final String id;
     private String name;
     private String data;
     private DataType dataType;
@@ -17,10 +17,6 @@ public class Contact implements Serializable {
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
