@@ -1,3 +1,4 @@
+include ':hw_5_contacts_database_kotlin'
 include ':hw_1_localization'
 include ':app'
 rootProject.name = "AndroidCourse"
