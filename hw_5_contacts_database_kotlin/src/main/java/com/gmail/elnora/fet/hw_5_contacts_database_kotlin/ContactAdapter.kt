@@ -127,7 +127,7 @@ class ContactAdapter : RecyclerView.Adapter<ContactViewHolder>, Parcelable, Filt
         private val contactName: TextView = itemView.findViewById(R.id.textViewContactName)
         private val contactData: TextView = itemView.findViewById(R.id.textViewContactPhone)
 
-        fun bind(contact: Contact, contactListener: OnContactClickListener?) {
+        fun bind(contact: Contact, contactListener: OnContactClickListener) {
             contactName.text = contact.name
             contactData.text = contact.data
             if (contact.dataType === DataType.PHONE) {
@@ -135,7 +135,7 @@ class ContactAdapter : RecyclerView.Adapter<ContactViewHolder>, Parcelable, Filt
             } else {
                 contactIcon.setImageResource(R.drawable.ic_baseline_contact_mail_56)
             }
-            itemView.setOnClickListener { contactListener!!.onContactClick(contact) }
+            itemView.setOnClickListener { contactListener.onContactClick(contact) }
         }
     }
 

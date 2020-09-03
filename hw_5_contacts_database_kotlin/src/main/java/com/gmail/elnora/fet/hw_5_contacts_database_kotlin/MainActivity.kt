@@ -33,7 +33,8 @@ class MainActivity : AppCompatActivity() {
             contactListRecyclerView.adapter = savedInstanceState.getParcelable<Parcelable>("ADAPTER") as ContactAdapter
             textViewNoContacts.visibility = savedInstanceState.getInt("VISIBLE")
         } else {
-            contactListRecyclerView.adapter = ContactAdapter(contacts, contacts, object : OnContactClickListener {
+            val contactsFilter = database.getContactDao().getAllContacts()
+            contactListRecyclerView.adapter = ContactAdapter(contacts, contactsFilter, object : OnContactClickListener {
                 override fun onContactClick(contact: Contact) {
                     val intent = Intent(this@MainActivity, EditContactActivity::class.java)
                     intent.putExtra("EDIT_CONTACT", contact)
