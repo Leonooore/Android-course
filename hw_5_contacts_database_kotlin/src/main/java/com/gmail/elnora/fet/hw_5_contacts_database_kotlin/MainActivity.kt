@@ -17,14 +17,8 @@ import kotlinx.android.synthetic.main.activity_main.textSearchView
 import kotlinx.android.synthetic.main.activity_main.buttonAddContact
 import kotlinx.android.synthetic.main.activity_main.textViewNoContacts
 import kotlinx.android.synthetic.main.activity_main.contactListRecyclerView
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
-
-    companion object {
-        private const val ADD_REQUEST_CODE = 111
-        private const val EDIT_REQUEST_CODE = 222
-    }
 
     private var contacts: MutableList<Contact> = ArrayList()
     private lateinit var database: ContactDatabase
@@ -39,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             contactListRecyclerView.adapter = savedInstanceState.getParcelable<Parcelable>("ADAPTER") as ContactAdapter
             textViewNoContacts.visibility = savedInstanceState.getInt("VISIBLE")
         } else {
-            contactListRecyclerView.adapter = ContactAdapter(database.getContactDao().getAllContacts(), database.getContactDao().getAllContacts(), object : OnContactClickListener {
+            contactListRecyclerView.adapter = ContactAdapter(contacts, contacts, object : OnContactClickListener {
                 override fun onContactClick(contact: Contact) {
                     val intent = Intent(this@MainActivity, EditContactActivity::class.java)
                     intent.putExtra("EDIT_CONTACT", contact)
@@ -47,10 +41,10 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         }
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            contactListRecyclerView.layoutManager = LinearLayoutManager(this)
+        contactListRecyclerView.layoutManager = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            LinearLayoutManager(this)
         } else {
-            contactListRecyclerView.layoutManager = GridLayoutManager(this, 2)
+            GridLayoutManager(this, 2)
         }
         adapter = contactListRecyclerView.adapter as ContactAdapter
         setVisibility(adapter.itemCount)
@@ -61,9 +55,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setVisibility(itemCount: Int) {
         if (itemCount > 0) {
-            textViewNoContacts!!.visibility = View.INVISIBLE
+            textViewNoContacts.visibility = View.INVISIBLE
         } else {
-            textViewNoContacts!!.visibility = View.VISIBLE
+            textViewNoContacts.visibility = View.VISIBLE
         }
     }
 
@@ -126,5 +120,10 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         database.close()
+    }
+
+    companion object {
+        private const val ADD_REQUEST_CODE = 111
+        private const val EDIT_REQUEST_CODE = 222
     }
 }

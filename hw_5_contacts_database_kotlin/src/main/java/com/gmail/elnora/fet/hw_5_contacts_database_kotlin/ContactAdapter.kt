@@ -12,7 +12,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gmail.elnora.fet.hw_5_contacts_database_kotlin.ContactAdapter.ContactViewHolder
 import java.io.Serializable
-import java.util.*
+import java.util.Locale
+import kotlin.collections.ArrayList
 
 class ContactAdapter : RecyclerView.Adapter<ContactViewHolder>, Parcelable, Filterable {
 
@@ -20,8 +21,8 @@ class ContactAdapter : RecyclerView.Adapter<ContactViewHolder>, Parcelable, Filt
         fun onContactClick(contact: Contact)
     }
 
-    private var contactList: MutableList<Contact> = ArrayList()
-    private var contactsFilter: MutableList<Contact> = ArrayList()
+    private var contactList = mutableListOf<Contact>()
+    private var contactsFilter = mutableListOf<Contact>()
     private lateinit var contactListener: OnContactClickListener
 
     constructor(contactList: MutableList<Contact>, contactsFilter: MutableList<Contact>, contactListener: OnContactClickListener) {
@@ -41,17 +42,7 @@ class ContactAdapter : RecyclerView.Adapter<ContactViewHolder>, Parcelable, Filt
         holder.bind(contactList[position], contactListener)
     }
 
-    override fun getItemCount(): Int {
-        return when {
-            contactList != null -> {
-                contactList.size
-            }
-            contactsFilter != null -> {
-                contactsFilter.size
-            }
-            else -> 0
-        }
-    }
+    override fun getItemCount() = contactList.size
 
     fun addContact(contact: Contact) {
         contactList.add(contact)

@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_add_contact.buttonAdd
 import kotlinx.android.synthetic.main.activity_add_contact.editTextName
 import kotlinx.android.synthetic.main.activity_add_contact.editTextData
 import kotlinx.android.synthetic.main.activity_add_contact.radioButtonGroup
-import java.util.*
+import java.util.UUID
 
 class AddContactActivity : AppCompatActivity() {
     private lateinit var contact: Contact

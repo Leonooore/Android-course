@@ -6,8 +6,10 @@ import androidx.room.TypeConverters
 import java.io.Serializable
 
 @Entity(tableName = "contacts")
-data class Contact(@field:PrimaryKey val id: String,
+data class Contact(@field:PrimaryKey
+                   val id: String,
                    var name: String,
                    var data: String,
-                   @field:TypeConverters(DataTypeConverter::class) var dataType: DataType)
+                   @field:TypeConverters(DataTypeConverter::class)
+                   var dataType: DataType)
     : Serializable
