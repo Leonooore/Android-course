@@ -1,3 +1,4 @@
+include ':hw_6_async'
 include ':hw_1_localization'
 include ':app'
 rootProject.name = "AndroidCourse"

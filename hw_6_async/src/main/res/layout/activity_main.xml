@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/searchContactsToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:paddingHorizontal="4dp"
+        android:paddingVertical="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="330dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="12dp"
+            android:orientation="horizontal"
+            android:background="@drawable/shadow">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchContact"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:queryHint="@string/textSearchContacts"
+                app:defaultQueryHint="@string/textSearchContacts"
+                android:iconifiedByDefault="false"/>
+            <TextView
+                android:id="@+id/textSearchView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:text="@string/textSearchContacts"
+                android:textSize="@dimen/defaultTextSize"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/searchTextMargin"/>
+        </FrameLayout>
+
+        <ImageButton
+            android:id="@+id/imageButtonSetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/ic_baseline_settings_24"
+            android:contentDescription="@string/setting"
+            android:paddingHorizontal="@dimen/smallPadding"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/textViewNoContacts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/textViewNoContacts"
+        android:textSize="@dimen/defaultTextSize"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/searchContactsToolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/contactListRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/defaultPadding"
+        app:layout_constraintTop_toBottomOf="@id/searchContactsToolbar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonAddContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/bigMargin"
+        android:backgroundTint="@color/colorPink"
+        android:src="@drawable/ic_baseline_person_add_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:targetApi="lollipop" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

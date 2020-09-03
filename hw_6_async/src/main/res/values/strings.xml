@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">My contacts</string>
+    <string name="textSearchContacts">Search contacts</string>
+    <string name="textViewNoContacts">No contacts. Please add</string>
+    <string name="contact_phone">Contact phone</string>
+    <string name="contact_email">Contact email</string>
+    <string name="contactName">Contact name</string>
+    <string name="contactPhoneNumber">Phone number</string>
+    <string name="contactEmail">Email</string>
+    <string name="addContactTitle">Add contact</string>
+    <string name="button_back">back</string>
+    <string name="button_check">check</string>
+    <string name="name">Name</string>
+    <string name="editContactTitle">Edit contact</string>
+    <string name="button_remove">Remove</string>
+    <string name="contact_data">Data</string>
+    <string name="rxjava">RxJava</string>
+    <string name="setting">Setting</string>
+    <string name="choose_async_settings">Choose async settings</string>
+    <string name="threadpoolexecutor">ThreadPoolExecutor</string>
+    <string name="handler">Handler</string>
+    <string name="completablefuture">CompletableFuture</string>
+</resources>
