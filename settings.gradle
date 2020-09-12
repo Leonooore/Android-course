@@ -1,3 +1,4 @@
+include ':finalcourseproject'
 include ':hw_1_localization'
 include ':app'
 rootProject.name = "AndroidCourse"
