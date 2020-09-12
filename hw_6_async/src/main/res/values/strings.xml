@@ -14,10 +14,9 @@
     <string name="editContactTitle">Edit contact</string>
     <string name="button_remove">Remove</string>
     <string name="contact_data">Data</string>
-    <string name="rxjava">RxJava</string>
     <string name="setting">Setting</string>
+    <string name="rxjava">RxJava</string>
     <string name="choose_async_settings">Choose async settings</string>
-    <string name="threadpoolexecutor">ThreadPoolExecutor</string>
-    <string name="handler">Handler</string>
-    <string name="completablefuture">CompletableFuture</string>
+    <string name="threadpoolexecutor_handler">ThreadPoolExecutor + Hundler</string>
+    <string name="completablefuture_threadpoolexecutor">CompletableFuture + ThreadPoolExecuto</string>
 </resources>

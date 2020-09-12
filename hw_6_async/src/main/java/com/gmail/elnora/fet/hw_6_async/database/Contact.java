@@ -1,9 +1,12 @@
-package com.gmail.elnora.fet.hw_6_async;
+package com.gmail.elnora.fet.hw_6_async.database;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
+
+import com.gmail.elnora.fet.hw_6_async.data.DataType;
+import com.gmail.elnora.fet.hw_6_async.data.DataTypeConverter;
 
 import java.io.Serializable;
 

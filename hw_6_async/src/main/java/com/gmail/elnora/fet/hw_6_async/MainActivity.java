@@ -16,6 +16,9 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.gmail.elnora.fet.hw_6_async.adapter.ContactAdapter;
+import com.gmail.elnora.fet.hw_6_async.database.Contact;
+import com.gmail.elnora.fet.hw_6_async.database.ContactDatabase;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -25,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int ADD_REQUEST_CODE = 111;
     private static final int EDIT_REQUEST_CODE = 222;
     private List<Contact> contacts = new ArrayList<>();
-    List<Contact> contactsFilter;
+    private List<Contact> contactsFilter = new ArrayList<>();
     private ContactDatabase database;
     private RecyclerView recyclerView;
     private ContactAdapter adapter;
@@ -41,13 +44,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        database = ContactDatabase.getDatabase(this);
+        database = ContactDatabase.getDatabase(MainActivity.this);
         contacts = database.getContactDao().getAllContacts();
 
         initViews();
 
         if (savedInstanceState != null) {
-            recyclerView.setAdapter((ContactAdapter) savedInstanceState.getParcelable("ADAPTER"));
+            recyclerView.setAdapter(savedInstanceState.getParcelable("ADAPTER"));
             textViewNoContacts.setVisibility(savedInstanceState.getInt("VISIBLE"));
         } else {
             contactsFilter = database.getContactDao().getAllContacts();
@@ -142,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         imageButtonSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AsyncSettings.class);
+                Intent intent = new Intent(MainActivity.this, AsyncSettingsActivity.class);
                 startActivity(intent);
             }
         });

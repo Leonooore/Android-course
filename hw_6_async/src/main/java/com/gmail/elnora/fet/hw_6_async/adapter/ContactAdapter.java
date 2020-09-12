@@ -1,4 +1,4 @@
-package com.gmail.elnora.fet.hw_6_async;
+package com.gmail.elnora.fet.hw_6_async.adapter;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -13,13 +13,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gmail.elnora.fet.hw_6_async.R;
+import com.gmail.elnora.fet.hw_6_async.database.Contact;
+import com.gmail.elnora.fet.hw_6_async.data.DataType;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> implements Parcelable, Filterable {
 
-    interface OnContactClickListener {
+    public interface OnContactClickListener {
         void onContactClick(Contact contact);
     }
 
@@ -75,7 +79,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         notifyDataSetChanged();
     }
 
-    void editContact(Contact changeContact) {
+    public void editContact(Contact changeContact) {
         String contactId = changeContact.getId();
         for (int i = 0; i < contactList.size(); i++) {
             if (contactList.get(i).getId().equals(contactId)) {
@@ -94,7 +98,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         notifyDataSetChanged();
     }
 
-    void removeContact(Contact removeContact) {
+    public void removeContact(Contact removeContact) {
         String contactId = removeContact.getId();
         for (int i = 0; i < contactList.size(); i++) {
             if (contactList.get(i).getId().equals(contactId)) {

@@ -38,7 +38,7 @@
     </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
+    <RadioGroup
         android:id="@+id/radioGroupSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,37 +46,35 @@
         android:padding="@dimen/defaultPadding"
         app:layout_constraintTop_toBottomOf="@id/toolbarSettings">
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
+        <RadioButton
+            android:id="@+id/radioButtonThreadPoolExecutorHandler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/threadpoolexecutor"
+            android:text="@string/threadpoolexecutor_handler"
             android:textSize="@dimen/defaultTextSize"
-            android:checked="false"
+            android:checked="true"
+            android:paddingHorizontal="@dimen/defaultPadding"
             android:layout_marginBottom="@dimen/defaultMargin"/>
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
+        <RadioButton
+            android:id="@+id/radioButtonCompletableFutureThreadPoolExecutor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/handler"
-            android:textSize="@dimen/defaultTextSize"
             android:checked="false"
+            android:text="@string/completablefuture_threadpoolexecutor"
+            android:textSize="@dimen/defaultTextSize"
+            android:paddingHorizontal="@dimen/defaultPadding"
             android:layout_marginBottom="@dimen/defaultMargin"/>
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/completablefuture"
-            android:textSize="@dimen/defaultTextSize"
-            android:checked="false"
-            android:layout_marginBottom="@dimen/defaultMargin"/>
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
+        <RadioButton
+            android:id="@+id/radioButtonRxJava"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/rxjava"
             android:textSize="@dimen/defaultTextSize"
-            android:checked="false"/>
+            android:checked="false"
+            android:paddingHorizontal="@dimen/defaultPadding"/>
 
-    </LinearLayout>
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

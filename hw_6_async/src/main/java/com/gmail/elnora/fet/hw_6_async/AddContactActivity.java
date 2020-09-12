@@ -6,11 +6,13 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.gmail.elnora.fet.hw_6_async.database.Contact;
+import com.gmail.elnora.fet.hw_6_async.data.DataType;
 
 import java.util.UUID;
 
@@ -18,8 +20,6 @@ public class AddContactActivity extends AppCompatActivity {
     private ImageButton buttonBack;
     private ImageButton buttonAdd;
     private RadioGroup radioGroup;
-    private RadioButton radioButtonPhoneNumber;
-    private RadioButton radioButtonEmail;
     private EditText editTextName;
     private EditText editTextData;
     private Contact contact;
@@ -37,8 +37,6 @@ public class AddContactActivity extends AppCompatActivity {
         buttonBack = findViewById(R.id.buttonBack);
         buttonAdd = findViewById(R.id.buttonAdd);
         radioGroup = findViewById(R.id.radioButtonGroup);
-        radioButtonPhoneNumber = findViewById(R.id.radioButtonPhoneNumber);
-        radioButtonEmail = findViewById(R.id.radioButtonEmail);
         editTextName = findViewById(R.id.editTextName);
         editTextData = findViewById(R.id.editTextData);
     }

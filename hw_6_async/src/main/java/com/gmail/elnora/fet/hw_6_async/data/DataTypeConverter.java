@@ -1,4 +1,4 @@
-package com.gmail.elnora.fet.hw_6_async;
+package com.gmail.elnora.fet.hw_6_async.data;
 
 import androidx.room.TypeConverter;
 

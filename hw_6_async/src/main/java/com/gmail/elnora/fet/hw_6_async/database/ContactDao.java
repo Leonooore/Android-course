@@ -1,4 +1,4 @@
-package com.gmail.elnora.fet.hw_6_async;
+package com.gmail.elnora.fet.hw_6_async.database;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

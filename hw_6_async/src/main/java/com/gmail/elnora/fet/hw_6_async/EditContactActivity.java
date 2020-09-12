@@ -11,6 +11,9 @@ import android.widget.ImageButton;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.gmail.elnora.fet.hw_6_async.database.Contact;
+import com.gmail.elnora.fet.hw_6_async.data.DataType;
+
 public class EditContactActivity extends AppCompatActivity {
     private ImageButton buttonBack;
     private EditText editTextName;
