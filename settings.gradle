@@ -1,3 +1,4 @@
+include ':hw_4_customview'
 include ':hw_1_localization'
 include ':app'
 rootProject.name = "AndroidCourse"
