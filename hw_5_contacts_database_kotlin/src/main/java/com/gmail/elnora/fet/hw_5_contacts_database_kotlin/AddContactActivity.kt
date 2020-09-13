@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.text.InputType
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.gmail.elnora.fet.hw_5_contacts_database_kotlin.data.DataType
+import com.gmail.elnora.fet.hw_5_contacts_database_kotlin.database.Contact
 import kotlinx.android.synthetic.main.activity_add_contact.buttonBack
 import kotlinx.android.synthetic.main.activity_add_contact.buttonAdd
 import kotlinx.android.synthetic.main.activity_add_contact.editTextName

@@ -1,6 +1,11 @@
-package com.gmail.elnora.fet.hw_5_contacts_database_kotlin
+package com.gmail.elnora.fet.hw_5_contacts_database_kotlin.database
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Update
+import androidx.room.Delete
+import androidx.room.Query
 
 @Dao
 interface ContactDao {

@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import androidx.appcompat.app.AppCompatActivity
+import com.gmail.elnora.fet.hw_5_contacts_database_kotlin.data.DataType
+import com.gmail.elnora.fet.hw_5_contacts_database_kotlin.database.Contact
 import kotlinx.android.synthetic.main.activity_edit_contact.editTextData
 import kotlinx.android.synthetic.main.activity_edit_contact.editTextName
 import kotlinx.android.synthetic.main.activity_edit_contact.buttonBack

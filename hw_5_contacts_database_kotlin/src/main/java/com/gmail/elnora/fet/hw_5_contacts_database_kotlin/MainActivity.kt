@@ -10,7 +10,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gmail.elnora.fet.hw_5_contacts_database_kotlin.ContactAdapter.OnContactClickListener
-import com.gmail.elnora.fet.hw_5_contacts_database_kotlin.ContactDatabase.Companion.getDatabase
+import com.gmail.elnora.fet.hw_5_contacts_database_kotlin.database.Contact
+import com.gmail.elnora.fet.hw_5_contacts_database_kotlin.database.ContactDatabase
+import com.gmail.elnora.fet.hw_5_contacts_database_kotlin.database.ContactDatabase.Companion.getDatabase
 import kotlinx.android.synthetic.main.activity_main.searchContactsToolbar
 import kotlinx.android.synthetic.main.activity_main.searchContact
 import kotlinx.android.synthetic.main.activity_main.textSearchView

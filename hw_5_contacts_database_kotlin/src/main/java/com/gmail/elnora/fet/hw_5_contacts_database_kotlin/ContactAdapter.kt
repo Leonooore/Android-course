@@ -11,6 +11,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gmail.elnora.fet.hw_5_contacts_database_kotlin.ContactAdapter.ContactViewHolder
+import com.gmail.elnora.fet.hw_5_contacts_database_kotlin.data.DataType
+import com.gmail.elnora.fet.hw_5_contacts_database_kotlin.database.Contact
 import java.io.Serializable
 import java.util.Locale
 import kotlin.collections.ArrayList
@@ -21,8 +23,8 @@ class ContactAdapter : RecyclerView.Adapter<ContactViewHolder>, Parcelable, Filt
         fun onContactClick(contact: Contact)
     }
 
-    private var contactList = mutableListOf<Contact>()
-    private var contactsFilter = mutableListOf<Contact>()
+    private var contactList: MutableList<Contact> = ArrayList<Contact>()
+    private var contactsFilter: MutableList<Contact> = ArrayList<Contact>()
     private lateinit var contactListener: OnContactClickListener
 
     constructor(contactList: MutableList<Contact>, contactsFilter: MutableList<Contact>, contactListener: OnContactClickListener) {
