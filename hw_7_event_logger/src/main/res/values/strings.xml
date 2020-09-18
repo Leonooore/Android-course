@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">hw_7_event_logger</string>
+    <string name="events">Events</string>
 </resources>
