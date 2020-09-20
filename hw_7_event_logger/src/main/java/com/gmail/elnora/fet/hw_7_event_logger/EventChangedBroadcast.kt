@@ -12,11 +12,11 @@ class EventChangedBroadcast : BroadcastReceiver() {
         when(intent.action) {
             Intent.ACTION_AIRPLANE_MODE_CHANGED -> printLog("ACTION_AIRPLANE_MODE_CHANGED")
             Intent.ACTION_LOCALE_CHANGED -> printLog("ACTION_LOCALE_CHANGED")
-            Intent.ACTION_TIMEZONE_CHANGED -> printLog("ACTION_TIMEZONE_CHANGED")
+            Intent.ACTION_SCREEN_OFF -> printLog("ACTION_SCREEN_OFF")
         }
     }
 
     private fun printLog(msg: String) {
-        Log.d(TAG, msg)
+        Log.d(TAG, getCurrentDateTime().toString("yyyy/mm/dd_hh:mm") + " - " + msg)
     }
 }
