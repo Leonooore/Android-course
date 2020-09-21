@@ -31,13 +31,15 @@
             android:id="@+id/viewRadioButtonInternalStorage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/internal_storage" />
+            android:text="@string/internal_storage"
+            android:textSize="@dimen/default_text_size" />
 
         <RadioButton
             android:id="@+id/viewRadioButtonExternalStorage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/external_storage" />
+            android:text="@string/external_storage"
+            android:textSize="@dimen/default_text_size" />
 
     </RadioGroup>
 

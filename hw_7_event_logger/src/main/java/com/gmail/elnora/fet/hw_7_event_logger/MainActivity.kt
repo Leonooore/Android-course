@@ -42,11 +42,6 @@ class MainActivity : AppCompatActivity() {
         registerReceiver(broadcastReceiver, intentFilter)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        unregisterReceiver(broadcastReceiver)
-    }
-
     private fun setChangeStorageTypeListener() {
         radioGroupStorageType.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
@@ -67,6 +62,11 @@ class MainActivity : AppCompatActivity() {
     private fun loadStorageType(): String? {
         sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
         return sharedPreferences.getString(PREF_SAVE_KEY, StorageType.INTERNAL.toString())
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(broadcastReceiver)
     }
     
     companion object {
