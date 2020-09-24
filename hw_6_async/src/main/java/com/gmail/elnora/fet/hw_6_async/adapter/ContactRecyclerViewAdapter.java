@@ -21,7 +21,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> implements Parcelable, Filterable {
+public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecyclerViewAdapter.ContactViewHolder> implements Parcelable, Filterable {
 
     public interface OnContactClickListener {
         void onContactClick(Contact contact);
@@ -31,99 +31,35 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     private List<Contact> contactsFilter = new ArrayList<>();
     private OnContactClickListener contactListener;
 
-    public ContactAdapter(List<Contact> contactList, List<Contact> contactsFilter, OnContactClickListener contactListener) {
+    public ContactRecyclerViewAdapter(List<Contact> contactList, List<Contact> contactsFilter, OnContactClickListener contactListener) {
         this.contactList = contactList;
         this.contactsFilter = contactsFilter;
         this.contactListener = contactListener;
     }
 
-    protected ContactAdapter(Parcel in) {}
-
-    public static final Creator<ContactAdapter> CREATOR = new Creator<ContactAdapter>() {
-        @Override
-        public ContactAdapter createFromParcel(Parcel in) {
-            return new ContactAdapter(in);
-        }
-
-        @Override
-        public ContactAdapter[] newArray(int size) {
-            return new ContactAdapter[size];
-        }
-    };
+    protected ContactRecyclerViewAdapter(Parcel in) {}
 
     @NonNull
     @Override
-    public ContactAdapter.ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ContactRecyclerViewAdapter.ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contact, parent, false);
-        return new ContactAdapter.ContactViewHolder(view);
+        return new ContactRecyclerViewAdapter.ContactViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ContactAdapter.ContactViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ContactRecyclerViewAdapter.ContactViewHolder holder, int position) {
         holder.bind(contactList.get(position), contactListener);
     }
 
     @Override
     public int getItemCount() {
-        if (contactList != null) {
-            return contactList.size();
-        } else if (contactsFilter != null) {
-            return contactsFilter.size();
-        } else
-            return 0;
+        return contactList != null ? contactList.size() : 0;
     }
 
-    public void addContact(@NonNull Contact contact) {
-        contactList.add(contact);
-        contactsFilter.add(contact);
+    public void updateContactList(ArrayList<Contact> contacts, ArrayList<Contact> contactsFilter) {
+        contactList = contacts;
+        this.contactsFilter = contactsFilter;
         notifyDataSetChanged();
-    }
-
-    public void editContact(Contact changeContact) {
-        String contactId = changeContact.getId();
-        for (int i = 0; i < contactList.size(); i++) {
-            if (contactList.get(i).getId().equals(contactId)) {
-                contactList.remove(i);
-                contactList.add(i, changeContact);
-                break;
-            }
-        }
-        for (int i = 0; i < contactsFilter.size(); i++) {
-            if (contactsFilter.get(i).getId().equals(contactId)) {
-                contactsFilter.remove(i);
-                contactsFilter.add(i, changeContact);
-                break;
-            }
-        }
-        notifyDataSetChanged();
-    }
-
-    public void removeContact(Contact removeContact) {
-        String contactId = removeContact.getId();
-        for (int i = 0; i < contactList.size(); i++) {
-            if (contactList.get(i).getId().equals(contactId)) {
-                contactList.remove(i);
-                break;
-            }
-        }
-        for (int i = 0; i < contactsFilter.size(); i++) {
-            if (contactsFilter.get(i).getId().equals(contactId)) {
-                contactsFilter.remove(i);
-                break;
-            }
-        }
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeSerializable((Serializable) contactList);
-        parcel.writeSerializable((Serializable) contactsFilter);
     }
 
     @Override
@@ -155,6 +91,29 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
             }
         };
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeSerializable((Serializable) contactList);
+        parcel.writeSerializable((Serializable) contactsFilter);
+    }
+
+    public static final Creator<ContactRecyclerViewAdapter> CREATOR = new Creator<ContactRecyclerViewAdapter>() {
+        @Override
+        public ContactRecyclerViewAdapter createFromParcel(Parcel in) {
+            return new ContactRecyclerViewAdapter(in);
+        }
+
+        @Override
+        public ContactRecyclerViewAdapter[] newArray(int size) {
+            return new ContactRecyclerViewAdapter[size];
+        }
+    };
 
     public static class ContactViewHolder extends RecyclerView.ViewHolder {
         private ImageView contactIcon;

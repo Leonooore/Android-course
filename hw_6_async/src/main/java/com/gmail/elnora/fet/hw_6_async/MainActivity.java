@@ -10,13 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.gmail.elnora.fet.hw_6_async.adapter.ContactAdapter;
+import com.gmail.elnora.fet.hw_6_async.adapter.ContactRecyclerViewAdapter;
 import com.gmail.elnora.fet.hw_6_async.database.Contact;
 import com.gmail.elnora.fet.hw_6_async.database.ContactDatabase;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,11 +28,14 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static final int ADD_REQUEST_CODE = 111;
     private static final int EDIT_REQUEST_CODE = 222;
+    private static final String THREADPOOLEXECUTER_HANDLER = "THREADPOOLEXECUTER_HANDLER";
+    private static final String COMPLETABLEFUTURE_THREADPOOLEXECUTOR = "COPLETABLEFUTURE_THREADPOOLEXECUTOR";
+    private static final String RXJAVA = "RXJAVA";
     private List<Contact> contacts = new ArrayList<>();
     private List<Contact> contactsFilter = new ArrayList<>();
     private ContactDatabase database;
     private RecyclerView recyclerView;
-    private ContactAdapter adapter;
+    private ContactRecyclerViewAdapter adapter;
     private FloatingActionButton fabAddContact;
     private TextView textViewNoContacts;
     private TextView textSearchView;
@@ -54,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             textViewNoContacts.setVisibility(savedInstanceState.getInt("VISIBLE"));
         } else {
             contactsFilter = database.getContactDao().getAllContacts();
-            recyclerView.setAdapter(new ContactAdapter(contacts, contactsFilter, new ContactAdapter.OnContactClickListener() {
+            recyclerView.setAdapter(new ContactRecyclerViewAdapter(contacts, contactsFilter, new ContactRecyclerViewAdapter.OnContactClickListener() {
                 @Override
                 public void onContactClick(Contact contact) {
                     Intent intent = new Intent(MainActivity.this, EditContactActivity.class);
@@ -69,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         }
-        adapter = (ContactAdapter) recyclerView.getAdapter();
+        adapter = (ContactRecyclerViewAdapter) recyclerView.getAdapter();
 
         if (adapter != null) {
             setVisibility(adapter.getItemCount());
@@ -158,7 +162,9 @@ public class MainActivity extends AppCompatActivity {
                 Contact contact = (Contact) data.getSerializableExtra("ADD_CONTACT");
                 if (contact != null) {
                     database.getContactDao().insert(contact);
-                    adapter.addContact(contact);
+                    contacts = database.getContactDao().getAllContacts();
+                    contactsFilter = database.getContactDao().getAllContacts();
+                    adapter.updateContactList((ArrayList<Contact>) contacts, (ArrayList<Contact>) contactsFilter);
                 }
             } else if (requestCode == EDIT_REQUEST_CODE) {
                 Contact changeContact;
@@ -166,16 +172,25 @@ public class MainActivity extends AppCompatActivity {
                 Contact deleteContact = (Contact) data.getSerializableExtra("REMOVE_CONTACT");
                 if (changeContact != null) {
                     database.getContactDao().update(changeContact);
-                    adapter.editContact(changeContact);
+                    contacts = database.getContactDao().getAllContacts();
+                    contactsFilter = database.getContactDao().getAllContacts();
+                    adapter.updateContactList((ArrayList<Contact>) contacts, (ArrayList<Contact>) contactsFilter);
                     textViewNoContacts.setVisibility(View.INVISIBLE);
                 } else if (deleteContact != null) {
                     database.getContactDao().delete(deleteContact);
-                    adapter.removeContact(deleteContact);
+                    contacts = database.getContactDao().getAllContacts();
+                    contactsFilter = database.getContactDao().getAllContacts();
+                    adapter.updateContactList((ArrayList<Contact>) contacts, (ArrayList<Contact>) contactsFilter);
                 }
             }
             setVisibility(adapter.getItemCount());
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private String loadAsyncType () {
+        SharedPreferences sharedPreferences = getSharedPreferences(AsyncSettingsActivity.getPrefName(), MODE_PRIVATE);
+        return sharedPreferences.getString(AsyncSettingsActivity.getPrefSaveKey(), THREADPOOLEXECUTER_HANDLER);
     }
 
     @Override
