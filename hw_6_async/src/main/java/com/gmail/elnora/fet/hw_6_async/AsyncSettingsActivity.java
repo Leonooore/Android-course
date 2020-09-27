@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AsyncSettingsActivity extends AppCompatActivity {
     private static final String THREADPOOLEXECUTER_HANDLER = "THREADPOOLEXECUTER_HANDLER";
-    private static final String COMPLETABLEFUTURE_THREADPOOLEXECUTOR = "COPLETABLEFUTURE_THREADPOOLEXECUTOR";
+    private static final String COMPLETABLEFUTURE_THREADPOOLEXECUTOR = "COMPLETABLEFUTURE_THREADPOOLEXECUTOR";
     private static final String RXJAVA = "RXJAVA";
     private static final String PREF_SAVE_KEY = "ASYNC_TYPE_KEY";
     private static final String PREF_NAME = "asyncTypePref";

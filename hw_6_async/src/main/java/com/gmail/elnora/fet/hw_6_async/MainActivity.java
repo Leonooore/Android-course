@@ -14,13 +14,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.gmail.elnora.fet.hw_6_async.adapter.ContactRecyclerViewAdapter;
 import com.gmail.elnora.fet.hw_6_async.async.CompletableFutureThreadPoolExecutor;
+import com.gmail.elnora.fet.hw_6_async.async.RxJava;
 import com.gmail.elnora.fet.hw_6_async.async.ThreadPoolExecutorHandler;
 import com.gmail.elnora.fet.hw_6_async.database.Contact;
 import com.gmail.elnora.fet.hw_6_async.database.ContactDatabase;
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         database = ContactDatabase.getDatabase(MainActivity.this);
 
+        loadAsyncSettings();
         initViews();
 
         if (savedInstanceState != null) {
@@ -77,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         }
         adapter = (ContactRecyclerViewAdapter) recyclerView.getAdapter();
+
+        repositorySwitch();
+        contacts = repository.getAllContacts();
 
         setToolbar();
         setButtonAddContactListener();
@@ -102,17 +106,14 @@ public class MainActivity extends AppCompatActivity {
         switch (loadAsyncSettings) {
             case THREADPOOLEXECUTER_HANDLER:
                 repository = new ThreadPoolExecutorHandler(database, adapter, contacts, textViewNoContacts);
-                Log.d("MAIN", THREADPOOLEXECUTER_HANDLER);
                 break;
             case COMPLETABLEFUTURE_THREADPOOLEXECUTOR:
                 repository = new CompletableFutureThreadPoolExecutor(database, adapter, contacts, textViewNoContacts, ContextCompat.getMainExecutor(this));
-                Log.d("MAIN", COMPLETABLEFUTURE_THREADPOOLEXECUTOR);
                 break;
             case RXJAVA:
-                Log.d("MAIN", RXJAVA);
+                repository = new RxJava(database, adapter, contacts, textViewNoContacts);
                 break;
         }
-        contacts = repository.getAllContacts();
     }
 
     private void setToolbar() {
@@ -166,24 +167,28 @@ public class MainActivity extends AppCompatActivity {
                 Contact removeContact = (Contact) data.getSerializableExtra("REMOVE_CONTACT");
                 removeContact(removeContact);
             }
+            contacts = repository.getAllContacts();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void addContact(Contact contact) {
         if (contact != null) {
+            repositorySwitch();
             repository.insert(contact);
         }
     }
 
     private void changeContact(Contact changeContact) {
         if (changeContact != null) {
+            repositorySwitch();
             repository.update(changeContact);
         }
     }
 
     private void removeContact(Contact removeContact) {
         if (removeContact != null) {
+            repositorySwitch();
             repository.delete(removeContact);
         }
     }
@@ -204,7 +209,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         loadAsyncSettings();
-        repositorySwitch();
     }
 
     @Override

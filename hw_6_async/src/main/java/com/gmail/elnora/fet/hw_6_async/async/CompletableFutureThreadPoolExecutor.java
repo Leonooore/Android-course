@@ -94,7 +94,6 @@ public class CompletableFutureThreadPoolExecutor implements DatabaseRepositoryIn
 
     @Override
     public void closeDatabaseThreads() {
-        database.close();
         threadPoolExecutor.shutdown();
     }
 }

@@ -51,38 +51,49 @@ public class ThreadPoolExecutorHandler implements DatabaseRepositoryInterface {
 
     @Override
     public List<Contact> getAllContacts() {
-        threadPoolExecutor.execute(() -> {
-            contacts = database.getContactDao().getAllContacts();
-            handler.sendMessage(handler.obtainMessage(0, contacts));
+        threadPoolExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                contacts = database.getContactDao().getAllContacts();
+                handler.sendMessage(handler.obtainMessage(0, contacts));
+            }
         });
         return contacts;
     }
 
     @Override
     public void insert(Contact contact) {
-        threadPoolExecutor.execute(() -> {
-            if(database != null)
-                database.getContactDao().insert(contact);
+        threadPoolExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (database != null)
+                    database.getContactDao().insert(contact);
+            }
         });
     }
 
     @Override
     public void update(Contact contact) {
-        threadPoolExecutor.execute(() -> {
-            database.getContactDao().update(contact);
+        threadPoolExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getContactDao().update(contact);
+            }
         });
     }
 
     @Override
     public void delete(Contact contact) {
-        threadPoolExecutor.execute(() -> {
-            database.getContactDao().delete(contact);
+        threadPoolExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getContactDao().delete(contact);
+            }
         });
     }
 
     @Override
     public void closeDatabaseThreads() {
-        database.close();
         threadPoolExecutor.shutdown();
     }
 
