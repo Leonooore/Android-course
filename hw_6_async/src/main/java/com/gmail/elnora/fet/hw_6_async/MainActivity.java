@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +21,6 @@ import android.widget.TextView;
 
 import com.gmail.elnora.fet.hw_6_async.adapter.ContactRecyclerViewAdapter;
 import com.gmail.elnora.fet.hw_6_async.async.CompletableFutureThreadPoolExecutor;
-import com.gmail.elnora.fet.hw_6_async.async.RxJava;
 import com.gmail.elnora.fet.hw_6_async.async.ThreadPoolExecutorHandler;
 import com.gmail.elnora.fet.hw_6_async.database.Contact;
 import com.gmail.elnora.fet.hw_6_async.database.ContactDatabase;
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int ADD_REQUEST_CODE = 111;
     private static final int EDIT_REQUEST_CODE = 222;
     private static final String THREADPOOLEXECUTER_HANDLER = "THREADPOOLEXECUTER_HANDLER";
-    private static final String COMPLETABLEFUTURE_THREADPOOLEXECUTOR = "COPLETABLEFUTURE_THREADPOOLEXECUTOR";
+    private static final String COMPLETABLEFUTURE_THREADPOOLEXECUTOR = "COMPLETABLEFUTURE_THREADPOOLEXECUTOR";
     private static final String RXJAVA = "RXJAVA";
     private List<Contact> contacts = new ArrayList<>();
     private ContactDatabase database;
@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
         database = ContactDatabase.getDatabase(MainActivity.this);
 
-        loadAsyncSettings();
         initViews();
 
         if (savedInstanceState != null) {
@@ -78,9 +77,6 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         }
         adapter = (ContactRecyclerViewAdapter) recyclerView.getAdapter();
-
-        repositorySwitch();
-        contacts = repository.getAllContacts();
 
         setToolbar();
         setButtonAddContactListener();
@@ -106,14 +102,17 @@ public class MainActivity extends AppCompatActivity {
         switch (loadAsyncSettings) {
             case THREADPOOLEXECUTER_HANDLER:
                 repository = new ThreadPoolExecutorHandler(database, adapter, contacts, textViewNoContacts);
+                Log.d("MAIN", THREADPOOLEXECUTER_HANDLER);
                 break;
             case COMPLETABLEFUTURE_THREADPOOLEXECUTOR:
-                Log.d("MAIN", "completable");
+                repository = new CompletableFutureThreadPoolExecutor(database, adapter, contacts, textViewNoContacts, ContextCompat.getMainExecutor(this));
+                Log.d("MAIN", COMPLETABLEFUTURE_THREADPOOLEXECUTOR);
                 break;
             case RXJAVA:
-                Log.d("MAIN", "rxJava");
+                Log.d("MAIN", RXJAVA);
                 break;
         }
+        contacts = repository.getAllContacts();
     }
 
     private void setToolbar() {
@@ -167,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
                 Contact removeContact = (Contact) data.getSerializableExtra("REMOVE_CONTACT");
                 removeContact(removeContact);
             }
-            contacts = repository.getAllContacts();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -203,9 +201,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        loadAsyncSettings();
+        repositorySwitch();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         database.close();
-        repository.closeThreads();
+        repository.closeDatabaseThreads();
     }
 }

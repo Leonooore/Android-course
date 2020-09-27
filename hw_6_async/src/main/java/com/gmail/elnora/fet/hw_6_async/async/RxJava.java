@@ -28,7 +28,7 @@ public class RxJava implements DatabaseRepositoryInterface {
     }
 
     @Override
-    public void closeThreads() {
+    public void closeDatabaseThreads() {
 
     }
 }

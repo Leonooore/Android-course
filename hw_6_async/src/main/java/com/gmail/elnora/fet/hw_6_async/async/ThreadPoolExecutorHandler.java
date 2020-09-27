@@ -19,12 +19,12 @@ import java.util.concurrent.ThreadPoolExecutor;
 import static android.os.Looper.getMainLooper;
 
 public class ThreadPoolExecutorHandler implements DatabaseRepositoryInterface {
+    private static final int NUMBER_OF_THREADS = 1;
+    private ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(NUMBER_OF_THREADS);
     private List<Contact> contacts;
     private ContactDatabase database;
     private ContactRecyclerViewAdapter adapter;
     private TextView textViewNoContacts;
-    private static final int NUMBER_OF_THREADS = 1;
-    private static final ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public ThreadPoolExecutorHandler(ContactDatabase database, ContactRecyclerViewAdapter adapter, List<Contact> contacts, TextView textViewNoContacts) {
         this.database = database;
@@ -63,7 +63,6 @@ public class ThreadPoolExecutorHandler implements DatabaseRepositoryInterface {
         threadPoolExecutor.execute(() -> {
             if(database != null)
                 database.getContactDao().insert(contact);
-            handler.sendMessage(handler.obtainMessage(0));
         });
     }
 
@@ -71,7 +70,6 @@ public class ThreadPoolExecutorHandler implements DatabaseRepositoryInterface {
     public void update(Contact contact) {
         threadPoolExecutor.execute(() -> {
             database.getContactDao().update(contact);
-            handler.sendMessage(handler.obtainMessage(0));
         });
     }
 
@@ -79,12 +77,11 @@ public class ThreadPoolExecutorHandler implements DatabaseRepositoryInterface {
     public void delete(Contact contact) {
         threadPoolExecutor.execute(() -> {
             database.getContactDao().delete(contact);
-            handler.sendMessage(handler.obtainMessage(0));
         });
     }
 
     @Override
-    public void closeThreads() {
+    public void closeDatabaseThreads() {
         database.close();
         threadPoolExecutor.shutdown();
     }

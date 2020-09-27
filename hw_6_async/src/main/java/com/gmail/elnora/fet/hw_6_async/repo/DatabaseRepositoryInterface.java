@@ -11,5 +11,5 @@ public interface DatabaseRepositoryInterface {
     void insert(Contact contact);
     void update(Contact contact);
     void delete(Contact contact);
-    void closeThreads();
+    void closeDatabaseThreads();
 }
