@@ -29,8 +29,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 public class MainActivity extends AppCompatActivity {
     private static final int ADD_REQUEST_CODE = 111;
@@ -39,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String COMPLETABLEFUTURE_THREADPOOLEXECUTOR = "COPLETABLEFUTURE_THREADPOOLEXECUTOR";
     private static final String RXJAVA = "RXJAVA";
     private List<Contact> contacts = new ArrayList<>();
-    private List<Contact> contactsFilter = new ArrayList<>();
     private ContactDatabase database;
     private RecyclerView recyclerView;
     private ContactRecyclerViewAdapter adapter;
@@ -49,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private SearchView searchView;
     private ImageButton imageButtonSetting;
-    private ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
     private DatabaseRepositoryInterface repository;
     private String loadAsyncSettings;
 
@@ -67,8 +63,7 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setAdapter(savedInstanceState.getParcelable("ADAPTER"));
             textViewNoContacts.setVisibility(savedInstanceState.getInt("VISIBLE"));
         } else
-            contactsFilter = contacts;
-            recyclerView.setAdapter(new ContactRecyclerViewAdapter(contacts, contactsFilter, new ContactRecyclerViewAdapter.OnContactClickListener() {
+            recyclerView.setAdapter(new ContactRecyclerViewAdapter(contacts, new ContactRecyclerViewAdapter.OnContactClickListener() {
                 @Override
                 public void onContactClick(Contact contact) {
                     Intent intent = new Intent(MainActivity.this, EditContactActivity.class);
@@ -110,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     private void repositorySwitch() {
         switch (loadAsyncSettings) {
             case THREADPOOLEXECUTER_HANDLER:
-                repository = new ThreadPoolExecutorHandler(database, adapter, contacts, contactsFilter, textViewNoContacts);
+                repository = new ThreadPoolExecutorHandler(database, adapter, contacts, textViewNoContacts);
                 break;
             case COMPLETABLEFUTURE_THREADPOOLEXECUTOR:
                 Log.d("MAIN", "completable");
@@ -210,7 +205,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        executor.shutdown();
         database.close();
         repository.closeThreads();
     }

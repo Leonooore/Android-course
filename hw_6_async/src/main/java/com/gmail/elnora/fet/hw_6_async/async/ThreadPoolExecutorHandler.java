@@ -20,18 +20,16 @@ import static android.os.Looper.getMainLooper;
 
 public class ThreadPoolExecutorHandler implements DatabaseRepositoryInterface {
     private List<Contact> contacts;
-    private List<Contact> contactsFilter;
     private ContactDatabase database;
     private ContactRecyclerViewAdapter adapter;
     private TextView textViewNoContacts;
     private static final int NUMBER_OF_THREADS = 1;
     private static final ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    public ThreadPoolExecutorHandler(ContactDatabase database, ContactRecyclerViewAdapter adapter, List<Contact> contacts, List<Contact> contactsFilter, TextView textViewNoContacts) {
+    public ThreadPoolExecutorHandler(ContactDatabase database, ContactRecyclerViewAdapter adapter, List<Contact> contacts, TextView textViewNoContacts) {
         this.database = database;
         this.adapter = adapter;
         this.contacts = contacts;
-        this.contactsFilter = contactsFilter;
         this.textViewNoContacts = textViewNoContacts;
     }
 
@@ -40,8 +38,7 @@ public class ThreadPoolExecutorHandler implements DatabaseRepositoryInterface {
         public boolean handleMessage(@NonNull Message msg) {
             if (msg.what == 0) {
                 List<Contact> contacts = (List<Contact>)msg.obj;
-                contactsFilter = contacts;
-                adapter.updateContactList(contacts, contactsFilter);
+                adapter.updateContactList(contacts);
                 if (adapter.getItemCount() > 0) {
                     textViewNoContacts.setVisibility(View.INVISIBLE);
                 } else {

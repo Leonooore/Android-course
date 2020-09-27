@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
-@Database(entities = {Contact.class}, version = 1)
+@Database(entities = {Contact.class}, version = 1, exportSchema = false)
 public abstract class ContactDatabase extends RoomDatabase {
     private static final String CONTACT_DATABASE_NAME = "contact_database";
     public static volatile ContactDatabase INSTANCE;
@@ -21,7 +21,6 @@ public abstract class ContactDatabase extends RoomDatabase {
             synchronized (ContactDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), ContactDatabase.class, CONTACT_DATABASE_NAME)
-//                            .allowMainThreadQueries()
                             .build();
                 }
             }

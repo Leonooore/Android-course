@@ -28,16 +28,12 @@ public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecy
     }
 
     private List<Contact> contactList = new ArrayList<>();
-    private List<Contact> contactsFilter = new ArrayList<>();
     private OnContactClickListener contactListener;
 
-    public ContactRecyclerViewAdapter(List<Contact> contactList, List<Contact> contactsFilter, OnContactClickListener contactListener) {
+    public ContactRecyclerViewAdapter(List<Contact> contactList, OnContactClickListener contactListener) {
         this.contactList = contactList;
-        this.contactsFilter = contactsFilter;
         this.contactListener = contactListener;
     }
-
-    public  ContactRecyclerViewAdapter() {}
 
     protected ContactRecyclerViewAdapter(Parcel in) {}
 
@@ -58,9 +54,8 @@ public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecy
         return contactList != null ? contactList.size() : 0;
     }
 
-    public void updateContactList(List<Contact> contacts, List<Contact> contactsFilter) {
+    public void updateContactList(List<Contact> contacts) {
         contactList = contacts;
-        this.contactsFilter = contactsFilter;
         notifyDataSetChanged();
     }
 
@@ -71,10 +66,10 @@ public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecy
             protected FilterResults performFiltering(CharSequence charSequence) {
                 List<Contact> filteredList = new ArrayList<>();
                 if (charSequence.length() == 0) {
-                    filteredList.addAll(contactsFilter);
+                    filteredList.addAll(contactList);
                 } else {
                     String filterPattern = charSequence.toString().toLowerCase().trim();
-                    for (Contact contact : contactsFilter) {
+                    for (Contact contact : contactList) {
                         if (contact.getName().toLowerCase().contains(filterPattern) || contact.getData().toLowerCase().contains(filterPattern)) {
                             filteredList.add(contact);
                         }
@@ -87,8 +82,10 @@ public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecy
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                contactList.clear();
-                contactList.addAll((ArrayList<Contact>)filterResults.values);
+                if(filterResults != null && filterResults.values != null) {
+                    contactList.clear();
+                    contactList.addAll((List<Contact>) filterResults.values);
+                }
                 notifyDataSetChanged();
             }
 
@@ -103,7 +100,6 @@ public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecy
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeSerializable((Serializable) contactList);
-        parcel.writeSerializable((Serializable) contactsFilter);
     }
 
     public static final Creator<ContactRecyclerViewAdapter> CREATOR = new Creator<ContactRecyclerViewAdapter>() {
@@ -140,12 +136,7 @@ public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecy
                 contactIcon.setImageResource(R.drawable.ic_baseline_contact_mail_56);
             }
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    contactListener.onContactClick(contact);
-                }
-            });
+            itemView.setOnClickListener(view -> contactListener.onContactClick(contact));
         }
 
     }
