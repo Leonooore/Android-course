@@ -19,9 +19,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.gmail.elnora.fet.hw_6_async.adapter.ContactRecyclerViewAdapter;
-import com.gmail.elnora.fet.hw_6_async.async.CompletableFutureThreadPoolExecutor;
-import com.gmail.elnora.fet.hw_6_async.async.RxJava;
-import com.gmail.elnora.fet.hw_6_async.async.ThreadPoolExecutorHandler;
+import com.gmail.elnora.fet.hw_6_async.repo.async.CompletableFutureThreadPoolExecutor;
+import com.gmail.elnora.fet.hw_6_async.repo.async.RxJava;
+import com.gmail.elnora.fet.hw_6_async.repo.async.ThreadPoolExecutorHandler;
 import com.gmail.elnora.fet.hw_6_async.database.Contact;
 import com.gmail.elnora.fet.hw_6_async.database.ContactDatabase;
 import com.gmail.elnora.fet.hw_6_async.repo.DatabaseRepositoryInterface;
