@@ -37,6 +37,8 @@ public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecy
         this.contactListener = contactListener;
     }
 
+    public  ContactRecyclerViewAdapter() {}
+
     protected ContactRecyclerViewAdapter(Parcel in) {}
 
     @NonNull
@@ -56,7 +58,7 @@ public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecy
         return contactList != null ? contactList.size() : 0;
     }
 
-    public void updateContactList(ArrayList<Contact> contacts, ArrayList<Contact> contactsFilter) {
+    public void updateContactList(List<Contact> contacts, List<Contact> contactsFilter) {
         contactList = contacts;
         this.contactsFilter = contactsFilter;
         notifyDataSetChanged();
@@ -89,6 +91,7 @@ public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecy
                 contactList.addAll((ArrayList<Contact>)filterResults.values);
                 notifyDataSetChanged();
             }
+
         };
     }
 

@@ -13,17 +13,24 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.gmail.elnora.fet.hw_6_async.adapter.ContactRecyclerViewAdapter;
+import com.gmail.elnora.fet.hw_6_async.async.CompletableFutureThreadPoolExecutor;
+import com.gmail.elnora.fet.hw_6_async.async.RxJava;
+import com.gmail.elnora.fet.hw_6_async.async.ThreadPoolExecutorHandler;
 import com.gmail.elnora.fet.hw_6_async.database.Contact;
 import com.gmail.elnora.fet.hw_6_async.database.ContactDatabase;
+import com.gmail.elnora.fet.hw_6_async.repo.DatabaseRepositoryInterface;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class MainActivity extends AppCompatActivity {
     private static final int ADD_REQUEST_CODE = 111;
@@ -42,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private SearchView searchView;
     private ImageButton imageButtonSetting;
+    private ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
+    private DatabaseRepositoryInterface repository;
+    private String loadAsyncSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,24 +59,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         database = ContactDatabase.getDatabase(MainActivity.this);
-        contacts = database.getContactDao().getAllContacts();
 
+        loadAsyncSettings();
         initViews();
 
         if (savedInstanceState != null) {
             recyclerView.setAdapter(savedInstanceState.getParcelable("ADAPTER"));
             textViewNoContacts.setVisibility(savedInstanceState.getInt("VISIBLE"));
-        } else {
-            contactsFilter = database.getContactDao().getAllContacts();
+        } else
+            contactsFilter = contacts;
             recyclerView.setAdapter(new ContactRecyclerViewAdapter(contacts, contactsFilter, new ContactRecyclerViewAdapter.OnContactClickListener() {
                 @Override
                 public void onContactClick(Contact contact) {
                     Intent intent = new Intent(MainActivity.this, EditContactActivity.class);
                     intent.putExtra("EDIT_CONTACT", contact);
-                    startActivityForResult(intent, EDIT_REQUEST_CODE );
+                    MainActivity.this.startActivityForResult(intent, EDIT_REQUEST_CODE);
                 }
             }));
-        }
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -75,9 +84,8 @@ public class MainActivity extends AppCompatActivity {
         }
         adapter = (ContactRecyclerViewAdapter) recyclerView.getAdapter();
 
-        if (adapter != null) {
-            setVisibility(adapter.getItemCount());
-        }
+        repositorySwitch();
+        contacts = repository.getAllContacts();
 
         setToolbar();
         setButtonAddContactListener();
@@ -95,41 +103,41 @@ public class MainActivity extends AppCompatActivity {
         imageButtonSetting = findViewById(R.id.imageButtonSetting);
     }
 
+    private void loadAsyncSettings() {
+        loadAsyncSettings = loadAsyncType();
+    }
+
+    private void repositorySwitch() {
+        switch (loadAsyncSettings) {
+            case THREADPOOLEXECUTER_HANDLER:
+                repository = new ThreadPoolExecutorHandler(database, adapter, contacts, contactsFilter, textViewNoContacts);
+                break;
+            case COMPLETABLEFUTURE_THREADPOOLEXECUTOR:
+                Log.d("MAIN", "completable");
+                break;
+            case RXJAVA:
+                Log.d("MAIN", "rxJava");
+                break;
+        }
+    }
+
     private void setToolbar() {
         setSupportActionBar(toolbar);
     }
 
-    private void setVisibility(int itemCount) {
-        if (itemCount > 0) {
-            textViewNoContacts.setVisibility(View.INVISIBLE);
-        } else {
-            textViewNoContacts.setVisibility(View.VISIBLE);
-        }
-    }
-
     private void setButtonAddContactListener() {
-        fabAddContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddContactActivity.class);
-                startActivityForResult(intent, ADD_REQUEST_CODE);
-            }
+        fabAddContact.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AddContactActivity.class);
+            startActivityForResult(intent, ADD_REQUEST_CODE);
         });
     }
 
     private void setSearchViewListener() {
-        searchView.setOnSearchClickListener(new SearchView.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                textSearchView.setVisibility(View.INVISIBLE);
-            }
-        });
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                textSearchView.setVisibility(View.VISIBLE);
-                return false;
-            }
+        searchView.setOnSearchClickListener(view -> textSearchView.setVisibility(View.INVISIBLE));
+        searchView.setOnCloseListener(() -> {
+            textSearchView.setVisibility(View.VISIBLE);
+            contacts = repository.getAllContacts();
+            return false;
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -146,12 +154,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setImageButtonSettingListener() {
-        imageButtonSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AsyncSettingsActivity.class);
-                startActivity(intent);
-            }
+        imageButtonSetting.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, AsyncSettingsActivity.class);
+            startActivity(intent);
         });
     }
 
@@ -160,32 +165,34 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK && data != null) {
             if (requestCode == ADD_REQUEST_CODE) {
                 Contact contact = (Contact) data.getSerializableExtra("ADD_CONTACT");
-                if (contact != null) {
-                    database.getContactDao().insert(contact);
-                    contacts = database.getContactDao().getAllContacts();
-                    contactsFilter = database.getContactDao().getAllContacts();
-                    adapter.updateContactList((ArrayList<Contact>) contacts, (ArrayList<Contact>) contactsFilter);
-                }
+                addContact(contact);
             } else if (requestCode == EDIT_REQUEST_CODE) {
-                Contact changeContact;
-                changeContact = (Contact) data.getSerializableExtra("CHANGE_CONTACT");
-                Contact deleteContact = (Contact) data.getSerializableExtra("REMOVE_CONTACT");
-                if (changeContact != null) {
-                    database.getContactDao().update(changeContact);
-                    contacts = database.getContactDao().getAllContacts();
-                    contactsFilter = database.getContactDao().getAllContacts();
-                    adapter.updateContactList((ArrayList<Contact>) contacts, (ArrayList<Contact>) contactsFilter);
-                    textViewNoContacts.setVisibility(View.INVISIBLE);
-                } else if (deleteContact != null) {
-                    database.getContactDao().delete(deleteContact);
-                    contacts = database.getContactDao().getAllContacts();
-                    contactsFilter = database.getContactDao().getAllContacts();
-                    adapter.updateContactList((ArrayList<Contact>) contacts, (ArrayList<Contact>) contactsFilter);
-                }
+                Contact changeContact = (Contact) data.getSerializableExtra("CHANGE_CONTACT");
+                changeContact(changeContact);
+                Contact removeContact = (Contact) data.getSerializableExtra("REMOVE_CONTACT");
+                removeContact(removeContact);
             }
-            setVisibility(adapter.getItemCount());
+            contacts = repository.getAllContacts();
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void addContact(Contact contact) {
+        if (contact != null) {
+            repository.insert(contact);
+        }
+    }
+
+    private void changeContact(Contact changeContact) {
+        if (changeContact != null) {
+            repository.update(changeContact);
+        }
+    }
+
+    private void removeContact(Contact removeContact) {
+        if (removeContact != null) {
+            repository.delete(removeContact);
+        }
     }
 
     private String loadAsyncType () {
@@ -203,6 +210,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        executor.shutdown();
         database.close();
+        repository.closeThreads();
     }
 }
