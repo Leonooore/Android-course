@@ -12,4 +12,7 @@
     <string name="menu_item_title_search_recipes">Search recipes</string>
     <string name="button_text_search" translatable="false">Search</string>
     <string name="menu_item_title_exit" translatable="false">Exit</string>
+    <string name="content_description_recipe_image" translatable="false">Image</string>
+    <string name="item_recipe_title_text" translatable="false">Title text</string>
+    <string name="item_recipe_description_text" translatable="false">Description text</string>
 </resources>

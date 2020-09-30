@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menuItemMyRecipes : showMyRecipesFragment(); break;
             case R.id.menuItemToDo : showToDoFragment(); break;
 //            case R.id.menuItemSettings : //if there will be any settings
-            case R.id.menuItemExit : finishActivity(0); break;
+            case R.id.menuItemExit : android.os.Process.killProcess (android.os.Process.myPid()); break;
         }
         return super.onOptionsItemSelected(item);
     }
