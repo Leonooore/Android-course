@@ -15,10 +15,19 @@ import com.gmail.elnora.fet.finalcourseproject.R;
 public class ToDoFragment extends Fragment {
 
     public static final String TAG = "ToDoFragment";
+    private static ToDoFragment instance;
+
+    public static ToDoFragment getInstance() {
+        if(instance == null) {
+            instance = new ToDoFragment();
+        }
+        return instance;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         TransitionInflater inflater = TransitionInflater.from(requireContext());
         setEnterTransition(inflater.inflateTransition(R.transition.fade));
     }

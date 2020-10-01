@@ -1,39 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="@dimen/default_padding">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/viewTextViewSearchRecipesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:text="@string/all_recipes_title_text"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="@dimen/default_title_text_size" />
+
+    <SearchView
+        android:id="@+id/viewSearchRecipes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow" />
 
-        <TextView
-            android:id="@+id/viewTextViewSearchRecipesTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/all_recipes_title_text"
-            android:textSize="@dimen/default_title_text_size"
-            android:textColor="@color/colorDarkGray"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/default_margin"/>
+    <CheckBox
+        android:id="@+id/viewCheckBoxFindByIngredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/search_check_box_text"
+        android:paddingHorizontal="@dimen/default_padding"
+        android:layout_marginTop="@dimen/search_list_margin_top" />
 
-        <SearchView
-            android:id="@+id/viewSearchRecipes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shadow">
-        </SearchView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/viewSearchRecipesList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow"
+        android:layout_marginTop="@dimen/search_list_margin_top"
+        android:padding="@dimen/default_padding" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/viewSearchRecipesList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/default_padding"
-            android:layout_marginTop="@dimen/search_list_margin_top"/>
-
-    </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>

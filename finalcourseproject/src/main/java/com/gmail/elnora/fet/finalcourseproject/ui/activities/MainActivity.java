@@ -1,4 +1,4 @@
-package com.gmail.elnora.fet.finalcourseproject.ui;
+package com.gmail.elnora.fet.finalcourseproject.ui.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,8 +11,8 @@ import android.widget.ImageButton;
 
 import com.gmail.elnora.fet.finalcourseproject.R;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.AllCategoriesRecipesFragment;
-import com.gmail.elnora.fet.finalcourseproject.ui.fragments.RecipesListDishCategoryFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.MyRecipesFragment;
+import com.gmail.elnora.fet.finalcourseproject.ui.fragments.RecipesListDishCategoryFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.SearchRecipesFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.ToDoFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.ViewRecipeFragment;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menuItemMyRecipes : showMyRecipesFragment(); break;
             case R.id.menuItemToDo : showToDoFragment(); break;
 //            case R.id.menuItemSettings : //if there will be any settings
-            case R.id.menuItemExit : android.os.Process.killProcess (android.os.Process.myPid()); break;
+            case R.id.menuItemExit : finish(); break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -78,42 +78,38 @@ public class MainActivity extends AppCompatActivity {
 
     private void showAllRecipesFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, new AllCategoriesRecipesFragment(), AllCategoriesRecipesFragment.TAG)
-                .addToBackStack(null)
+                .replace(R.id.fragmentContainer, AllCategoriesRecipesFragment.getInstance(), AllCategoriesRecipesFragment.TAG)
                 .commit();
     }
 
     private void showSearchRecipesFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, new SearchRecipesFragment(), SearchRecipesFragment.TAG)
-                .addToBackStack(null)
+                .replace(R.id.fragmentContainer, SearchRecipesFragment.getInstance(), SearchRecipesFragment.TAG)
                 .commit();
     }
 
     private void showMyRecipesFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, new MyRecipesFragment(), MyRecipesFragment.TAG)
-                .addToBackStack(null)
+                .replace(R.id.fragmentContainer, MyRecipesFragment.getInstance(), MyRecipesFragment.TAG)
                 .commit();
     }
 
     private void showToDoFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, new ToDoFragment(), ToDoFragment.TAG)
-                .addToBackStack(null)
+                .replace(R.id.fragmentContainer, ToDoFragment.getInstance(), ToDoFragment.TAG)
                 .commit();
     }
 
     private void showRecipesListDishCategory() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainer, new RecipesListDishCategoryFragment(), RecipesListDishCategoryFragment.TAG)
+                .add(R.id.fragmentContainer, RecipesListDishCategoryFragment.getInstance(), RecipesListDishCategoryFragment.TAG)
                 .addToBackStack(null)
                 .commit();
     }
 
     private void showViewRecipeFragment() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainer, new ViewRecipeFragment(), ViewRecipeFragment.TAG)
+                .add(R.id.fragmentContainer, ViewRecipeFragment.getInstance(), ViewRecipeFragment.TAG)
                 .addToBackStack(null)
                 .commit();
     }

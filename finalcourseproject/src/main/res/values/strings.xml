@@ -15,4 +15,6 @@
     <string name="content_description_recipe_image" translatable="false">Image</string>
     <string name="item_recipe_title_text" translatable="false">Title text</string>
     <string name="item_recipe_description_text" translatable="false">Description text</string>
+    <string name="all_categories_title_text">Choose dish category</string>
+    <string name="search_check_box_text">Find the dish by choosing the ingredients you have in your fridge</string>
 </resources>

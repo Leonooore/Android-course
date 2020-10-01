@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/default_padding">
+    android:padding="@dimen/default_padding"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/viewTextViewSearchCategoriesRecipesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/all_categories_title_text"
+        android:textSize="@dimen/default_title_text_size"
+        android:textColor="@color/colorDarkGray"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/default_margin"/>
+
+    <SearchView
+        android:id="@+id/viewSearchCategoryRecipes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow"
+        android:layout_marginBottom="@dimen/default_margin"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/viewAllCategoriesRecipesList"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-</FrameLayout>
+</LinearLayout>

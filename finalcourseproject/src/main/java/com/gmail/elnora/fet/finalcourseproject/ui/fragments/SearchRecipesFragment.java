@@ -15,10 +15,19 @@ import com.gmail.elnora.fet.finalcourseproject.R;
 public class SearchRecipesFragment extends Fragment {
 
     public static final String TAG = "SearchRecipesFragment";
+    private static SearchRecipesFragment instance;
+
+    public static SearchRecipesFragment getInstance() {
+        if(instance == null) {
+            instance = new SearchRecipesFragment();
+        }
+        return instance;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         TransitionInflater inflater = TransitionInflater.from(requireContext());
         setEnterTransition(inflater.inflateTransition(R.transition.fade));
     }
