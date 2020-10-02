@@ -18,6 +18,8 @@
         </activity>
         <activity android:name=".ui.activities.AddMyRecipeActivity" />
         <activity android:name=".ui.activities.EditMyRecipeActivity" />
+        <activity android:name=".ui.activities.CookDishActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>
