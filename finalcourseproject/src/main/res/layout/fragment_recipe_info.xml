@@ -44,6 +44,34 @@
         app:layout_constraintTop_toBottomOf="@id/viewTextViewRecipeTitleText"
         tools:text="@string/item_recipe_description_text" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/shadow"
+        android:padding="@dimen/default_padding"
+        android:layout_marginTop="@dimen/default_margin"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewTextViewRecipeDescriptionText">
+
+        <TextView
+            android:id="@+id/viewTextViewIngredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="5"
+            android:text="@string/recipe_info_title_ingredients"
+            android:textSize="@dimen/default_text_size"
+            android:textColor="@color/colorDarkGray" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/viewListIngredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin" />
+
+    </LinearLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/viewFabAddMyRecipe"
         android:layout_width="wrap_content"

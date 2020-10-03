@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/default_margin"
-        android:text="@string/all_recipes_title_text"
+        android:text="@string/search_recipes_title_text"
         android:textColor="@color/colorDarkGray"
         android:textSize="@dimen/default_title_text_size" />
 
@@ -21,14 +21,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/shadow" />
-
     <CheckBox
         android:id="@+id/viewCheckBoxFindByIngredients"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/search_check_box_text"
-        android:paddingHorizontal="@dimen/default_padding"
-        android:layout_marginTop="@dimen/search_list_margin_top" />
+        android:paddingHorizontal="@dimen/default_padding" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/viewSearchRecipesList"

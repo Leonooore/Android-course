@@ -11,15 +11,20 @@ import androidx.fragment.app.Fragment;
 import androidx.transition.TransitionInflater;
 
 import com.gmail.elnora.fet.finalcourseproject.R;
+import com.gmail.elnora.fet.finalcourseproject.data.DishTypeEnum;
 
-public class RecipesListDishCategoryFragment extends Fragment {
+public class RecipesListDishByCategoryFragment extends Fragment {
 
     public static final String TAG = "ListRecipesDishCategoryFragment";
-    private static RecipesListDishCategoryFragment instance;
+//    private static final String DISH_TYPE__BUNDLE_KEY = "URL_BUNDLE_KEY";
+    private static RecipesListDishByCategoryFragment instance;
 
-    public static RecipesListDishCategoryFragment getInstance() {
+    public static RecipesListDishByCategoryFragment getInstance(DishTypeEnum dishType) {
+//        Bundle bundle = new Bundle();
+//        bundle.putString(DISH_TYPE__BUNDLE_KEY, dishType.getDishType());
+//        instance.setArguments(bundle);
         if(instance == null) {
-            instance = new RecipesListDishCategoryFragment();
+            instance = new RecipesListDishByCategoryFragment();
         }
         return instance;
     }

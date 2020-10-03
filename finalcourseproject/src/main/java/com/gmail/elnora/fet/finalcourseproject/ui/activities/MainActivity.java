@@ -9,15 +9,17 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.gmail.elnora.fet.finalcourseproject.OnDishTypeClickListener;
 import com.gmail.elnora.fet.finalcourseproject.R;
+import com.gmail.elnora.fet.finalcourseproject.data.DishTypeEnum;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.AllCategoriesRecipesFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.MyRecipesFragment;
-import com.gmail.elnora.fet.finalcourseproject.ui.fragments.RecipesListDishCategoryFragment;
+import com.gmail.elnora.fet.finalcourseproject.ui.fragments.RecipesListDishByCategoryFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.SearchRecipesFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.ToDoFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.ViewRecipeFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnDishTypeClickListener {
 
     private ImageButton viewImageButtonSearch;
     private Button viewButtonAllRecipes;
@@ -100,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    private void showRecipesListDishCategory() {
+    public void showRecipesListDishCategory(DishTypeEnum dishType) {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainer, RecipesListDishCategoryFragment.getInstance(), RecipesListDishCategoryFragment.TAG)
+                .replace(R.id.fragmentContainer, RecipesListDishByCategoryFragment.getInstance(dishType), RecipesListDishByCategoryFragment.TAG)
                 .addToBackStack(null)
                 .commit();
     }
@@ -112,6 +114,11 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.fragmentContainer, ViewRecipeFragment.getInstance(), ViewRecipeFragment.TAG)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void onDishTypeClick(DishTypeEnum dishType) {
+        showRecipesListDishCategory(dishType);
     }
 
 }

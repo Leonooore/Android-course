@@ -32,7 +32,7 @@
             android:layout_height="@dimen/default_button_height"
             android:layout_weight="1"
             android:background="@color/colorWhite"
-            android:src="@drawable/ic_baseline_search_36"
+            android:src="@drawable/ic_baseline_search_32"
             android:contentDescription="@string/button_text_search" />
 
         <Button
