@@ -16,7 +16,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_baseline_image_150"
+        tools:src="@drawable/ic_baseline_image_170"
         android:contentDescription="@string/content_description_recipe_image" />
 
     <TextView

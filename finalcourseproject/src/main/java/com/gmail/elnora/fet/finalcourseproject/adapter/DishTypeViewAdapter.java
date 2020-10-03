@@ -93,7 +93,7 @@ public class DishTypeViewAdapter extends RecyclerView.Adapter<DishTypeViewAdapte
 
         private void bind(final DishTypeEnum dishType, final OnDishTypeClickListener dishTypeClickListener) {
             viewDishTypeTitleText.setText(dishType.toString());
-            viewImageDishType.setImageResource(R.drawable.ic_baseline_image_150);
+            viewImageDishType.setImageResource(dishType.getImage());
             itemView.setOnClickListener(view -> dishTypeClickListener.onDishTypeClick(dishType));
         }
 
