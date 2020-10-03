@@ -32,7 +32,6 @@ public class AllCategoriesRecipesFragment extends Fragment {
     private OnDishTypeClickListener dishTypeClickListener;
     private DishTypeViewAdapter adapter;
     private SearchView searchView;
-//    private DishType dishType = new DishType();
 
     public static AllCategoriesRecipesFragment getInstance() {
         if(instance == null) {
@@ -52,7 +51,6 @@ public class AllCategoriesRecipesFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
         TransitionInflater inflater = TransitionInflater.from(requireContext());
         setExitTransition(inflater.inflateTransition(R.transition.fade));
         initDishTypeList();
@@ -70,7 +68,9 @@ public class AllCategoriesRecipesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_all_categories_recipes, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.viewAllCategoriesRecipesList);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        adapter = new DishTypeViewAdapter(dishTypeList, dishTypeClickListener);
+        if (adapter == null) {
+            adapter = new DishTypeViewAdapter(dishTypeList, dishTypeClickListener);
+        }
         recyclerView.setAdapter(adapter);
         return view;
     }
@@ -83,7 +83,6 @@ public class AllCategoriesRecipesFragment extends Fragment {
     }
 
     private void setSearchViewListener() {
-        searchView.setQueryHint("Enter dish type...");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

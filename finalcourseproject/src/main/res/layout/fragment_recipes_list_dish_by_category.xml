@@ -6,16 +6,31 @@
     android:orientation="vertical"
     android:padding="@dimen/default_padding">
 
+    <TextView
+        android:id="@+id/viewTextViewSearchByCategoryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search_recipes_title_text"
+        android:textSize="@dimen/default_title_text_size"
+        android:textColor="@color/colorDarkGray"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/default_margin" />
+
     <SearchView
-        android:id="@+id/viewSearchDishTypeRecipes"
+        android:id="@+id/viewSearchDishRecipesByCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shadow" />
+        android:background="@drawable/shadow"
+        android:queryHint="@string/search_query_hint_recipe"
+        android:searchIcon="@drawable/ic_baseline_search_24"
+        android:iconifiedByDefault="false"
+        android:focusable="false"
+        android:padding="@dimen/small_padding" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/viewRecipesListDishCategory"
+        android:id="@+id/viewRecipesListDishByCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"/>
+        android:layout_marginTop="@dimen/default_margin" />
 
 </LinearLayout>

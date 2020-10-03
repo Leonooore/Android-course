@@ -10,8 +10,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.gmail.elnora.fet.finalcourseproject.OnDishTypeClickListener;
+import com.gmail.elnora.fet.finalcourseproject.OnRecipeClickListener;
 import com.gmail.elnora.fet.finalcourseproject.R;
 import com.gmail.elnora.fet.finalcourseproject.data.DishTypeEnum;
+import com.gmail.elnora.fet.finalcourseproject.data.Recipe;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.AllCategoriesRecipesFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.MyRecipesFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.RecipesListDishByCategoryFragment;
@@ -19,7 +21,7 @@ import com.gmail.elnora.fet.finalcourseproject.ui.fragments.SearchRecipesFragmen
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.ToDoFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.ViewRecipeFragment;
 
-public class MainActivity extends AppCompatActivity implements OnDishTypeClickListener {
+public class MainActivity extends AppCompatActivity implements OnDishTypeClickListener, OnRecipeClickListener {
 
     private ImageButton viewImageButtonSearch;
     private Button viewButtonAllRecipes;
@@ -109,9 +111,9 @@ public class MainActivity extends AppCompatActivity implements OnDishTypeClickLi
                 .commit();
     }
 
-    private void showViewRecipeFragment() {
+    private void showViewRecipeFragment(Recipe recipe) {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainer, ViewRecipeFragment.getInstance(), ViewRecipeFragment.TAG)
+                .replace(R.id.fragmentContainer, ViewRecipeFragment.getInstance(recipe), ViewRecipeFragment.TAG)
                 .addToBackStack(null)
                 .commit();
     }
@@ -121,4 +123,8 @@ public class MainActivity extends AppCompatActivity implements OnDishTypeClickLi
         showRecipesListDishCategory(dishType);
     }
 
+    @Override
+    public void onRecipeClick(Recipe recipe) {
+        showViewRecipeFragment(recipe);
+    }
 }

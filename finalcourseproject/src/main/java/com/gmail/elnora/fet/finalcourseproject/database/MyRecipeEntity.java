@@ -1,4 +1,4 @@
 package com.gmail.elnora.fet.finalcourseproject.database;
 
-public class RecipeDatabase {
+public class MyRecipeEntity {
 }

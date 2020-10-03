@@ -10,12 +10,17 @@
         android:id="@+id/viewSearchToDoRecipes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shadow" />
+        android:background="@drawable/shadow"
+        android:queryHint="@string/search_query_hint_recipe"
+        android:searchIcon="@drawable/ic_baseline_search_24"
+        android:iconifiedByDefault="false"
+        android:focusable="false"
+        android:padding="@dimen/small_padding" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/viewRecyclerToDoList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/default_margin"/>
+        android:layout_marginTop="@dimen/default_margin" />
 
 </LinearLayout>

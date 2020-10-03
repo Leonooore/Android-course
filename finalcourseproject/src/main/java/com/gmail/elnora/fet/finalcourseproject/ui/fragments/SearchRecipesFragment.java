@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,8 @@ public class SearchRecipesFragment extends Fragment {
     public static final String TAG = "SearchRecipesFragment";
     private static SearchRecipesFragment instance;
 
+    private SearchView searchView;
+
     public static SearchRecipesFragment getInstance() {
         if(instance == null) {
             instance = new SearchRecipesFragment();
@@ -27,7 +30,6 @@ public class SearchRecipesFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
         TransitionInflater inflater = TransitionInflater.from(requireContext());
         setEnterTransition(inflater.inflateTransition(R.transition.fade));
     }
@@ -36,5 +38,27 @@ public class SearchRecipesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_search_recipes, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        searchView = (SearchView) view.findViewById(R.id.viewSearchRecipes);
+        setSearchViewListener();
+    }
+
+    private void setSearchViewListener() {
+        searchView.setQueryHint("Search ...");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 }

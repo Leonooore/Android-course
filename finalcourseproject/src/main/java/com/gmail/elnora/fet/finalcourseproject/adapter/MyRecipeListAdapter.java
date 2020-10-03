@@ -1,4 +1,4 @@
 package com.gmail.elnora.fet.finalcourseproject.adapter;
 
-public class RecipeListAdapter {
+public class MyRecipeListAdapter {
 }
