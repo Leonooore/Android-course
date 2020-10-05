@@ -13,7 +13,7 @@ import com.gmail.elnora.fet.finalcourseproject.OnDishTypeClickListener;
 import com.gmail.elnora.fet.finalcourseproject.OnRecipeClickListener;
 import com.gmail.elnora.fet.finalcourseproject.R;
 import com.gmail.elnora.fet.finalcourseproject.data.DishTypeEnum;
-import com.gmail.elnora.fet.finalcourseproject.data.Recipe;
+import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.AllCategoriesRecipesFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.MyRecipesFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.RecipesListDishByCategoryFragment;
@@ -111,9 +111,9 @@ public class MainActivity extends AppCompatActivity implements OnDishTypeClickLi
                 .commit();
     }
 
-    private void showViewRecipeFragment(Recipe recipe) {
+    private void showViewRecipeFragment(RecipeDataModel recipeDataModel) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, ViewRecipeFragment.getInstance(recipe), ViewRecipeFragment.TAG)
+                .replace(R.id.fragmentContainer, ViewRecipeFragment.getInstance(recipeDataModel), ViewRecipeFragment.TAG)
                 .addToBackStack(null)
                 .commit();
     }
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements OnDishTypeClickLi
     }
 
     @Override
-    public void onRecipeClick(Recipe recipe) {
-        showViewRecipeFragment(recipe);
+    public void onRecipeClick(RecipeDataModel recipeDataModel) {
+        showViewRecipeFragment(recipeDataModel);
     }
 }

@@ -14,7 +14,7 @@
         android:textSize="@dimen/default_title_text_size"
         android:textColor="@color/colorDarkGray"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/default_margin" />
+        android:layout_marginBottom="@dimen/middle_margin" />
 
     <SearchView
         android:id="@+id/viewSearchDishRecipesByCategory"

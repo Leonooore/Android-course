@@ -19,10 +19,16 @@ import com.gmail.elnora.fet.finalcourseproject.OnRecipeClickListener;
 import com.gmail.elnora.fet.finalcourseproject.R;
 import com.gmail.elnora.fet.finalcourseproject.adapter.RecipeListViewAdapter;
 import com.gmail.elnora.fet.finalcourseproject.data.DishTypeEnum;
-import com.gmail.elnora.fet.finalcourseproject.data.Recipe;
+import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
+import com.gmail.elnora.fet.finalcourseproject.data.data_converter.RecipesDataModelConverter;
+import com.gmail.elnora.fet.finalcourseproject.repo.RecipeRepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import okhttp3.OkHttpClient;
 
 public class RecipesListDishByCategoryFragment extends Fragment {
 
@@ -30,10 +36,14 @@ public class RecipesListDishByCategoryFragment extends Fragment {
     private static final String DISH_TYPE_BUNDLE_KEY = "DISH_TYPE_BUNDLE_KEY";
     private static RecipesListDishByCategoryFragment instance = new RecipesListDishByCategoryFragment();
 
-    private List<Recipe> recipeList = new ArrayList<>();
+    private List<RecipeDataModel> recipeDataModelList = new ArrayList<>();
     private OnRecipeClickListener recipeClickListener;
     private RecipeListViewAdapter adapter;
     private SearchView searchView;
+
+    private OkHttpClient okHttpClient = new OkHttpClient();
+    private RecipesDataModelConverter recipesDataModelConverter = new RecipesDataModelConverter();
+    private Disposable disposable;
 
     public static RecipesListDishByCategoryFragment getInstance(DishTypeEnum dishType) {
         Bundle bundle = new Bundle();
@@ -59,7 +69,13 @@ public class RecipesListDishByCategoryFragment extends Fragment {
     }
 
     private void initRecipeList() {
-
+        String getType = getArguments() != null ? getArguments().getString(DISH_TYPE_BUNDLE_KEY, "") : "";
+        disposable = new RecipeRepositoryImpl(okHttpClient, recipesDataModelConverter).getRecipesByType(getType)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> {
+                    recipeDataModelList.addAll(list);
+                    adapter.updateItemList(list);
+                }, throwable -> Log.d("TYPE", throwable.toString()));
     }
 
     @Nullable
@@ -69,7 +85,7 @@ public class RecipesListDishByCategoryFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.viewRecipesListDishByCategory);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         if (adapter == null) {
-            adapter = new RecipeListViewAdapter(recipeList, recipeClickListener);
+            adapter = new RecipeListViewAdapter(recipeDataModelList, recipeClickListener);
         }
         recyclerView.setAdapter(adapter);
         return view;
@@ -78,9 +94,8 @@ public class RecipesListDishByCategoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        searchView = (SearchView) view.findViewById(R.id.viewSearchDishRecipesByCategory);
+        searchView = view.findViewById(R.id.viewSearchDishRecipesByCategory);
         setSearchViewListener();
-        Log.d("TYPE", getArguments() != null ? getArguments().getString(DISH_TYPE_BUNDLE_KEY, "") : "");
     }
 
     private void setSearchViewListener() {
@@ -104,6 +119,7 @@ public class RecipesListDishByCategoryFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         recipeClickListener = null;
+        disposable.dispose();
     }
 
 }

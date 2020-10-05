@@ -11,22 +11,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.gmail.elnora.fet.finalcourseproject.OnRecipeClickListener;
 import com.gmail.elnora.fet.finalcourseproject.R;
-import com.gmail.elnora.fet.finalcourseproject.data.Recipe;
+import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeListViewAdapter extends RecyclerView.Adapter<RecipeListViewAdapter.RecipeViewHolder> implements Filterable {
 
-    private List<Recipe> recipeList;
-    private List<Recipe> recipeFullList;
+    private List<RecipeDataModel> recipeDataModelList;
+    private List<RecipeDataModel> recipeDataModelFullList;
     private OnRecipeClickListener recipeClickListener;
 
-    public RecipeListViewAdapter(List<Recipe> recipeList, OnRecipeClickListener recipeClickListener) {
-        this.recipeList = recipeList;
-        this.recipeFullList = new ArrayList<>(recipeList);
+    public RecipeListViewAdapter(List<RecipeDataModel> recipeDataModelList, OnRecipeClickListener recipeClickListener) {
+        this.recipeDataModelList = recipeDataModelList;
+        this.recipeDataModelFullList = new ArrayList<>(recipeDataModelList);
         this.recipeClickListener = recipeClickListener;
     }
 
@@ -39,12 +40,20 @@ public class RecipeListViewAdapter extends RecyclerView.Adapter<RecipeListViewAd
 
     @Override
     public void onBindViewHolder(@NonNull RecipeListViewAdapter.RecipeViewHolder holder, int position) {
-        holder.bind(recipeList.get(position), recipeClickListener);
+        holder.bind(recipeDataModelList.get(position), recipeClickListener);
     }
 
     @Override
     public int getItemCount() {
-        return recipeList.size();
+        return recipeDataModelList.size();
+    }
+
+    public void updateItemList(List<RecipeDataModel> list) {
+        recipeDataModelList.clear();
+        recipeDataModelList.addAll(list);
+        recipeDataModelFullList.clear();
+        recipeDataModelFullList.addAll(list);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -54,14 +63,14 @@ public class RecipeListViewAdapter extends RecyclerView.Adapter<RecipeListViewAd
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String query = charSequence.toString();
 
-                List<Recipe> filtered = new ArrayList<>();
+                List<RecipeDataModel> filtered = new ArrayList<>();
 
                 if (query.isEmpty()) {
-                    filtered = recipeFullList;
+                    filtered = recipeDataModelFullList;
                 } else {
-                    for (Recipe recipe : recipeFullList) {
-                        if (recipe.getName().toLowerCase().contains(query.toLowerCase())) {
-                            filtered.add(recipe);
+                    for (RecipeDataModel recipeDataModel : recipeDataModelFullList) {
+                        if (recipeDataModel.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                            filtered.add(recipeDataModel);
                         }
                     }
                 }
@@ -74,8 +83,8 @@ public class RecipeListViewAdapter extends RecyclerView.Adapter<RecipeListViewAd
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults results) {
-                recipeList.clear();
-                recipeList.addAll((List<Recipe>) results.values);
+                recipeDataModelList.clear();
+                recipeDataModelList.addAll((List<RecipeDataModel>) results.values);
                 notifyDataSetChanged();
             }
         };
@@ -84,20 +93,17 @@ public class RecipeListViewAdapter extends RecyclerView.Adapter<RecipeListViewAd
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
         private ImageView viewImageViewRecipeImagePreview;
         private TextView viewTextViewRecipeTitleText;
-        private TextView viewTextViewRecipeDescriptionText;
 
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             viewImageViewRecipeImagePreview = itemView.findViewById(R.id.viewImageViewRecipeImagePreview);
             viewTextViewRecipeTitleText = itemView.findViewById(R.id.viewTextViewRecipeTitleText);
-            viewTextViewRecipeDescriptionText = itemView.findViewById(R.id.viewTextViewRecipeDescriptionText);
         }
 
-        private void bind(final Recipe recipe, final OnRecipeClickListener recipeClickListener) {
-            viewImageViewRecipeImagePreview.setImageResource(R.drawable.ic_baseline_image_170);
-            viewTextViewRecipeTitleText.setText(recipe.getName());
-
-            itemView.setOnClickListener(view -> recipeClickListener.onRecipeClick(recipe));
+        private void bind(final RecipeDataModel recipeDataModel, final OnRecipeClickListener recipeClickListener) {
+            Glide.with(itemView.getContext()).load(recipeDataModel.getUrlToImage()).into(viewImageViewRecipeImagePreview);
+            viewTextViewRecipeTitleText.setText(recipeDataModel.getTitle());
+            itemView.setOnClickListener(view -> recipeClickListener.onRecipeClick(recipeDataModel));
         }
 
     }

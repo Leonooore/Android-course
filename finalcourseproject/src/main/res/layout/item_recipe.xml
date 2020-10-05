@@ -1,48 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/default_padding"
     android:background="@drawable/shadow"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginBottom="@dimen/small_margin"
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
         android:id="@+id/viewImageViewRecipeImagePreview"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:scaleType="fitCenter"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_baseline_image_170"
         android:contentDescription="@string/content_description_recipe_image" />
 
     <TextView
         android:id="@+id/viewTextViewRecipeTitleText"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
+        android:gravity="center"
+        android:ellipsize="middle"
         android:maxLines="2"
         android:textSize="@dimen/default_title_text_size"
         android:textColor="@color/colorDarkGray"
-        android:layout_marginTop="@dimen/default_margin"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewImageViewRecipeImagePreview"
+        android:textAllCaps="true"
+        android:padding="@dimen/default_padding"
         tools:text="@string/item_recipe_title_text" />
 
-    <TextView
-        android:id="@+id/viewTextViewRecipeDescriptionText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:maxLines="5"
-        android:textSize="@dimen/default_text_size"
-        android:layout_marginTop="@dimen/default_margin"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewTextViewRecipeTitleText"
-        tools:text="@string/item_recipe_description_text" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

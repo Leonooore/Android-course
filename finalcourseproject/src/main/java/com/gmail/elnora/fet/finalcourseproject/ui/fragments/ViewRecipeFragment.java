@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.transition.TransitionInflater;
 
 import com.gmail.elnora.fet.finalcourseproject.R;
-import com.gmail.elnora.fet.finalcourseproject.data.Recipe;
+import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
 
 public class ViewRecipeFragment extends Fragment {
 
@@ -21,9 +20,9 @@ public class ViewRecipeFragment extends Fragment {
     private static final String RECIPE_BUNDLE_KEY = "RECIPE_BUNDLE_KEY";
     private static ViewRecipeFragment instance = new ViewRecipeFragment();
 
-    public static ViewRecipeFragment getInstance(Recipe recipe) {
+    public static ViewRecipeFragment getInstance(RecipeDataModel recipeDataModel) {
         Bundle bundle = new Bundle();
-        bundle.putString(RECIPE_BUNDLE_KEY, recipe.getName());
+        bundle.putString(RECIPE_BUNDLE_KEY, recipeDataModel.getTitle());
         instance.setArguments(bundle);
         return instance;
     }

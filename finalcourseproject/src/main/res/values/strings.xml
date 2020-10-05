@@ -8,7 +8,7 @@
     <string name="menu_item_to_do" translatable="false">TO DO</string>
     <string name="app_name">Make best dishes</string>
     <string name="search_recipes_title_text" translatable="false">Find and choose your dish</string>
-    <string name="text_find_recipe" translatable="false">Find recipe</string>
+    <string name="text_find_recipe" translatable="false">Find recipeDataModel</string>
     <string name="menu_item_title_search_recipes">Search recipes</string>
     <string name="button_text_search" translatable="false">Search</string>
     <string name="menu_item_title_exit" translatable="false">Exit</string>
