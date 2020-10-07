@@ -101,7 +101,11 @@ public class RecipeListViewAdapter extends RecyclerView.Adapter<RecipeListViewAd
         }
 
         private void bind(final RecipeDataModel recipeDataModel, final OnRecipeClickListener recipeClickListener) {
-            Glide.with(itemView.getContext()).load(recipeDataModel.getUrlToImage()).into(viewImageViewRecipeImagePreview);
+            Glide.with(itemView.getContext())
+                    .load(recipeDataModel.getUrlToImage())
+                    .placeholder(R.drawable.ic_baseline_image_180)
+                    .error(R.drawable.ic_baseline_image_180)
+                    .into(viewImageViewRecipeImagePreview);
             viewTextViewRecipeTitleText.setText(recipeDataModel.getTitle());
             itemView.setOnClickListener(view -> recipeClickListener.onRecipeClick(recipeDataModel));
         }

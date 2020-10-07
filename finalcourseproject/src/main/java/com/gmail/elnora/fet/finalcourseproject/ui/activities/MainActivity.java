@@ -2,6 +2,7 @@ package com.gmail.elnora.fet.finalcourseproject.ui.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -54,10 +55,10 @@ public class MainActivity extends AppCompatActivity implements OnDishTypeClickLi
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
         switch(itemId) {
-            case R.id.menuItemSearchRecipes : showSearchRecipesFragment(); break;
-            case R.id.menuItemAllRecipes : showAllRecipesFragment(); break;
-            case R.id.menuItemMyRecipes : showMyRecipesFragment(); break;
-            case R.id.menuItemToDo : showToDoFragment(); break;
+            case R.id.menuItemSearchRecipes : showFragment(SearchRecipesFragment.getInstance(), SearchRecipesFragment.TAG); break;
+            case R.id.menuItemAllRecipes : showFragment(AllCategoriesRecipesFragment.getInstance(), AllCategoriesRecipesFragment.TAG); break;
+            case R.id.menuItemMyRecipes : showFragment(MyRecipesFragment.getInstance(), MyRecipesFragment.TAG); break;
+            case R.id.menuItemToDo : showFragment(ToDoFragment.getInstance(), ToDoFragment.TAG); break;
 //            case R.id.menuItemSettings : //if there will be any settings
             case R.id.menuItemExit : finish(); break;
         }
@@ -65,10 +66,10 @@ public class MainActivity extends AppCompatActivity implements OnDishTypeClickLi
     }
 
     private void buttonsClickListeners() {
-        viewImageButtonSearch.setOnClickListener(view -> showSearchRecipesFragment());
-        viewButtonAllRecipes.setOnClickListener(view -> showAllRecipesFragment());
-        viewButtonMyRecipes.setOnClickListener(view -> showMyRecipesFragment());
-        viewButtonToDo.setOnClickListener(view -> showToDoFragment());
+        viewImageButtonSearch.setOnClickListener(view -> showFragment(SearchRecipesFragment.getInstance(), SearchRecipesFragment.TAG));
+        viewButtonAllRecipes.setOnClickListener(view -> showFragment(AllCategoriesRecipesFragment.getInstance(), AllCategoriesRecipesFragment.TAG));
+        viewButtonMyRecipes.setOnClickListener(view -> showFragment(MyRecipesFragment.getInstance(), MyRecipesFragment.TAG));
+        viewButtonToDo.setOnClickListener(view -> showFragment(ToDoFragment.getInstance(), ToDoFragment.TAG));
     }
 
     private void showMainFragmentAllRecipes(Bundle savedInstanceState) {
@@ -76,55 +77,31 @@ public class MainActivity extends AppCompatActivity implements OnDishTypeClickLi
             if (savedInstanceState != null) {
                 return;
             }
-            showAllRecipesFragment();
+            showFragment(AllCategoriesRecipesFragment.getInstance(), AllCategoriesRecipesFragment.TAG);
         }
     }
 
-    private void showAllRecipesFragment() {
+    private void showFragment(Fragment fragment, String tag) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, AllCategoriesRecipesFragment.getInstance(), AllCategoriesRecipesFragment.TAG)
+                .replace(R.id.fragmentContainer, fragment, tag)
                 .commit();
     }
 
-    private void showSearchRecipesFragment() {
+    private void showFragmentBackStack(Fragment fragment, String tag) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, SearchRecipesFragment.getInstance(), SearchRecipesFragment.TAG)
-                .commit();
-    }
-
-    private void showMyRecipesFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, MyRecipesFragment.getInstance(), MyRecipesFragment.TAG)
-                .commit();
-    }
-
-    private void showToDoFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, ToDoFragment.getInstance(), ToDoFragment.TAG)
-                .commit();
-    }
-
-    public void showRecipesListDishCategory(DishTypeEnum dishType) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, RecipesListDishByCategoryFragment.getInstance(dishType), RecipesListDishByCategoryFragment.TAG)
-                .addToBackStack(null)
-                .commit();
-    }
-
-    private void showViewRecipeFragment(RecipeDataModel recipeDataModel) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, ViewRecipeFragment.getInstance(recipeDataModel), ViewRecipeFragment.TAG)
+                .replace(R.id.fragmentContainer, fragment, tag)
                 .addToBackStack(null)
                 .commit();
     }
 
     @Override
     public void onDishTypeClick(DishTypeEnum dishType) {
-        showRecipesListDishCategory(dishType);
+        showFragmentBackStack(RecipesListDishByCategoryFragment.getInstance(dishType), RecipesListDishByCategoryFragment.TAG);
     }
 
     @Override
     public void onRecipeClick(RecipeDataModel recipeDataModel) {
-        showViewRecipeFragment(recipeDataModel);
+        showFragmentBackStack(ViewRecipeFragment.getInstance(recipeDataModel), ViewRecipeFragment.TAG);
     }
+
 }

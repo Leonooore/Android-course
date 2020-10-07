@@ -63,6 +63,7 @@ public class RecipesListDishByCategoryFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         TransitionInflater inflater = TransitionInflater.from(requireContext());
         setEnterTransition(inflater.inflateTransition(R.transition.fade));
         initRecipeList();
@@ -75,7 +76,7 @@ public class RecipesListDishByCategoryFragment extends Fragment {
                 .subscribe(list -> {
                     recipeDataModelList.addAll(list);
                     adapter.updateItemList(list);
-                }, throwable -> Log.d("TYPE", throwable.toString()));
+                }, throwable -> Log.d("RECIPE_TYPE", throwable.toString()));
     }
 
     @Nullable

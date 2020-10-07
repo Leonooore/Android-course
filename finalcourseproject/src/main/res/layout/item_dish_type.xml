@@ -10,14 +10,14 @@
 
     <ImageView
         android:id="@+id/viewImageDishType"
-        android:layout_width="170dp"
-        android:layout_height="170dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         android:scaleType="fitCenter"
         android:contentDescription="@string/content_description_recipe_image"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_baseline_image_170"/>
+        tools:src="@drawable/ic_baseline_image_180"/>
 
     <TextView
         android:id="@+id/viewDishTypeTitleText"

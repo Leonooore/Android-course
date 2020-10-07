@@ -12,4 +12,5 @@
     <color name="colorOrange">#FA692E</color>
     <color name="colorRed">#C80926</color>
     <color name="colorDarkRed">#DF930101</color>
+    <color name="colorTextImage">#81F8F6F6</color>
 </resources>
