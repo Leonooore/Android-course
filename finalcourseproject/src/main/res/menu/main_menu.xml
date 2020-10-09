@@ -7,9 +7,6 @@
         android:id="@+id/menuItemAllRecipes"
         android:title="@string/menu_item_title_all_categories_recipes"/>
     <item
-        android:id="@+id/menuItemMyRecipes"
-        android:title="@string/menu_item_title_my_recipes"/>
-    <item
         android:id="@+id/menuItemToDo"
         android:title="@string/menu_item_to_do"/>
     <!--<item

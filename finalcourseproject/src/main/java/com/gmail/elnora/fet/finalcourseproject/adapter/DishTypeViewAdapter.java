@@ -11,8 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gmail.elnora.fet.finalcourseproject.OnDishTypeClickListener;
 import com.gmail.elnora.fet.finalcourseproject.R;
+import com.gmail.elnora.fet.finalcourseproject.RecipeListeners;
 import com.gmail.elnora.fet.finalcourseproject.data.DishTypeEnum;
 
 import java.util.ArrayList;
@@ -22,9 +22,9 @@ public class DishTypeViewAdapter extends RecyclerView.Adapter<DishTypeViewAdapte
 
     private List<DishTypeEnum> dishTypeList;
     private List<DishTypeEnum> dishTypeFullList;
-    private OnDishTypeClickListener dishTypeClickListener;
+    private RecipeListeners dishTypeClickListener;
 
-    public DishTypeViewAdapter(List<DishTypeEnum> dishTypeList, OnDishTypeClickListener dishTypeClickListener) {
+    public DishTypeViewAdapter(List<DishTypeEnum> dishTypeList, RecipeListeners dishTypeClickListener) {
         this.dishTypeList = dishTypeList;
         this.dishTypeFullList = new ArrayList<>(dishTypeList);
         this.dishTypeClickListener = dishTypeClickListener;
@@ -91,7 +91,7 @@ public class DishTypeViewAdapter extends RecyclerView.Adapter<DishTypeViewAdapte
             viewImageDishType = itemView.findViewById(R.id.viewImageDishType);
         }
 
-        private void bind(final DishTypeEnum dishType, final OnDishTypeClickListener dishTypeClickListener) {
+        private void bind(final DishTypeEnum dishType, final RecipeListeners dishTypeClickListener) {
             viewDishTypeTitleText.setText(dishType.toString());
             viewImageDishType.setImageResource(dishType.getImage());
             itemView.setOnClickListener(view -> dishTypeClickListener.onDishTypeClick(dishType));

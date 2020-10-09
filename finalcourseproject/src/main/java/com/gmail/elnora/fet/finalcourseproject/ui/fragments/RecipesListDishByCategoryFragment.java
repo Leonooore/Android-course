@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.TransitionInflater;
 
-import com.gmail.elnora.fet.finalcourseproject.OnRecipeClickListener;
 import com.gmail.elnora.fet.finalcourseproject.R;
+import com.gmail.elnora.fet.finalcourseproject.RecipeListeners;
 import com.gmail.elnora.fet.finalcourseproject.adapter.RecipeListViewAdapter;
 import com.gmail.elnora.fet.finalcourseproject.data.DishTypeEnum;
 import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
@@ -37,7 +37,7 @@ public class RecipesListDishByCategoryFragment extends Fragment {
     private static RecipesListDishByCategoryFragment instance = new RecipesListDishByCategoryFragment();
 
     private List<RecipeDataModel> recipeDataModelList = new ArrayList<>();
-    private OnRecipeClickListener recipeClickListener;
+    private RecipeListeners recipeClickListener = null;
     private RecipeListViewAdapter adapter;
     private SearchView searchView;
 
@@ -55,8 +55,8 @@ public class RecipesListDishByCategoryFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if (context instanceof OnRecipeClickListener) {
-            recipeClickListener = (OnRecipeClickListener) context;
+        if (context instanceof RecipeListeners) {
+            recipeClickListener = (RecipeListeners) context;
         }
     }
 
@@ -66,7 +66,20 @@ public class RecipesListDishByCategoryFragment extends Fragment {
         setRetainInstance(true);
         TransitionInflater inflater = TransitionInflater.from(requireContext());
         setEnterTransition(inflater.inflateTransition(R.transition.fade));
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_recipes_list_dish_by_category, container, false);
         initRecipeList();
+        RecyclerView recyclerView = view.findViewById(R.id.viewRecipesListDishByCategory);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        if (adapter == null) {
+            adapter = new RecipeListViewAdapter(recipeDataModelList, recipeClickListener);
+        }
+        recyclerView.setAdapter(adapter);
+        return view;
     }
 
     private void initRecipeList() {
@@ -77,19 +90,6 @@ public class RecipesListDishByCategoryFragment extends Fragment {
                     recipeDataModelList.addAll(list);
                     adapter.updateItemList(list);
                 }, throwable -> Log.d("RECIPE_TYPE", throwable.toString()));
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recipes_list_dish_by_category, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.viewRecipesListDishByCategory);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        if (adapter == null) {
-            adapter = new RecipeListViewAdapter(recipeDataModelList, recipeClickListener);
-        }
-        recyclerView.setAdapter(adapter);
-        return view;
     }
 
     @Override

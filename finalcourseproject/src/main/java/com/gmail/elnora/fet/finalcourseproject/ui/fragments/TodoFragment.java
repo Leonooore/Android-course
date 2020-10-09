@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import android.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,26 +16,25 @@ import androidx.transition.TransitionInflater;
 
 import com.gmail.elnora.fet.finalcourseproject.R;
 import com.gmail.elnora.fet.finalcourseproject.RecipeListeners;
-import com.gmail.elnora.fet.finalcourseproject.adapter.DishTypeViewAdapter;
-import com.gmail.elnora.fet.finalcourseproject.data.DishTypeEnum;
+import com.gmail.elnora.fet.finalcourseproject.adapter.TodoRecipeListAdapter;
+import com.gmail.elnora.fet.finalcourseproject.database.TodoRecipeEntity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class AllCategoriesRecipesFragment extends Fragment {
+public class TodoFragment extends Fragment {
 
-    public static final String TAG = "AllCategoriesRecipesFragment";
-    private static AllCategoriesRecipesFragment instance;
+    public static final String TAG = "TodoFragment";
+    private static TodoFragment instance;
 
-    private List<DishTypeEnum> dishTypeList = new ArrayList<>();
-    private RecipeListeners dishTypeClickListener = null;
-    private DishTypeViewAdapter adapter;
+    private List<TodoRecipeEntity> todoRecipeEntityList = new ArrayList<>();
+    private TodoRecipeListAdapter adapter;
+    private RecipeListeners todoClickListener = null;
     private SearchView searchView;
 
-    public static AllCategoriesRecipesFragment getInstance() {
+    public static TodoFragment getInstance() {
         if(instance == null) {
-            instance = new AllCategoriesRecipesFragment();
+            instance = new TodoFragment();
         }
         return instance;
     }
@@ -44,7 +43,7 @@ public class AllCategoriesRecipesFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof RecipeListeners) {
-            dishTypeClickListener = (RecipeListeners) context;
+            todoClickListener = (RecipeListeners) context;
         }
     }
 
@@ -53,24 +52,23 @@ public class AllCategoriesRecipesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         TransitionInflater inflater = TransitionInflater.from(requireContext());
-        setExitTransition(inflater.inflateTransition(R.transition.fade));
-        initDishTypeList();
+        setEnterTransition(inflater.inflateTransition(R.transition.fade));
+        initTodoList();
     }
 
-    private void initDishTypeList() {
-        for(DishTypeEnum dishTypeEnum : DishTypeEnum.values()) {
-            dishTypeList.addAll(Collections.singleton(dishTypeEnum));
-        }
+    private void initTodoList() {
+        todoRecipeEntityList.add(new TodoRecipeEntity(1, "title", "url", "summary",
+                "ingredients", "step", "time"));
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_all_categories_recipes, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.viewAllCategoriesRecipesList);
+        View view = inflater.inflate(R.layout.fragment_to_do_list, container, false);
+        RecyclerView recyclerView = view.findViewById(R.id.viewRecyclerToDoList);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         if (adapter == null) {
-            adapter = new DishTypeViewAdapter(dishTypeList, dishTypeClickListener);
+            adapter = new TodoRecipeListAdapter(todoRecipeEntityList, todoClickListener);
         }
         recyclerView.setAdapter(adapter);
         return view;
@@ -79,7 +77,7 @@ public class AllCategoriesRecipesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        searchView = view.findViewById(R.id.viewSearchCategoryRecipes);
+        searchView = view.findViewById(R.id.viewSearchToDoRecipes);
         setSearchViewListener();
     }
 
@@ -103,7 +101,7 @@ public class AllCategoriesRecipesFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        dishTypeClickListener = null;
+        todoClickListener = null;
     }
 
 }

@@ -1,7 +1,7 @@
 package com.gmail.elnora.fet.finalcourseproject.repo;
 
-import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
-import com.gmail.elnora.fet.finalcourseproject.data.data_converter.RecipesDataModelConverter;
+import com.gmail.elnora.fet.finalcourseproject.data.StepDataModel;
+import com.gmail.elnora.fet.finalcourseproject.data.data_converter.StepsDataModelConverter;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,15 +15,15 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class RecipeRepositoryImpl implements RecipeRepository {
+public class StepRepositoryImpl implements StepRepository {
 
-    private static final String API_KEY = "b02c4852aab443b183f8d791cc2ccace";
+    private static final String API_KEY = "dfefec802bca4f6bb311f142862efcc0";
     private OkHttpClient okHttpClient = new OkHttpClient();
-    private RecipesDataModelConverter recipesDataModelConverter;
+    private StepsDataModelConverter stepDataModelConverter;
 
-    public RecipeRepositoryImpl(OkHttpClient okHttpClient, RecipesDataModelConverter recipesDataModelConverter) {
+    public StepRepositoryImpl(OkHttpClient okHttpClient, StepsDataModelConverter stepDataModelConverter) {
         this.okHttpClient = okHttpClient;
-        this.recipesDataModelConverter = recipesDataModelConverter;
+        this.stepDataModelConverter = stepDataModelConverter;
     }
 
     private Request builtRequest(String url) {
@@ -45,18 +45,13 @@ public class RecipeRepositoryImpl implements RecipeRepository {
     }
 
     @Override
-    public Single<List<RecipeDataModel>> getRecipesByType(String type) {
-        String url = "https://api.spoonacular.com/recipes/complexSearch/?query=" +
-                type.toLowerCase() + "&addRecipeInformation=true&apiKey=" + API_KEY;
+    public Single<List<StepDataModel>> getStepsByRecipeId(int recipeId) {
+        String url = "https://api.spoonacular.com/recipes/" +  recipeId +
+                "/analyzedInstructions?apiKey=" + API_KEY;
         Request request = builtRequest(url);
         return Single.create((SingleOnSubscribe<String>) emitter -> createResponse(emitter, request))
                 .subscribeOn(Schedulers.io())
-                .map(new Function<String, List<RecipeDataModel>>() {
-                    @Override
-                    public List<RecipeDataModel> apply(String jsonData) throws Exception {
-                        return recipesDataModelConverter.fromJsonToRecipeListConverter(jsonData);
-                    }
-                });
+                .map(jsonData -> stepDataModelConverter.fromJsonToRecipeStepListConverter(jsonData));
     }
 
 }

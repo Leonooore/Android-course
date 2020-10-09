@@ -11,9 +11,12 @@
         android:id="@+id/viewCheckBoxCookDish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/default_padding"
-        android:layout_marginBottom="@dimen/default_margin"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="First make your chili sauce ..."/>
+        android:button="@null"
+        android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+        android:textSize="@dimen/default_text_size"
+        android:padding="@dimen/default_padding"
+        tools:text="1. First make your chili sauce ..."
+        tools:checked="true"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

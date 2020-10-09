@@ -6,6 +6,6 @@ import java.util.List;
 
 import io.reactivex.Single;
 
-public interface RecipeByTypeRepository {
+public interface RecipeRepository {
     Single<List<RecipeDataModel>> getRecipesByType(String type);
 }

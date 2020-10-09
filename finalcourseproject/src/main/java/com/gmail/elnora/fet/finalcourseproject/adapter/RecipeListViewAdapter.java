@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.gmail.elnora.fet.finalcourseproject.OnRecipeClickListener;
 import com.gmail.elnora.fet.finalcourseproject.R;
+import com.gmail.elnora.fet.finalcourseproject.RecipeListeners;
 import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
 
 import java.util.ArrayList;
@@ -23,9 +23,9 @@ public class RecipeListViewAdapter extends RecyclerView.Adapter<RecipeListViewAd
 
     private List<RecipeDataModel> recipeDataModelList;
     private List<RecipeDataModel> recipeDataModelFullList;
-    private OnRecipeClickListener recipeClickListener;
+    private RecipeListeners recipeClickListener;
 
-    public RecipeListViewAdapter(List<RecipeDataModel> recipeDataModelList, OnRecipeClickListener recipeClickListener) {
+    public RecipeListViewAdapter(List<RecipeDataModel> recipeDataModelList, RecipeListeners recipeClickListener) {
         this.recipeDataModelList = recipeDataModelList;
         this.recipeDataModelFullList = new ArrayList<>(recipeDataModelList);
         this.recipeClickListener = recipeClickListener;
@@ -100,10 +100,9 @@ public class RecipeListViewAdapter extends RecyclerView.Adapter<RecipeListViewAd
             viewTextViewRecipeTitleText = itemView.findViewById(R.id.viewTextViewRecipeTitleText);
         }
 
-        private void bind(final RecipeDataModel recipeDataModel, final OnRecipeClickListener recipeClickListener) {
+        private void bind(final RecipeDataModel recipeDataModel, final RecipeListeners recipeClickListener) {
             Glide.with(itemView.getContext())
                     .load(recipeDataModel.getUrlToImage())
-                    .placeholder(R.drawable.ic_baseline_image_180)
                     .error(R.drawable.ic_baseline_image_180)
                     .into(viewImageViewRecipeImagePreview);
             viewTextViewRecipeTitleText.setText(recipeDataModel.getTitle());

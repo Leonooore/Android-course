@@ -6,6 +6,6 @@ import java.util.List;
 
 import io.reactivex.Single;
 
-public interface IngredientByRecipeIdRepository {
+public interface IngredientRepository {
     Single<List<IngredientDataModel>> getIngredientsByRecipeId(int recipeId);
 }

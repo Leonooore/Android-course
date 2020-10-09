@@ -3,6 +3,5 @@
     <string name="app_name">Приготовь лучшие блюда</string>
     <string name="menu_item_title_settings">Настройки</string>
     <string name="menu_item_title_all_categories_recipes">Все рецепты</string>
-    <string name="menu_item_title_my_recipes">Мои рецепты</string>
     <string name="menu_item_title_search_recipes">Найти рецепты</string>
 </resources>

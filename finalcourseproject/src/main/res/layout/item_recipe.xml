@@ -11,7 +11,7 @@
     <ImageView
         android:id="@+id/viewImageViewRecipeImagePreview"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/recipe_image_height"
+        android:layout_height="wrap_content"
         android:scaleType="fitCenter"
         tools:src="@drawable/ic_baseline_image_180"
         android:contentDescription="@string/content_description_recipe_image" />

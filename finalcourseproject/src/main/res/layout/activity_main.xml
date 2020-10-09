@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
-    tools:context=".ui.activities.MainActivity">
+    tools:context=".ui.MainActivity">
 
     <FrameLayout
         android:id="@+id/fragmentContainer"
@@ -45,15 +45,6 @@
             android:textColor="@color/colorDarkGray"
             android:textSize="@dimen/default_button_text_size" />
 
-        <Button
-            android:id="@+id/viewButtonMyRecipes"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/default_button_height"
-            android:layout_weight="1"
-            android:background="@color/colorWhite"
-            android:text="@string/button_text_my_recipes"
-            android:textColor="@color/colorDarkGray"
-            android:textSize="@dimen/default_button_text_size" />
         <Button
             android:id="@+id/viewButtonToDoRecipes"
             android:layout_width="0dp"

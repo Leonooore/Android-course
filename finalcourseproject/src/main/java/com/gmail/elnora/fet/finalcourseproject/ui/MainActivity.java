@@ -1,8 +1,10 @@
-package com.gmail.elnora.fet.finalcourseproject.ui.activities;
+package com.gmail.elnora.fet.finalcourseproject.ui;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,23 +12,21 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import com.gmail.elnora.fet.finalcourseproject.OnDishTypeClickListener;
-import com.gmail.elnora.fet.finalcourseproject.OnRecipeClickListener;
 import com.gmail.elnora.fet.finalcourseproject.R;
+import com.gmail.elnora.fet.finalcourseproject.RecipeListeners;
 import com.gmail.elnora.fet.finalcourseproject.data.DishTypeEnum;
 import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.AllCategoriesRecipesFragment;
-import com.gmail.elnora.fet.finalcourseproject.ui.fragments.MyRecipesFragment;
+import com.gmail.elnora.fet.finalcourseproject.ui.fragments.CookDishFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.RecipesListDishByCategoryFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.SearchRecipesFragment;
-import com.gmail.elnora.fet.finalcourseproject.ui.fragments.ToDoFragment;
+import com.gmail.elnora.fet.finalcourseproject.ui.fragments.TodoFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.ViewRecipeFragment;
 
-public class MainActivity extends AppCompatActivity implements OnDishTypeClickListener, OnRecipeClickListener {
+public class MainActivity extends AppCompatActivity implements RecipeListeners {
 
     private ImageButton viewImageButtonSearch;
     private Button viewButtonAllRecipes;
-    private Button viewButtonMyRecipes;
     private Button viewButtonToDo;
 
     @Override
@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements OnDishTypeClickLi
     private void initViews() {
         viewImageButtonSearch = findViewById(R.id.viewImageButtonSearchRecipes);
         viewButtonAllRecipes = findViewById(R.id.viewButtonAllRecipes);
-        viewButtonMyRecipes = findViewById(R.id.viewButtonMyRecipes);
         viewButtonToDo = findViewById(R.id.viewButtonToDoRecipes);
     }
 
@@ -55,21 +54,30 @@ public class MainActivity extends AppCompatActivity implements OnDishTypeClickLi
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
         switch(itemId) {
+            case android.R.id.home : {
+                getSupportFragmentManager().popBackStack();
+                return true;
+            }
             case R.id.menuItemSearchRecipes : showFragment(SearchRecipesFragment.getInstance(), SearchRecipesFragment.TAG); break;
             case R.id.menuItemAllRecipes : showFragment(AllCategoriesRecipesFragment.getInstance(), AllCategoriesRecipesFragment.TAG); break;
-            case R.id.menuItemMyRecipes : showFragment(MyRecipesFragment.getInstance(), MyRecipesFragment.TAG); break;
-            case R.id.menuItemToDo : showFragment(ToDoFragment.getInstance(), ToDoFragment.TAG); break;
+            case R.id.menuItemToDo : showFragment(TodoFragment.getInstance(), TodoFragment.TAG); break;
 //            case R.id.menuItemSettings : //if there will be any settings
             case R.id.menuItemExit : finish(); break;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void setTitleToolbar(String title) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(title);
+        }
+    }
+
     private void buttonsClickListeners() {
         viewImageButtonSearch.setOnClickListener(view -> showFragment(SearchRecipesFragment.getInstance(), SearchRecipesFragment.TAG));
         viewButtonAllRecipes.setOnClickListener(view -> showFragment(AllCategoriesRecipesFragment.getInstance(), AllCategoriesRecipesFragment.TAG));
-        viewButtonMyRecipes.setOnClickListener(view -> showFragment(MyRecipesFragment.getInstance(), MyRecipesFragment.TAG));
-        viewButtonToDo.setOnClickListener(view -> showFragment(ToDoFragment.getInstance(), ToDoFragment.TAG));
+        viewButtonToDo.setOnClickListener(view -> showFragment(TodoFragment.getInstance(), TodoFragment.TAG));
     }
 
     private void showMainFragmentAllRecipes(Bundle savedInstanceState) {
@@ -92,16 +100,52 @@ public class MainActivity extends AppCompatActivity implements OnDishTypeClickLi
                 .replace(R.id.fragmentContainer, fragment, tag)
                 .addToBackStack(null)
                 .commit();
+
+        setGoBackListener();
+    }
+
+    private void setGoBackListener() {
+        getSupportFragmentManager().addOnBackStackChangedListener(() -> {
+            int stackHeight = getSupportFragmentManager().getBackStackEntryCount();
+            if (stackHeight > 0) {
+                getSupportActionBar().setHomeButtonEnabled(true);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                if ( stackHeight > 1) {
+                    setTitleToolbar(getResources().getString(R.string.app_name));
+                }
+            } else {
+                getSupportActionBar().setHomeButtonEnabled(false);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                setTitleToolbar(getResources().getString(R.string.app_name));
+            }
+        });
     }
 
     @Override
     public void onDishTypeClick(DishTypeEnum dishType) {
         showFragmentBackStack(RecipesListDishByCategoryFragment.getInstance(dishType), RecipesListDishByCategoryFragment.TAG);
+        setTitleToolbar(dishType.toString());
     }
 
     @Override
     public void onRecipeClick(RecipeDataModel recipeDataModel) {
         showFragmentBackStack(ViewRecipeFragment.getInstance(recipeDataModel), ViewRecipeFragment.TAG);
+    }
+
+    @Override
+    public void onFabTodoCookClick(int recipeId) {
+        showFragmentBackStack(CookDishFragment.getInstance(recipeId), CookDishFragment.TAG);
+    }
+
+    @Override
+    public void onFabAddTodoListClick() {
+        showFragmentBackStack(TodoFragment.getInstance(), TodoFragment.TAG);
+    }
+
+    @Override
+    public void onTodoItemClick(int recipeId) {
+        showFragmentBackStack(CookDishFragment.getInstance(recipeId), CookDishFragment.TAG);
+        setTitleToolbar(getResources().getString(R.string.toolbar_text_cook_dish));
     }
 
 }

@@ -1,5 +1,6 @@
 package com.gmail.elnora.fet.finalcourseproject.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,12 +18,14 @@ import androidx.transition.TransitionInflater;
 
 import com.bumptech.glide.Glide;
 import com.gmail.elnora.fet.finalcourseproject.R;
+import com.gmail.elnora.fet.finalcourseproject.RecipeListeners;
 import com.gmail.elnora.fet.finalcourseproject.adapter.IngredientsRecipeListAdapter;
 import com.gmail.elnora.fet.finalcourseproject.data.IngredientDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.data_converter.HtmlConverter;
-import com.gmail.elnora.fet.finalcourseproject.data.data_converter.RecipesDataModelConverter;
-import com.gmail.elnora.fet.finalcourseproject.repo.RecipeRepositoryImpl;
+import com.gmail.elnora.fet.finalcourseproject.data.data_converter.IngredientsDataModelConverter;
+import com.gmail.elnora.fet.finalcourseproject.repo.IngredientRepositoryImpl;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,14 +46,19 @@ public class ViewRecipeFragment extends Fragment {
     private HtmlConverter htmlConverter = new HtmlConverter();
     private List<IngredientDataModel> ingredientDataModelList = new ArrayList<>();
     private IngredientsRecipeListAdapter adapter;
+    private RecipeListeners onToDoAddFabClickListener = null;
+    private RecipeListeners onToDoCookFabClickListener = null;
 
     private OkHttpClient okHttpClient = new OkHttpClient();
-    private RecipesDataModelConverter recipesDataModelConverter = new RecipesDataModelConverter();
+    private IngredientsDataModelConverter ingredientsDataModelConverter = new IngredientsDataModelConverter();
     private Disposable disposable;
+    private int getRecipeId;
 
     private ImageView viewImageViewRecipeImagePreview;
     private TextView viewTextViewRecipeTitleText;
     private TextView viewTextViewRecipeDescriptionText;
+    private FloatingActionButton viewFabToDoCook;
+    private FloatingActionButton viewFabAddTodoList;
 
     public static ViewRecipeFragment getInstance(RecipeDataModel recipeDataModel) {
         Bundle bundle = new Bundle();
@@ -63,6 +71,15 @@ public class ViewRecipeFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof RecipeListeners) {
+            onToDoCookFabClickListener = (RecipeListeners) context;
+            onToDoAddFabClickListener = (RecipeListeners) context;
+        }
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
@@ -72,8 +89,8 @@ public class ViewRecipeFragment extends Fragment {
     }
 
     private void initIngredientList() {
-        int getRecipeId = getArguments() != null ? getArguments().getInt(RECIPE_ID_BUNDLE_KEY, 0) : 0;
-        disposable = new RecipeRepositoryImpl(okHttpClient, recipesDataModelConverter).getIngredientsByRecipeId(getRecipeId)
+        getRecipeId = getArguments() != null ? getArguments().getInt(RECIPE_ID_BUNDLE_KEY, 0) : 0;
+        disposable = new IngredientRepositoryImpl(okHttpClient, ingredientsDataModelConverter).getIngredientsByRecipeId(getRecipeId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
                     ingredientDataModelList.addAll(list);
@@ -99,13 +116,14 @@ public class ViewRecipeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
         setViews();
-        Log.d("RECIPE_ID", getArgs(RECIPE_ID_BUNDLE_KEY));
     }
 
     private void initViews(View view) {
         viewImageViewRecipeImagePreview = view.findViewById(R.id.viewImageViewRecipeImagePreview);
         viewTextViewRecipeTitleText = view.findViewById(R.id.viewTextViewRecipeTitleText);
         viewTextViewRecipeDescriptionText = view.findViewById(R.id.viewTextViewRecipeDescriptionText);
+        viewFabToDoCook = view.findViewById(R.id.viewFabToDoCook);
+        viewFabAddTodoList = view.findViewById(R.id.viewFabAddTodoList);
     }
 
     private void setViews() {
@@ -116,6 +134,26 @@ public class ViewRecipeFragment extends Fragment {
         Glide.with(this).load(imageUrl).into(viewImageViewRecipeImagePreview);
         viewTextViewRecipeTitleText.setText(title);
         viewTextViewRecipeDescriptionText.setText(htmlConverter.convertFromHtml(description));
+
+        fabTodoCookClickListener();
+        fabAddTodoListClickListener();
+    }
+
+    private void fabTodoCookClickListener() {
+        viewFabToDoCook.setOnClickListener(view -> {
+            int getRecipeId = getArguments() != null ? getArguments().getInt(RECIPE_ID_BUNDLE_KEY, 0) : 0;
+            onToDoCookFabClickListener.onFabTodoCookClick(getRecipeId);
+        });
+    }
+
+    private void fabAddTodoListClickListener() {
+        viewFabAddTodoList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // save to database all info
+                onToDoAddFabClickListener.onFabAddTodoListClick();
+            }
+        });
     }
 
     private String getArgs(String bundleKey) {
@@ -126,6 +164,8 @@ public class ViewRecipeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         disposable.dispose();
+        onToDoAddFabClickListener = null;
+        onToDoCookFabClickListener = null;
     }
 
 }
