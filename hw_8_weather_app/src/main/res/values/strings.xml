@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">hw_8_weather_app</string>
+    <string name="app_name">Weather</string>
+    <string name="weather_icon_description">weather icon</string>
 </resources>
