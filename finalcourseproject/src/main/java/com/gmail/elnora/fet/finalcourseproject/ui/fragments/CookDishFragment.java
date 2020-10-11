@@ -18,6 +18,7 @@ import com.gmail.elnora.fet.finalcourseproject.adapter.TodoStepListAdapter;
 import com.gmail.elnora.fet.finalcourseproject.data.StepDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.StepsDataModelConverter;
 import com.gmail.elnora.fet.finalcourseproject.repo.RecipesRepositoryImpl;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,17 +78,30 @@ public class CookDishFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initTodoCheckList();
+        initTodoCheckList(view);
     }
 
-    private void initTodoCheckList() {
+    private void initTodoCheckList(View view) {
         int getRecipeId = getArguments() != null ? getArguments().getInt(RECIPE_ID_BUNDLE_KEY, 0) : 0;
         disposable = new RecipesRepositoryImpl(okHttpClient, stepsDataModelConverter).getStepsByRecipeId(getRecipeId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
                     stepDataModelList.addAll(list);
                     adapter.updateItemList(list);
-                }, throwable -> Log.d("RECIPE_STEPS", throwable.toString()));
+                }, throwable -> {
+                    if(throwable.getMessage().contains("Unable to resolve host")) {
+                        Snackbar.make(view.findViewById(R.id.recyclerListToDoCheckBox),
+                                getString(R.string.error_no_internet_connection),
+                                Snackbar.LENGTH_LONG)
+                                .show();
+                    } else if (throwable.getMessage().contains("402")) {
+                        Snackbar.make(view.findViewById(R.id.recyclerListToDoCheckBox),
+                                getString(R.string.error_api_request),
+                                Snackbar.LENGTH_LONG)
+                                .show();
+                    }
+                    Log.d("RECIPE_STEPS", throwable.toString());
+                });
     }
 
     @Override

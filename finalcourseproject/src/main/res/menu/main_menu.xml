@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menuItemSearchRecipes"
-        android:title="@string/menu_item_title_search_recipes"/>
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/menu_item_title_search_recipes" />
     <item
         android:id="@+id/menuItemAllRecipes"
         android:title="@string/menu_item_title_all_categories_recipes"/>
     <item
         android:id="@+id/menuItemToDo"
         android:title="@string/menu_item_to_do"/>
-    <!--<item
-        android:id="@+id/menuItemSettings"
-        android:title="@string/menu_item_title_settings"/>-->
     <item
         android:id="@+id/menuItemExit"
         android:title="@string/menu_item_title_exit"/>

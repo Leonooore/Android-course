@@ -83,7 +83,7 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     @Override
     public Single<List<IngredientDataModel>> getIngredientsByRecipeId(int recipeId) {
         String url = "https://api.spoonacular.com/recipes/" +  recipeId +
-                "/ingredientWidget.json?apiKey=" + API_KEY;
+                "/ingredientWidget.json?apiKey=" + API_KEY_2;
         Request request = builtRequest(url);
         return Single.create((SingleOnSubscribe<String>) emitter -> createResponse(emitter, request))
                 .subscribeOn(Schedulers.io())

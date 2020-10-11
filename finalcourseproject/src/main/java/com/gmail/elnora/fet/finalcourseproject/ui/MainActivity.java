@@ -24,6 +24,8 @@ import com.gmail.elnora.fet.finalcourseproject.viewmodel.TodoRecipeViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity implements RecipeListeners {
 
     private BottomNavigationView viewBottomNavigation;
@@ -34,25 +36,9 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         viewModel = new TodoRecipeViewModel(this);
+        showMainFragmentAllRecipes(savedInstanceState);
         initBottomNavigation();
         bottomNavigationClickListeners();
-        showMainFragmentAllRecipes(savedInstanceState);
-    }
-
-    private void initBottomNavigation() {
-        viewBottomNavigation = findViewById(R.id.viewBottomNavigation);
-        viewBottomNavigation.setSelectedItemId(R.id.pageAllRecipes);
-    }
-
-    private void bottomNavigationClickListeners() {
-        viewBottomNavigation.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.pageSearchRecipes : showFragment(SearchRecipesFragment.getInstance(), SearchRecipesFragment.TAG); return true;
-                case R.id.pageAllRecipes : showFragment(AllCategoriesRecipesFragment.getInstance(), AllCategoriesRecipesFragment.TAG); return true;
-                case R.id.pageToDoRecipes : showFragment(TodoFragment.getInstance(), TodoFragment.TAG); return true;
-                default: return false;
-            }
-        });
     }
 
     @Override
@@ -72,10 +58,42 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
             case R.id.menuItemSearchRecipes : showFragment(SearchRecipesFragment.getInstance(), SearchRecipesFragment.TAG); break;
             case R.id.menuItemAllRecipes : showFragment(AllCategoriesRecipesFragment.getInstance(), AllCategoriesRecipesFragment.TAG); break;
             case R.id.menuItemToDo : showFragment(TodoFragment.getInstance(), TodoFragment.TAG); break;
-//            case R.id.menuItemSettings : //if there will be any settings
             case R.id.menuItemExit : finish(); break;
         }
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
+        setTitleToolbar(getResources().getString(R.string.app_name));
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initBottomNavigation() {
+        viewBottomNavigation = findViewById(R.id.viewBottomNavigation);
+        viewBottomNavigation.setSelectedItemId(R.id.pageAllRecipes);
+    }
+
+    private void bottomNavigationClickListeners() {
+        viewBottomNavigation.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.pageSearchRecipes: {
+                    showFragment(SearchRecipesFragment.getInstance(), SearchRecipesFragment.TAG);
+                    Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
+                    setTitleToolbar(getResources().getString(R.string.app_name));
+                    return true;
+                }
+                case R.id.pageAllRecipes: {
+                    showFragment(AllCategoriesRecipesFragment.getInstance(), AllCategoriesRecipesFragment.TAG);
+                    Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
+                    setTitleToolbar(getResources().getString(R.string.app_name));
+                    return true;
+                }
+                case R.id.pageToDoRecipes: {
+                    showFragment(TodoFragment.getInstance(), TodoFragment.TAG);
+                    Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
+                    setTitleToolbar(getResources().getString(R.string.app_name));
+                    return true;
+                }
+                default: return false;
+            }
+        });
     }
 
     private void setTitleToolbar(String title) {
@@ -115,14 +133,12 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
         getSupportFragmentManager().addOnBackStackChangedListener(() -> {
             int stackHeight = getSupportFragmentManager().getBackStackEntryCount();
             if (stackHeight > 0) {
-                getSupportActionBar().setHomeButtonEnabled(true);
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
                 if ( stackHeight > 1) {
                     setTitleToolbar(getResources().getString(R.string.app_name));
                 }
             } else {
-                getSupportActionBar().setHomeButtonEnabled(false);
-                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
                 setTitleToolbar(getResources().getString(R.string.app_name));
             }
         });

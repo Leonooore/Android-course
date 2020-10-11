@@ -30,4 +30,6 @@
     <string name="snack_bar_text" translatable="false">Recipe has been added in TO DO</string>
     <string name="welcome_text" translatable="false">Welcome!</string>
     <string name="welcome_joke_text" translatable="false">Joke</string>
+    <string name="error_no_internet_connection" translatable="false">No internet connection</string>
+    <string name="error_api_request">API requests limit exceeded</string>
 </resources>

@@ -1,14 +1,19 @@
 package com.gmail.elnora.fet.finalcourseproject.ui.fragments;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.widget.SearchView;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,7 +36,7 @@ public class AllCategoriesRecipesFragment extends Fragment {
     private List<DishTypeEnum> dishTypeList = new ArrayList<>();
     private RecipeListeners dishTypeClickListener = null;
     private DishTypeViewAdapter adapter;
-    private SearchView searchView;
+    private SearchView searchView = null;
 
     public static AllCategoriesRecipesFragment getInstance() {
         if(instance == null) {
@@ -55,6 +60,7 @@ public class AllCategoriesRecipesFragment extends Fragment {
         TransitionInflater inflater = TransitionInflater.from(requireContext());
         setExitTransition(inflater.inflateTransition(R.transition.fade));
         initDishTypeList();
+        setHasOptionsMenu(true);
     }
 
     private void initDishTypeList() {
@@ -73,8 +79,6 @@ public class AllCategoriesRecipesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView(view);
-        searchView = view.findViewById(R.id.viewSearchCategoryRecipes);
-        setSearchViewListener();
     }
 
     private void initRecyclerView(View view) {
@@ -84,6 +88,22 @@ public class AllCategoriesRecipesFragment extends Fragment {
             adapter = new DishTypeViewAdapter(dishTypeList, dishTypeClickListener);
         }
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_search, menu);
+        MenuItem searchItem = menu.findItem(R.id.menuItemSearchInToolbar);
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+            searchView.setQueryHint(getString(R.string.search_query_hint_categories));
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+            setSearchViewListener();
+        }
     }
 
     private void setSearchViewListener() {

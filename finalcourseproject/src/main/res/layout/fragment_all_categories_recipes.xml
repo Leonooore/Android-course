@@ -18,18 +18,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/middle_margin" />
 
-    <SearchView
-        android:id="@+id/viewSearchCategoryRecipes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shadow"
-        android:searchIcon="@drawable/ic_baseline_search_24"
-        android:iconifiedByDefault="false"
-        android:focusable="false"
-        android:queryHint="@string/search_query_hint_categories"
-        android:padding="@dimen/small_padding"
-        android:layout_marginBottom="@dimen/default_margin" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/viewAllCategoriesRecipesList"
         android:layout_width="match_parent"

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +30,6 @@ public class TodoFragment extends Fragment {
     private List<TodoRecipeEntity> todoRecipeEntityList = new ArrayList<>();
     private TodoRecipeListAdapter adapter;
     private RecipeListeners todoClickListener = null;
-    private SearchView searchView;
 
     private TodoRecipeViewModel viewModel;
 
@@ -77,8 +75,6 @@ public class TodoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView(view);
-        searchView = view.findViewById(R.id.viewSearchToDoRecipes);
-        setSearchViewListener();
     }
 
     private void initRecyclerView(View view) {
@@ -88,23 +84,6 @@ public class TodoFragment extends Fragment {
             adapter = new TodoRecipeListAdapter(todoRecipeEntityList, todoClickListener);
         }
         recyclerView.setAdapter(adapter);
-    }
-
-    private void setSearchViewListener() {
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if (adapter != null) {
-                    adapter.getFilter().filter(newText);
-                }
-                return false;
-            }
-        });
     }
 
     @Override

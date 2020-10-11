@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.gmail.elnora.fet.finalcourseproject.R;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.JokeDataModelConverter;
 import com.gmail.elnora.fet.finalcourseproject.repo.RecipesRepositoryImpl;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.net.UnknownHostException;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -31,8 +34,8 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_activity);
         initViews();
-        buttonClickListener();
         initJoke();
+        buttonClickListener();
     }
 
     private void initViews() {
@@ -44,6 +47,7 @@ public class WelcomeActivity extends AppCompatActivity {
         viewButtonWelcome.setOnClickListener(view -> {
             Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
             startActivity(intent);
+            finish();
         });
     }
 
@@ -51,7 +55,14 @@ public class WelcomeActivity extends AppCompatActivity {
         disposable = new RecipesRepositoryImpl(okHttpClient, jokeDataModelConverter).getJoke()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(joke -> viewTextFoodJokes.setText(joke.getJoke()),
-                        throwable -> Log.d("WELCOME_JOKE", throwable.toString()));
+                        throwable -> {
+                            if(throwable.getMessage().contains("Unable to resolve host")) {
+                                viewTextFoodJokes.setText(getString(R.string.error_no_internet_connection));
+                            } else if (throwable.getMessage().contains("402")) {
+                                viewTextFoodJokes.setText(getString(R.string.error_api_request));
+                            }
+                            Log.d("WELCOME_JOKE", throwable.getMessage());
+                        });
     }
 
     @Override

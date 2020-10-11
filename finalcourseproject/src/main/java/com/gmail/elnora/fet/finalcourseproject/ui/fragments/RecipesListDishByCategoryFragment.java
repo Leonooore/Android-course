@@ -22,6 +22,7 @@ import com.gmail.elnora.fet.finalcourseproject.data.DishTypeEnum;
 import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.RecipesDataModelConverter;
 import com.gmail.elnora.fet.finalcourseproject.repo.RecipesRepositoryImpl;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class RecipesListDishByCategoryFragment extends Fragment {
     private List<RecipeDataModel> recipeDataModelList = new ArrayList<>();
     private RecipeListeners recipeClickListener = null;
     private RecipeListViewAdapter adapter;
-    private SearchView searchView;
+    private SearchView searchView = null;
 
     private OkHttpClient okHttpClient = new OkHttpClient();
     private RecipesDataModelConverter recipesDataModelConverter = new RecipesDataModelConverter();
@@ -88,19 +89,32 @@ public class RecipesListDishByCategoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initRecipeList();
+        initRecipeList(view);
         searchView = view.findViewById(R.id.viewSearchDishRecipesByCategory);
         setSearchViewListener();
     }
 
-    private void initRecipeList() {
+    private void initRecipeList(View view) {
         String getType = getArguments() != null ? getArguments().getString(DISH_TYPE_BUNDLE_KEY, "") : "";
         disposable = new RecipesRepositoryImpl(okHttpClient, recipesDataModelConverter).getRecipesByType(getType)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
                     recipeDataModelList.addAll(list);
                     adapter.updateItemList(list);
-                }, throwable -> Log.d("RECIPE_TYPE", throwable.toString()));
+                }, throwable -> {
+                    if (throwable.getMessage().contains("Unable to resolve host")) {
+                        Snackbar.make(view.findViewById(R.id.viewRecipesListDishByCategory),
+                                getString(R.string.error_no_internet_connection),
+                                Snackbar.LENGTH_LONG)
+                                .show();
+                    } else if (throwable.getMessage().contains("402")) {
+                        Snackbar.make(view.findViewById(R.id.viewRecipesListDishByCategory),
+                                getString(R.string.error_api_request),
+                                Snackbar.LENGTH_LONG)
+                                .show();
+                    }
+                    Log.d("RECIPE_TYPE", throwable.toString());
+                });
     }
 
     private void setSearchViewListener() {
