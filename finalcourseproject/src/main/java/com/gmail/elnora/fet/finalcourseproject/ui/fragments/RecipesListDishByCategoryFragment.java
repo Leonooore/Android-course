@@ -20,8 +20,8 @@ import com.gmail.elnora.fet.finalcourseproject.RecipeListeners;
 import com.gmail.elnora.fet.finalcourseproject.adapter.RecipeListViewAdapter;
 import com.gmail.elnora.fet.finalcourseproject.data.DishTypeEnum;
 import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
-import com.gmail.elnora.fet.finalcourseproject.data.data_converter.RecipesDataModelConverter;
-import com.gmail.elnora.fet.finalcourseproject.repo.RecipeRepositoryImpl;
+import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.RecipesDataModelConverter;
+import com.gmail.elnora.fet.finalcourseproject.repo.RecipesRepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,31 +72,35 @@ public class RecipesListDishByCategoryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipes_list_dish_by_category, container, false);
-        initRecipeList();
+        initRecyclerView(view);
+        return view;
+    }
+
+    private void initRecyclerView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.viewRecipesListDishByCategory);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         if (adapter == null) {
             adapter = new RecipeListViewAdapter(recipeDataModelList, recipeClickListener);
         }
         recyclerView.setAdapter(adapter);
-        return view;
-    }
-
-    private void initRecipeList() {
-        String getType = getArguments() != null ? getArguments().getString(DISH_TYPE_BUNDLE_KEY, "") : "";
-        disposable = new RecipeRepositoryImpl(okHttpClient, recipesDataModelConverter).getRecipesByType(getType)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(list -> {
-                    recipeDataModelList.addAll(list);
-                    adapter.updateItemList(list);
-                }, throwable -> Log.d("RECIPE_TYPE", throwable.toString()));
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initRecipeList();
         searchView = view.findViewById(R.id.viewSearchDishRecipesByCategory);
         setSearchViewListener();
+    }
+
+    private void initRecipeList() {
+        String getType = getArguments() != null ? getArguments().getString(DISH_TYPE_BUNDLE_KEY, "") : "";
+        disposable = new RecipesRepositoryImpl(okHttpClient, recipesDataModelConverter).getRecipesByType(getType)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> {
+                    recipeDataModelList.addAll(list);
+                    adapter.updateItemList(list);
+                }, throwable -> Log.d("RECIPE_TYPE", throwable.toString()));
     }
 
     private void setSearchViewListener() {

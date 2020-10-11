@@ -93,23 +93,24 @@ public class TodoRecipeListAdapter extends RecyclerView.Adapter<TodoRecipeListAd
     public static class ToDoViewHolder extends RecyclerView.ViewHolder {
         private ImageView viewImageTodoImagePreview;
         private TextView viewTextViewTodoTitleText;
+        private ImageView viewImageRemoveRecipe;
 
         public ToDoViewHolder(@NonNull View itemView) {
             super(itemView);
             viewImageTodoImagePreview = itemView.findViewById(R.id.viewImageTodoImagePreview);
             viewTextViewTodoTitleText = itemView.findViewById(R.id.viewTextViewTodoTitleText);
+            viewImageRemoveRecipe = itemView.findViewById(R.id.viewImageRemoveRecipe);
         }
 
         private void bind(final TodoRecipeEntity toDoRecipe, final RecipeListeners recipeClickListener) {
             Glide.with(itemView.getContext())
                     .load(toDoRecipe.getUrlToImage())
-                    .placeholder(R.drawable.ic_baseline_image_180)
                     .error(R.drawable.ic_baseline_image_180)
                     .into(viewImageTodoImagePreview);
             viewTextViewTodoTitleText.setText(toDoRecipe.getTitle());
             itemView.setOnClickListener(view -> recipeClickListener.onTodoItemClick(toDoRecipe.getRecipeId()));
+            viewImageRemoveRecipe.setOnClickListener(remove -> recipeClickListener.onRemoveRecipeClick(toDoRecipe));
         }
-
     }
 
 }

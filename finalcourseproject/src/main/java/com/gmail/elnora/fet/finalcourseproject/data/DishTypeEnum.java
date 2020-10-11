@@ -3,14 +3,14 @@ package com.gmail.elnora.fet.finalcourseproject.data;
 import com.gmail.elnora.fet.finalcourseproject.R;
 
 public enum DishTypeEnum {
-    MAIN_COURSE("Main course", R.drawable.ic_main_dish),
-    SIDE_DISH("Side dish", R.drawable.ic_spaghetti),
     DESSERT("Dessert", R.drawable.ic_sweets),
     APPETIZER("Appetizer", R.drawable.ic_appetizer),
-    SALAD("Salad", R.drawable.ic_salad),
-    BREAD("Bread", R.drawable.ic_bread),
     BREAKFAST("Breakfast", R.drawable.ic_egg),
+    SALAD("Salad", R.drawable.ic_salad),
+    SIDE_DISH("Side dish", R.drawable.ic_spaghetti),
+    MAIN_COURSE("Main course", R.drawable.ic_main_dish),
     SOUP("Soup", R.drawable.ic_soup),
+    BREAD("Bread", R.drawable.ic_bread),
     BEVERAGE("Beverage", R.drawable.ic_cocktail),
     SAUCE("Sauce", R.drawable.ic_sauces),
     MARINADE("Marinade", R.drawable.ic_steak),

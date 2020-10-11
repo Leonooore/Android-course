@@ -66,21 +66,24 @@ public class AllCategoriesRecipesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_all_categories_recipes, container, false);
+        return inflater.inflate(R.layout.fragment_all_categories_recipes, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initRecyclerView(view);
+        searchView = view.findViewById(R.id.viewSearchCategoryRecipes);
+        setSearchViewListener();
+    }
+
+    private void initRecyclerView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.viewAllCategoriesRecipesList);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         if (adapter == null) {
             adapter = new DishTypeViewAdapter(dishTypeList, dishTypeClickListener);
         }
         recyclerView.setAdapter(adapter);
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        searchView = view.findViewById(R.id.viewSearchCategoryRecipes);
-        setSearchViewListener();
     }
 
     private void setSearchViewListener() {

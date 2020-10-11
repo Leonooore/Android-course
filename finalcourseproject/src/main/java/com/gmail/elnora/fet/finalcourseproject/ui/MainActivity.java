@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,23 +15,27 @@ import com.gmail.elnora.fet.finalcourseproject.R;
 import com.gmail.elnora.fet.finalcourseproject.RecipeListeners;
 import com.gmail.elnora.fet.finalcourseproject.data.DishTypeEnum;
 import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
+import com.gmail.elnora.fet.finalcourseproject.database.TodoRecipeEntity;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.AllCategoriesRecipesFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.CookDishFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.RecipesListDishByCategoryFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.SearchRecipesFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.TodoFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.ViewRecipeFragment;
+import com.gmail.elnora.fet.finalcourseproject.viewmodel.TodoRecipeViewModel;
 
 public class MainActivity extends AppCompatActivity implements RecipeListeners {
 
     private ImageButton viewImageButtonSearch;
     private Button viewButtonAllRecipes;
     private Button viewButtonToDo;
+    private TodoRecipeViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        viewModel = new TodoRecipeViewModel(this);
         initViews();
         buttonsClickListeners();
         showMainFragmentAllRecipes(savedInstanceState);
@@ -85,7 +88,9 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
             if (savedInstanceState != null) {
                 return;
             }
-            showFragment(AllCategoriesRecipesFragment.getInstance(), AllCategoriesRecipesFragment.TAG);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragmentContainer, AllCategoriesRecipesFragment.getInstance(), AllCategoriesRecipesFragment.TAG)
+                    .commit();
         }
     }
 
@@ -138,7 +143,8 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
     }
 
     @Override
-    public void onFabAddTodoListClick() {
+    public void onFabAddTodoListClick(TodoRecipeEntity recipe) {
+        viewModel.insert(recipe);
         showFragmentBackStack(TodoFragment.getInstance(), TodoFragment.TAG);
     }
 
@@ -146,6 +152,11 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
     public void onTodoItemClick(int recipeId) {
         showFragmentBackStack(CookDishFragment.getInstance(recipeId), CookDishFragment.TAG);
         setTitleToolbar(getResources().getString(R.string.toolbar_text_cook_dish));
+    }
+
+    @Override
+    public void onRemoveRecipeClick(TodoRecipeEntity recipe) {
+        viewModel.delete(recipe);
     }
 
 }

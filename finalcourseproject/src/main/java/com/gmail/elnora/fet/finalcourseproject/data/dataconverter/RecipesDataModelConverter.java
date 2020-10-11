@@ -1,6 +1,4 @@
-package com.gmail.elnora.fet.finalcourseproject.data.data_converter;
-
-import androidx.room.TypeConverter;
+package com.gmail.elnora.fet.finalcourseproject.data.dataconverter;
 
 import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
 
@@ -13,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class RecipesDataModelConverter {
-    @TypeConverter
     public List<RecipeDataModel> fromJsonToRecipeListConverter(String jsonData) throws JSONException {
         JSONObject jsonObject = new JSONObject(jsonData);
         JSONArray jsonResultsArray = jsonObject.getJSONArray("results");

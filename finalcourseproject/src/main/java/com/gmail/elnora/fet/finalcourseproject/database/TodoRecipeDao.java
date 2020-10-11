@@ -1,6 +1,8 @@
 package com.gmail.elnora.fet.finalcourseproject.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -10,12 +12,12 @@ import java.util.List;
 @Dao
 public interface TodoRecipeDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(TodoRecipeEntity todoRecipeEntity);
+    void insert(TodoRecipeEntity recipe);
 
-    @Query("DELETE FROM todo_recipe_table")
-    void deleteAll();
+    @Delete
+    void delete(TodoRecipeEntity recipe);
 
-    @Query("SELECT * from todo_recipe_table")
-    List<TodoRecipeEntity> getTodoRecipes();
+    @Query("SELECT * FROM recipe_table")
+    LiveData<List<TodoRecipeEntity>> getRecipes();
 
 }

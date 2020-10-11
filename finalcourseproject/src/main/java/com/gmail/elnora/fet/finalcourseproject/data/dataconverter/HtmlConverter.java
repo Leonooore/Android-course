@@ -1,4 +1,4 @@
-package com.gmail.elnora.fet.finalcourseproject.data.data_converter;
+package com.gmail.elnora.fet.finalcourseproject.data.dataconverter;
 
 import android.os.Build;
 import android.text.Html;

@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shadow"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -11,12 +10,12 @@
         android:id="@+id/viewCheckBoxCookDish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/shadow"
         android:button="@null"
         android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
         android:textSize="@dimen/default_text_size"
         android:padding="@dimen/default_padding"
         tools:text="1. First make your chili sauce ..."
-        tools:checked="true"
         app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

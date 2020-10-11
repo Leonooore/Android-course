@@ -26,4 +26,5 @@
     <string name="ingredient" translatable="false">Ingredient</string>
     <string name="ingredient_amount" translatable="false">Amount</string>
     <string name="cook_steps_title" translatable="false">Steps</string>
+    <string name="remove_recipe_image_description" translatable="false">remove</string>
 </resources>

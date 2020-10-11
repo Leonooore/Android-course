@@ -1,6 +1,4 @@
-package com.gmail.elnora.fet.finalcourseproject.data.data_converter;
-
-import androidx.room.TypeConverter;
+package com.gmail.elnora.fet.finalcourseproject.data.dataconverter;
 
 import com.gmail.elnora.fet.finalcourseproject.data.StepDataModel;
 
@@ -13,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class StepsDataModelConverter {
-    @TypeConverter
     public List<StepDataModel> fromJsonToRecipeStepListConverter(String jsonData) throws JSONException {
         JSONArray jsonResultsArray = new JSONArray(jsonData);
         if (jsonResultsArray.length() != 0) {

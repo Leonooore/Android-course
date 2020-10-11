@@ -1,29 +1,19 @@
 package com.gmail.elnora.fet.finalcourseproject.database;
 
-import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "todo_recipe_table")
+@Entity(tableName = "recipe_table")
 public class TodoRecipeEntity {
     @PrimaryKey
-    @NonNull
     private int recipeId;
     private String title;
     private String urlToImage;
-    private String summary;
-    private String ingredients;
-    private String step;
-    private String timeLength;
 
-    public TodoRecipeEntity(int recipeId, String title, String urlToImage, String summary, String ingredients, String step, String timeLength) {
+    public TodoRecipeEntity(int recipeId, String title, String urlToImage) {
         this.recipeId = recipeId;
         this.title = title;
         this.urlToImage = urlToImage;
-        this.summary = summary;
-        this.ingredients = ingredients;
-        this.step = step;
-        this.timeLength = timeLength;
     }
 
     public int getRecipeId() {
@@ -50,35 +40,4 @@ public class TodoRecipeEntity {
         this.urlToImage = urlToImage;
     }
 
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
-    public String getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(String ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public String getStep() {
-        return step;
-    }
-
-    public void setStep(String step) {
-        this.step = step;
-    }
-
-    public String getTimeLength() {
-        return timeLength;
-    }
-
-    public void setTimeLength(String timeLength) {
-        this.timeLength = timeLength;
-    }
 }

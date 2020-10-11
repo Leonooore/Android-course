@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,8 +16,8 @@ import androidx.transition.TransitionInflater;
 import com.gmail.elnora.fet.finalcourseproject.R;
 import com.gmail.elnora.fet.finalcourseproject.adapter.TodoStepListAdapter;
 import com.gmail.elnora.fet.finalcourseproject.data.StepDataModel;
-import com.gmail.elnora.fet.finalcourseproject.data.data_converter.StepsDataModelConverter;
-import com.gmail.elnora.fet.finalcourseproject.repo.StepRepositoryImpl;
+import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.StepsDataModelConverter;
+import com.gmail.elnora.fet.finalcourseproject.repo.RecipesRepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,30 +55,39 @@ public class CookDishFragment extends Fragment {
         setRetainInstance(true);
         TransitionInflater inflater = TransitionInflater.from(requireContext());
         setEnterTransition(inflater.inflateTransition(R.transition.fade));
-        initTodoCheckList();
-    }
-
-    private void initTodoCheckList() {
-        int getRecipeId = getArguments() != null ? getArguments().getInt(RECIPE_ID_BUNDLE_KEY, 0) : 0;
-        disposable = new StepRepositoryImpl(okHttpClient, stepsDataModelConverter).getStepsByRecipeId(getRecipeId)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(list -> {
-                    stepDataModelList.addAll(list);
-                    adapter.updateItemList(list);
-                }, throwable -> Log.d("RECIPE_STEPS", throwable.toString()));
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cook_dish, container, false);
+        initRecyclerView(view);
+        return view;
+    }
+
+    private void initRecyclerView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerListToDoCheckBox);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         if (adapter == null) {
             adapter = new TodoStepListAdapter(stepDataModelList);
         }
         recyclerView.setAdapter(adapter);
-        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initTodoCheckList();
+    }
+
+    private void initTodoCheckList() {
+        int getRecipeId = getArguments() != null ? getArguments().getInt(RECIPE_ID_BUNDLE_KEY, 0) : 0;
+        disposable = new RecipesRepositoryImpl(okHttpClient, stepsDataModelConverter).getStepsByRecipeId(getRecipeId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> {
+                    stepDataModelList.addAll(list);
+                    adapter.updateItemList(list);
+                }, throwable -> Log.d("RECIPE_STEPS", throwable.toString()));
     }
 
     @Override

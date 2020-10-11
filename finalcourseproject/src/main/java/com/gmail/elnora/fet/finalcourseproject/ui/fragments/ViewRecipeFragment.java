@@ -22,9 +22,10 @@ import com.gmail.elnora.fet.finalcourseproject.RecipeListeners;
 import com.gmail.elnora.fet.finalcourseproject.adapter.IngredientsRecipeListAdapter;
 import com.gmail.elnora.fet.finalcourseproject.data.IngredientDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
-import com.gmail.elnora.fet.finalcourseproject.data.data_converter.HtmlConverter;
-import com.gmail.elnora.fet.finalcourseproject.data.data_converter.IngredientsDataModelConverter;
-import com.gmail.elnora.fet.finalcourseproject.repo.IngredientRepositoryImpl;
+import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.HtmlConverter;
+import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.IngredientsDataModelConverter;
+import com.gmail.elnora.fet.finalcourseproject.database.TodoRecipeEntity;
+import com.gmail.elnora.fet.finalcourseproject.repo.RecipesRepositoryImpl;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -52,7 +53,6 @@ public class ViewRecipeFragment extends Fragment {
     private OkHttpClient okHttpClient = new OkHttpClient();
     private IngredientsDataModelConverter ingredientsDataModelConverter = new IngredientsDataModelConverter();
     private Disposable disposable;
-    private int getRecipeId;
 
     private ImageView viewImageViewRecipeImagePreview;
     private TextView viewTextViewRecipeTitleText;
@@ -85,37 +85,47 @@ public class ViewRecipeFragment extends Fragment {
         setRetainInstance(true);
         TransitionInflater inflater = TransitionInflater.from(requireContext());
         setEnterTransition(inflater.inflateTransition(R.transition.fade));
-        initIngredientList();
-    }
-
-    private void initIngredientList() {
-        getRecipeId = getArguments() != null ? getArguments().getInt(RECIPE_ID_BUNDLE_KEY, 0) : 0;
-        disposable = new IngredientRepositoryImpl(okHttpClient, ingredientsDataModelConverter).getIngredientsByRecipeId(getRecipeId)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(list -> {
-                    ingredientDataModelList.addAll(list);
-                    adapter.updateItemList(list);
-                }, throwable -> Log.d("RECIPE_INGREDIENT", throwable.toString()));
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipe_info, container, false);
+        initRecyclerView(view);
+        return view;
+    }
+
+    private void initRecyclerView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.viewListIngredients);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         if (adapter == null) {
             adapter = new IngredientsRecipeListAdapter(ingredientDataModelList);
         }
         recyclerView.setAdapter(adapter);
-        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        int recipeId = getArguments() != null ? getArguments().getInt(RECIPE_ID_BUNDLE_KEY, 0) : 0;
+        String imageUrl = getArgs(RECIPE_IMAGE_BUNDLE_KEY);
+        String title = getArgs(RECIPE_TITLE_BUNDLE_KEY);
+        String description = getArgs(RECIPE_SUMMARY_BUNDLE_KEY);
+
+        initIngredientList(recipeId);
         initViews(view);
-        setViews();
+        setViews(imageUrl, title, description);
+        fabTodoCookClickListener(recipeId);
+        fabAddTodoListClickListener(recipeId, title,imageUrl);
+    }
+
+    private void initIngredientList(int recipeId) {
+        disposable = new RecipesRepositoryImpl(okHttpClient, ingredientsDataModelConverter).getIngredientsByRecipeId(recipeId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> {
+                    ingredientDataModelList.addAll(list);
+                    adapter.updateItemList(list);
+                }, throwable -> Log.d("RECIPE_INGREDIENT", throwable.toString()));
     }
 
     private void initViews(View view) {
@@ -126,34 +136,19 @@ public class ViewRecipeFragment extends Fragment {
         viewFabAddTodoList = view.findViewById(R.id.viewFabAddTodoList);
     }
 
-    private void setViews() {
-        String imageUrl = getArgs(RECIPE_IMAGE_BUNDLE_KEY);
-        String title = getArgs(RECIPE_TITLE_BUNDLE_KEY);
-        String description = getArgs(RECIPE_SUMMARY_BUNDLE_KEY);
-
+    private void setViews(String imageUrl, String title, String description) {
         Glide.with(this).load(imageUrl).into(viewImageViewRecipeImagePreview);
         viewTextViewRecipeTitleText.setText(title);
         viewTextViewRecipeDescriptionText.setText(htmlConverter.convertFromHtml(description));
-
-        fabTodoCookClickListener();
-        fabAddTodoListClickListener();
     }
 
-    private void fabTodoCookClickListener() {
-        viewFabToDoCook.setOnClickListener(view -> {
-            int getRecipeId = getArguments() != null ? getArguments().getInt(RECIPE_ID_BUNDLE_KEY, 0) : 0;
-            onToDoCookFabClickListener.onFabTodoCookClick(getRecipeId);
-        });
+    private void fabTodoCookClickListener(int recipeId) {
+        viewFabToDoCook.setOnClickListener(view -> onToDoCookFabClickListener.onFabTodoCookClick(recipeId));
     }
 
-    private void fabAddTodoListClickListener() {
-        viewFabAddTodoList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // save to database all info
-                onToDoAddFabClickListener.onFabAddTodoListClick();
-            }
-        });
+    private void fabAddTodoListClickListener(int recipeId, String title, String imageUrl) {
+        viewFabAddTodoList.setOnClickListener(view -> onToDoAddFabClickListener
+                .onFabAddTodoListClick(new TodoRecipeEntity(recipeId, title, imageUrl)));
     }
 
     private String getArgs(String bundleKey) {
