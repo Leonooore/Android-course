@@ -27,4 +27,7 @@
     <string name="ingredient_amount" translatable="false">Amount</string>
     <string name="cook_steps_title" translatable="false">Steps</string>
     <string name="remove_recipe_image_description" translatable="false">remove</string>
+    <string name="snack_bar_text" translatable="false">Recipe has been added in TO DO</string>
+    <string name="welcome_text">Welcome!</string>
+    <string name="welcome_joke_text">Joke</string>
 </resources>

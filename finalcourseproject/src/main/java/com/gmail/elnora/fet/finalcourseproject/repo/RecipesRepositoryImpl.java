@@ -1,9 +1,11 @@
 package com.gmail.elnora.fet.finalcourseproject.repo;
 
 import com.gmail.elnora.fet.finalcourseproject.data.IngredientDataModel;
+import com.gmail.elnora.fet.finalcourseproject.data.JokeDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.StepDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.IngredientsDataModelConverter;
+import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.JokeDataModelConverter;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.RecipesDataModelConverter;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.StepsDataModelConverter;
 
@@ -18,7 +20,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class RecipesRepositoryImpl implements TypeRecipesRepository, IngredientRepository, StepRepository {
+public class RecipesRepositoryImpl implements RecipesRepository {
 
     private static final String API_KEY = "b02c4852aab443b183f8d791cc2ccace";
     private static final String API_KEY_2 = "dfefec802bca4f6bb311f142862efcc0";
@@ -28,6 +30,7 @@ public class RecipesRepositoryImpl implements TypeRecipesRepository, IngredientR
     private RecipesDataModelConverter recipesDataModelConverter;
     private IngredientsDataModelConverter ingredientsDataModelConverter;
     private StepsDataModelConverter stepsDataModelConverter;
+    private JokeDataModelConverter jokeDataModelConverter;
 
     public RecipesRepositoryImpl(OkHttpClient okHttpClient, RecipesDataModelConverter recipesDataModelConverter) {
         this.okHttpClient = okHttpClient;
@@ -42,6 +45,11 @@ public class RecipesRepositoryImpl implements TypeRecipesRepository, IngredientR
     public RecipesRepositoryImpl(OkHttpClient okHttpClient, StepsDataModelConverter stepsDataModelConverter) {
         this.okHttpClient = okHttpClient;
         this.stepsDataModelConverter = stepsDataModelConverter;
+    }
+
+    public RecipesRepositoryImpl(OkHttpClient okHttpClient, JokeDataModelConverter jokeDataModelConverter) {
+        this.okHttpClient = okHttpClient;
+        this.jokeDataModelConverter = jokeDataModelConverter;
     }
 
     private Request builtRequest(String url) {
@@ -90,6 +98,15 @@ public class RecipesRepositoryImpl implements TypeRecipesRepository, IngredientR
         return Single.create((SingleOnSubscribe<String>) emitter -> createResponse(emitter, request))
                 .subscribeOn(Schedulers.io())
                 .map(jsonData -> stepsDataModelConverter.fromJsonToRecipeStepListConverter(jsonData));
+    }
+
+    @Override
+    public Single<JokeDataModel> getJoke() {
+        String url = "https://api.spoonacular.com/food/jokes/random?apiKey=" + API_KEY_2;
+        Request request = builtRequest(url);
+        return Single.create((SingleOnSubscribe<String>) emitter -> createResponse(emitter, request))
+                .subscribeOn(Schedulers.io())
+                .map(jsonData -> jokeDataModelConverter.fromJsonToJokeConverter(jsonData));
     }
 
 }

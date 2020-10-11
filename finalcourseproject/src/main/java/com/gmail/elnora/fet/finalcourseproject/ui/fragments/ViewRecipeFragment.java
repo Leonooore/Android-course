@@ -47,8 +47,7 @@ public class ViewRecipeFragment extends Fragment {
     private HtmlConverter htmlConverter = new HtmlConverter();
     private List<IngredientDataModel> ingredientDataModelList = new ArrayList<>();
     private IngredientsRecipeListAdapter adapter;
-    private RecipeListeners onToDoAddFabClickListener = null;
-    private RecipeListeners onToDoCookFabClickListener = null;
+    private RecipeListeners onFabClickListener = null;
 
     private OkHttpClient okHttpClient = new OkHttpClient();
     private IngredientsDataModelConverter ingredientsDataModelConverter = new IngredientsDataModelConverter();
@@ -74,8 +73,7 @@ public class ViewRecipeFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof RecipeListeners) {
-            onToDoCookFabClickListener = (RecipeListeners) context;
-            onToDoAddFabClickListener = (RecipeListeners) context;
+            onFabClickListener = (RecipeListeners) context;
         }
     }
 
@@ -143,12 +141,13 @@ public class ViewRecipeFragment extends Fragment {
     }
 
     private void fabTodoCookClickListener(int recipeId) {
-        viewFabToDoCook.setOnClickListener(view -> onToDoCookFabClickListener.onFabTodoCookClick(recipeId));
+        viewFabToDoCook.setOnClickListener(view -> onFabClickListener.onFabTodoCookClick(recipeId));
     }
 
     private void fabAddTodoListClickListener(int recipeId, String title, String imageUrl) {
-        viewFabAddTodoList.setOnClickListener(view -> onToDoAddFabClickListener
-                .onFabAddTodoListClick(new TodoRecipeEntity(recipeId, title, imageUrl)));
+        viewFabAddTodoList.setOnClickListener(view -> { onFabClickListener
+                .onFabAddTodoListClick(new TodoRecipeEntity(recipeId, title, imageUrl));
+        });
     }
 
     private String getArgs(String bundleKey) {
@@ -159,8 +158,7 @@ public class ViewRecipeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         disposable.dispose();
-        onToDoAddFabClickListener = null;
-        onToDoCookFabClickListener = null;
+        onFabClickListener = null;
     }
 
 }

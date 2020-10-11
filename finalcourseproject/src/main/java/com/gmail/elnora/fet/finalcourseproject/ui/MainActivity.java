@@ -23,6 +23,7 @@ import com.gmail.elnora.fet.finalcourseproject.ui.fragments.SearchRecipesFragmen
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.TodoFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.ViewRecipeFragment;
 import com.gmail.elnora.fet.finalcourseproject.viewmodel.TodoRecipeViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity implements RecipeListeners {
 
@@ -145,13 +146,15 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
     @Override
     public void onFabAddTodoListClick(TodoRecipeEntity recipe) {
         viewModel.insert(recipe);
-        showFragmentBackStack(TodoFragment.getInstance(), TodoFragment.TAG);
+        Snackbar.make(viewButtonToDo, getString(R.string.snack_bar_text), Snackbar.LENGTH_LONG)
+                .setAction("Show", view -> showFragmentBackStack(TodoFragment.getInstance(), TodoFragment.TAG))
+                .show();
     }
 
     @Override
     public void onTodoItemClick(int recipeId) {
         showFragmentBackStack(CookDishFragment.getInstance(recipeId), CookDishFragment.TAG);
-        setTitleToolbar(getResources().getString(R.string.toolbar_text_cook_dish));
+        setTitleToolbar(getString(R.string.toolbar_text_cook_dish));
     }
 
     @Override
