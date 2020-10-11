@@ -14,47 +14,18 @@
         android:layout_height="0dp"
         android:background="@color/colorWhite"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/buttonGroup"/>
+        app:layout_constraintBottom_toTopOf="@id/viewBottomNavigation"/>
 
-    <LinearLayout
-        android:id="@+id/buttonGroup"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/viewBottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="bottom"
+        android:background="@color/colorWhite"
+        app:menu="@menu/bottom_navigation_menu"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" >
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <ImageButton
-            android:id="@+id/viewImageButtonSearchRecipes"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/default_button_height"
-            android:layout_weight="1"
-            android:background="@color/colorWhite"
-            android:src="@drawable/ic_baseline_search_32"
-            android:contentDescription="@string/button_text_search" />
-
-        <Button
-            android:id="@+id/viewButtonAllRecipes"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/default_button_height"
-            android:layout_weight="1"
-            android:background="@color/colorWhite"
-            android:text="@string/button_text_all"
-            android:textColor="@color/colorDarkGray"
-            android:textSize="@dimen/default_button_text_size" />
-
-        <Button
-            android:id="@+id/viewButtonToDoRecipes"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/default_button_height"
-            android:layout_weight="1"
-            android:background="@color/colorWhite"
-            android:text="@string/button_text_to_do"
-            android:textColor="@color/colorDarkGray"
-            android:textSize="@dimen/default_button_text_size" />
-
-    </LinearLayout>
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

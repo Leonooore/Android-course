@@ -8,8 +8,6 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.ImageButton;
 
 import com.gmail.elnora.fet.finalcourseproject.R;
 import com.gmail.elnora.fet.finalcourseproject.RecipeListeners;
@@ -23,13 +21,12 @@ import com.gmail.elnora.fet.finalcourseproject.ui.fragments.SearchRecipesFragmen
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.TodoFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.ViewRecipeFragment;
 import com.gmail.elnora.fet.finalcourseproject.viewmodel.TodoRecipeViewModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity implements RecipeListeners {
 
-    private ImageButton viewImageButtonSearch;
-    private Button viewButtonAllRecipes;
-    private Button viewButtonToDo;
+    private BottomNavigationView viewBottomNavigation;
     private TodoRecipeViewModel viewModel;
 
     @Override
@@ -37,15 +34,25 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         viewModel = new TodoRecipeViewModel(this);
-        initViews();
-        buttonsClickListeners();
+        initBottomNavigation();
+        bottomNavigationClickListeners();
         showMainFragmentAllRecipes(savedInstanceState);
     }
 
-    private void initViews() {
-        viewImageButtonSearch = findViewById(R.id.viewImageButtonSearchRecipes);
-        viewButtonAllRecipes = findViewById(R.id.viewButtonAllRecipes);
-        viewButtonToDo = findViewById(R.id.viewButtonToDoRecipes);
+    private void initBottomNavigation() {
+        viewBottomNavigation = findViewById(R.id.viewBottomNavigation);
+        viewBottomNavigation.setSelectedItemId(R.id.pageAllRecipes);
+    }
+
+    private void bottomNavigationClickListeners() {
+        viewBottomNavigation.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.pageSearchRecipes : showFragment(SearchRecipesFragment.getInstance(), SearchRecipesFragment.TAG); return true;
+                case R.id.pageAllRecipes : showFragment(AllCategoriesRecipesFragment.getInstance(), AllCategoriesRecipesFragment.TAG); return true;
+                case R.id.pageToDoRecipes : showFragment(TodoFragment.getInstance(), TodoFragment.TAG); return true;
+                default: return false;
+            }
+        });
     }
 
     @Override
@@ -76,12 +83,6 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
         if (actionBar != null) {
             actionBar.setTitle(title);
         }
-    }
-
-    private void buttonsClickListeners() {
-        viewImageButtonSearch.setOnClickListener(view -> showFragment(SearchRecipesFragment.getInstance(), SearchRecipesFragment.TAG));
-        viewButtonAllRecipes.setOnClickListener(view -> showFragment(AllCategoriesRecipesFragment.getInstance(), AllCategoriesRecipesFragment.TAG));
-        viewButtonToDo.setOnClickListener(view -> showFragment(TodoFragment.getInstance(), TodoFragment.TAG));
     }
 
     private void showMainFragmentAllRecipes(Bundle savedInstanceState) {
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
     @Override
     public void onFabAddTodoListClick(TodoRecipeEntity recipe) {
         viewModel.insert(recipe);
-        Snackbar.make(viewButtonToDo, getString(R.string.snack_bar_text), Snackbar.LENGTH_LONG)
+        Snackbar.make(viewBottomNavigation, getString(R.string.snack_bar_text), Snackbar.LENGTH_LONG)
                 .setAction("Show", view -> showFragmentBackStack(TodoFragment.getInstance(), TodoFragment.TAG))
                 .show();
     }

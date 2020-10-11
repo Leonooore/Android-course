@@ -6,9 +6,9 @@
     <string name="menu_item_title_search_recipes">Search recipes</string>
     <string name="menu_item_title_exit" translatable="false">Exit</string>
     <string name="toolbar_text_cook_dish" translatable="false">Cooking</string>
-    <string name="button_text_all" translatable="false">All</string>
-    <string name="button_text_to_do" translatable="false">To do</string>
-    <string name="button_text_search" translatable="false">Search</string>
+    <string name="button_text_all" translatable="false">ALL</string>
+    <string name="button_text_to_do" translatable="false">TO DO</string>
+    <string name="button_text_search" translatable="false">SEARCH</string>
     <string name="search_recipes_title_text" translatable="false">Find and choose your dish</string>
     <string name="text_find_recipe" translatable="false">Find recipeDataModel</string>
     <string name="content_description_recipe_image" translatable="false">Image</string>
@@ -28,6 +28,6 @@
     <string name="cook_steps_title" translatable="false">Steps</string>
     <string name="remove_recipe_image_description" translatable="false">remove</string>
     <string name="snack_bar_text" translatable="false">Recipe has been added in TO DO</string>
-    <string name="welcome_text">Welcome!</string>
-    <string name="welcome_joke_text">Joke</string>
+    <string name="welcome_text" translatable="false">Welcome!</string>
+    <string name="welcome_joke_text" translatable="false">Joke</string>
 </resources>
