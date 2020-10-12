@@ -15,4 +15,5 @@
     <dimen name="search_list_margin_top">24dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="recipe_image_height">200dp</dimen>
+    <dimen name="ingredient_image_size">100dp</dimen>
 </resources>

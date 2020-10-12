@@ -1,5 +1,6 @@
 package com.gmail.elnora.fet.finalcourseproject.ui.fragments;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +32,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -138,6 +141,9 @@ public class ViewRecipeFragment extends Fragment {
         Glide.with(this).load(imageUrl).into(viewImageViewRecipeImagePreview);
         viewTextViewRecipeTitleText.setText(title);
         viewTextViewRecipeDescriptionText.setText(htmlConverter.convertFromHtml(description));
+
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle(title);
+        Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
     private void fabTodoCookClickListener(int recipeId) {

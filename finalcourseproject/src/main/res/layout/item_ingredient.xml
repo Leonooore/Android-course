@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/viewItemIngredientImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/ingredient_image_size"
+        android:layout_height="@dimen/ingredient_image_size"
         android:scaleType="fitCenter"
         android:layout_gravity="center"
         android:padding="@dimen/small_padding"

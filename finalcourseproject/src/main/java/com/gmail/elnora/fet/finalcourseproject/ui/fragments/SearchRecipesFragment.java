@@ -8,10 +8,13 @@ import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.transition.TransitionInflater;
 
 import com.gmail.elnora.fet.finalcourseproject.R;
+
+import java.util.Objects;
 
 public class SearchRecipesFragment extends Fragment {
 
@@ -38,6 +41,8 @@ public class SearchRecipesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle(getString(R.string.toolbar_text_search));
+        Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
         return inflater.inflate(R.layout.fragment_search_recipes, container, false);
     }
 

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,8 +21,10 @@ import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.StepsDataModel
 import com.gmail.elnora.fet.finalcourseproject.repo.RecipesRepositoryImpl;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -62,6 +65,8 @@ public class CookDishFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cook_dish, container, false);
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle(getString(R.string.toolbar_text_cook_dish));
+        Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         initRecyclerView(view);
         return view;
     }
@@ -89,7 +94,7 @@ public class CookDishFragment extends Fragment {
                     stepDataModelList.addAll(list);
                     adapter.updateItemList(list);
                 }, throwable -> {
-                    if(throwable.getMessage().contains("Unable to resolve host")) {
+                    if(throwable instanceof UnknownHostException) {
                         Snackbar.make(view.findViewById(R.id.recyclerListToDoCheckBox),
                                 getString(R.string.error_no_internet_connection),
                                 Snackbar.LENGTH_LONG)
@@ -109,5 +114,4 @@ public class CookDishFragment extends Fragment {
         super.onDetach();
         disposable.dispose();
     }
-
 }

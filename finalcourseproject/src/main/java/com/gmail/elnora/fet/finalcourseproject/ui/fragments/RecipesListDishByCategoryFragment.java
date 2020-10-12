@@ -10,6 +10,7 @@ import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,8 +25,10 @@ import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.RecipesDataMod
 import com.gmail.elnora.fet.finalcourseproject.repo.RecipesRepositoryImpl;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -89,20 +92,22 @@ public class RecipesListDishByCategoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initRecipeList(view);
+        String getType = getArguments() != null ? getArguments().getString(DISH_TYPE_BUNDLE_KEY, "") : "";
+        initRecipeList(view, getType);
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle(getType);
+        Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         searchView = view.findViewById(R.id.viewSearchDishRecipesByCategory);
         setSearchViewListener();
     }
 
-    private void initRecipeList(View view) {
-        String getType = getArguments() != null ? getArguments().getString(DISH_TYPE_BUNDLE_KEY, "") : "";
+    private void initRecipeList(View view, String getType) {
         disposable = new RecipesRepositoryImpl(okHttpClient, recipesDataModelConverter).getRecipesByType(getType)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
                     recipeDataModelList.addAll(list);
                     adapter.updateItemList(list);
                 }, throwable -> {
-                    if (throwable.getMessage().contains("Unable to resolve host")) {
+                    if (throwable instanceof UnknownHostException) {
                         Snackbar.make(view.findViewById(R.id.viewRecipesListDishByCategory),
                                 getString(R.string.error_no_internet_connection),
                                 Snackbar.LENGTH_LONG)

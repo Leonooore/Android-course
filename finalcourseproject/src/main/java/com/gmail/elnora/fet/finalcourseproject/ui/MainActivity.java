@@ -1,7 +1,6 @@
 package com.gmail.elnora.fet.finalcourseproject.ui;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -23,8 +22,6 @@ import com.gmail.elnora.fet.finalcourseproject.ui.fragments.ViewRecipeFragment;
 import com.gmail.elnora.fet.finalcourseproject.viewmodel.TodoRecipeViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements RecipeListeners {
 
@@ -60,8 +57,6 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
             case R.id.menuItemToDo : showFragment(TodoFragment.getInstance(), TodoFragment.TAG); break;
             case R.id.menuItemExit : finish(); break;
         }
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
-        setTitleToolbar(getResources().getString(R.string.app_name));
         return super.onOptionsItemSelected(item);
     }
 
@@ -75,32 +70,20 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
             switch (item.getItemId()) {
                 case R.id.pageSearchRecipes: {
                     showFragment(SearchRecipesFragment.getInstance(), SearchRecipesFragment.TAG);
-                    Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
-                    setTitleToolbar(getResources().getString(R.string.app_name));
                     return true;
                 }
                 case R.id.pageAllRecipes: {
                     showFragment(AllCategoriesRecipesFragment.getInstance(), AllCategoriesRecipesFragment.TAG);
-                    Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
-                    setTitleToolbar(getResources().getString(R.string.app_name));
                     return true;
                 }
                 case R.id.pageToDoRecipes: {
                     showFragment(TodoFragment.getInstance(), TodoFragment.TAG);
-                    Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
-                    setTitleToolbar(getResources().getString(R.string.app_name));
                     return true;
                 }
-                default: return false;
+                default:
+                    return false;
             }
         });
-    }
-
-    private void setTitleToolbar(String title) {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(title);
-        }
     }
 
     private void showMainFragmentAllRecipes(Bundle savedInstanceState) {
@@ -125,29 +108,11 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
                 .replace(R.id.fragmentContainer, fragment, tag)
                 .addToBackStack(null)
                 .commit();
-
-        setGoBackListener();
-    }
-
-    private void setGoBackListener() {
-        getSupportFragmentManager().addOnBackStackChangedListener(() -> {
-            int stackHeight = getSupportFragmentManager().getBackStackEntryCount();
-            if (stackHeight > 0) {
-                Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-                if ( stackHeight > 1) {
-                    setTitleToolbar(getResources().getString(R.string.app_name));
-                }
-            } else {
-                Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
-                setTitleToolbar(getResources().getString(R.string.app_name));
-            }
-        });
     }
 
     @Override
     public void onDishTypeClick(DishTypeEnum dishType) {
         showFragmentBackStack(RecipesListDishByCategoryFragment.getInstance(dishType), RecipesListDishByCategoryFragment.TAG);
-        setTitleToolbar(dishType.toString());
     }
 
     @Override
@@ -171,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
     @Override
     public void onTodoItemClick(int recipeId) {
         showFragmentBackStack(CookDishFragment.getInstance(recipeId), CookDishFragment.TAG);
-        setTitleToolbar(getString(R.string.toolbar_text_cook_dish));
     }
 
     @Override
