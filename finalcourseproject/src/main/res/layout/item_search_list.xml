@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shadow"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/viewImageSearchImagePreview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_baseline_image_180"
+        android:contentDescription="@string/content_description_recipe_image" />
+
+    <TextView
+        android:id="@+id/viewTextViewSearchTitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textSize="@dimen/default_text_size"
+        android:textAllCaps="true"
+        android:textColor="@color/colorDarkGray"
+        android:padding="@dimen/small_padding"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewImageSearchImagePreview"
+        tools:text="@string/item_recipe_title_text" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

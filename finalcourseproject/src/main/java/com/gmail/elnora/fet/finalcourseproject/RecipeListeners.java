@@ -11,4 +11,5 @@ public interface RecipeListeners {
     void onFabAddTodoListClick(TodoRecipeEntity recipe);
     void onTodoItemClick(int recipeId);
     void onRemoveRecipeClick(TodoRecipeEntity recipe);
+    void onSearchedRecipeClick(String url);
 }

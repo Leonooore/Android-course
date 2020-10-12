@@ -3,10 +3,12 @@ package com.gmail.elnora.fet.finalcourseproject.repo;
 import com.gmail.elnora.fet.finalcourseproject.data.IngredientDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.JokeDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
+import com.gmail.elnora.fet.finalcourseproject.data.SearchRecipeDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.StepDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.IngredientsDataModelConverter;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.JokeDataModelConverter;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.RecipesDataModelConverter;
+import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.SearchDataModeConverter;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.StepsDataModelConverter;
 
 import java.io.IOException;
@@ -31,6 +33,7 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     private IngredientsDataModelConverter ingredientsDataModelConverter;
     private StepsDataModelConverter stepsDataModelConverter;
     private JokeDataModelConverter jokeDataModelConverter;
+    private SearchDataModeConverter searchDataModeConverter;
 
     public RecipesRepositoryImpl(OkHttpClient okHttpClient, RecipesDataModelConverter recipesDataModelConverter) {
         this.okHttpClient = okHttpClient;
@@ -50,6 +53,11 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     public RecipesRepositoryImpl(OkHttpClient okHttpClient, JokeDataModelConverter jokeDataModelConverter) {
         this.okHttpClient = okHttpClient;
         this.jokeDataModelConverter = jokeDataModelConverter;
+    }
+
+    public RecipesRepositoryImpl(OkHttpClient okHttpClient, SearchDataModeConverter searchDataModeConverter) {
+        this.okHttpClient = okHttpClient;
+        this.searchDataModeConverter = searchDataModeConverter;
     }
 
     private Request builtRequest(String url) {
@@ -107,6 +115,15 @@ public class RecipesRepositoryImpl implements RecipesRepository {
         return Single.create((SingleOnSubscribe<String>) emitter -> createResponse(emitter, request))
                 .subscribeOn(Schedulers.io())
                 .map(jsonData -> jokeDataModelConverter.fromJsonToJokeConverter(jsonData));
+    }
+
+    @Override
+    public Single<List<SearchRecipeDataModel>> getSearchRecipes(String searchQuery) {
+        String url = "https://api.spoonacular.com/recipes/complexSearch?query=" + searchQuery + "&addRecipeInformation=true&apiKey=" + API_KEY;
+        Request request = builtRequest(url);
+        return Single.create((SingleOnSubscribe<String>) emitter -> createResponse(emitter, request))
+                .subscribeOn(Schedulers.io())
+                .map(jsonData -> searchDataModeConverter.fromJsonToRecipeListConverter(jsonData));
     }
 
 }

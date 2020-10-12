@@ -143,4 +143,9 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
         viewModel.delete(recipe);
     }
 
+    @Override
+    public void onSearchedRecipeClick(String url) {
+        Snackbar.make(viewBottomNavigation, "Recipe was clicked", Snackbar.LENGTH_LONG).show();
+    }
+
 }

@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
     android:orientation="vertical"
-    android:paddingTop="@dimen/default_padding"
-    android:paddingHorizontal="@dimen/small_padding">
+    android:paddingTop="@dimen/default_padding">
 
     <TextView
         android:id="@+id/viewTextViewSearchRecipesTitle"
@@ -23,26 +22,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/shadow"
-        android:queryHint="@string/search_query_hint_recipe"
+        android:queryHint="@string/search_text_query"
         android:searchIcon="@drawable/ic_baseline_search_24"
         android:iconifiedByDefault="false"
         android:focusable="false"
         android:padding="@dimen/small_padding"
         android:layout_marginBottom="@dimen/small_margin" />
 
-    <CheckBox
-        android:id="@+id/viewCheckBoxFindByIngredients"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/search_check_box_text"
-        android:paddingHorizontal="@dimen/default_padding" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/viewSearchRecipesList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shadow"
-        android:layout_marginTop="@dimen/search_list_margin_top"
-        android:padding="@dimen/default_padding" />
+        android:background="@color/colorWhite" />
 
 </LinearLayout>

@@ -17,12 +17,12 @@
     <string name="item_recipe_title_text" translatable="false">Title text</string>
     <string name="item_recipe_description_text" translatable="false">Description text</string>
     <string name="all_categories_title_text" translatable="false">Choose dish category</string>
-    <string name="search_check_box_text" translatable="false">Find the dish by choosing the ingredients you have in your fridge</string>
+    <string name="search_text_query" translatable="false">Search dish by title</string>
     <string name="recipe_info_title_ingredients" translatable="false">Ingredients</string>
     <string name="title_text_choose_dish_to_do" translatable="false">Choose dish to do</string>
     <string name="menu_item_title_search" translatable="false">Search</string>
     <string name="search_query_hint_categories" translatable="false">Search dish category...</string>
-    <string name="search_query_hint_recipe" translatable="false">Search recipe...</string>
+    <string name="search_query_hint_recipe" translatable="false">Search recipe ...</string>
     <string name="recipe_text_about" translatable="false">About</string>
     <string name="text_name_of_ingredient" translatable="false">Name of ingredient</string>
     <string name="ingredient" translatable="false">Ingredient</string>
