@@ -53,7 +53,7 @@ public class RecipesListDishByCategoryFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString(DISH_TYPE_BUNDLE_KEY, dishType.toString());
         instance.setArguments(bundle);
-        return  instance;
+        return instance;
     }
 
     @Override

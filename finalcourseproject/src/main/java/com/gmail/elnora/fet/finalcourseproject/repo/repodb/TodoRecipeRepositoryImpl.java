@@ -1,6 +1,5 @@
 package com.gmail.elnora.fet.finalcourseproject.repo.repodb;
 
-import android.app.Application;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;

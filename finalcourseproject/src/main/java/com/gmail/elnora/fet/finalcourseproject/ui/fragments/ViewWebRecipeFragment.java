@@ -73,7 +73,7 @@ public class ViewWebRecipeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle(getString(R.string.toolbar_text_web_view));
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle(getArgs(RECIPE_TITLE_BUNDLE_KEY));
         Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         View view = inflater.inflate(R.layout.fragment_view_web_recipe, container, false);
         initViews(view);
@@ -104,12 +104,7 @@ public class ViewWebRecipeFragment extends Fragment {
     }
 
     private void fabAddTodoListClickListener(int recipeId, String title, String imageUrl, String summary, String dishType) {
-        viewFabAddTodoRecipe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onFabClickListener.onFabAddTodoListClick(new TodoRecipeEntity(recipeId, title, imageUrl, summary, dishType));
-            }
-        });
+        viewFabAddTodoRecipe.setOnClickListener(view -> onFabClickListener.onFabAddTodoListClick(new TodoRecipeEntity(recipeId, title, imageUrl, summary, dishType)));
     }
 
     @SuppressLint("SetJavaScriptEnabled")

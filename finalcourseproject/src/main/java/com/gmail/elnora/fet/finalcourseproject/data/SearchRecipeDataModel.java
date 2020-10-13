@@ -17,13 +17,6 @@ public class SearchRecipeDataModel {
         this.dishTypes = dishTypes;
     }
 
-    /*public SearchRecipeDataModel(int id, String title, String urlToImage, String summary) {
-        this.id = id;
-        this.title = title;
-        this.urlToImage = urlToImage;
-        this.sourceUrl = summary;
-    }*/
-
     public int getId() {
         return id;
     }

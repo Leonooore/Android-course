@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.gmail.elnora.fet.finalcourseproject.R;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.JokeDataModelConverter;
 import com.gmail.elnora.fet.finalcourseproject.repo.RecipesRepositoryImpl;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.net.UnknownHostException;
 
@@ -56,12 +55,12 @@ public class WelcomeActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(joke -> viewTextFoodJokes.setText(joke.getJoke()),
                         throwable -> {
-                            if(throwable.getMessage().contains("Unable to resolve host")) {
+                            if(throwable instanceof UnknownHostException) {
                                 viewTextFoodJokes.setText(getString(R.string.error_no_internet_connection));
                             } else if (throwable.getMessage().contains("402")) {
                                 viewTextFoodJokes.setText(getString(R.string.error_api_request));
                             }
-                            Log.d("WELCOME_JOKE", throwable.getMessage());
+                            Log.d("WELCOME_JOKE", throwable.toString());
                         });
     }
 

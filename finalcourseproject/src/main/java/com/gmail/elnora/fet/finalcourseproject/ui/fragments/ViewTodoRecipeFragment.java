@@ -26,7 +26,6 @@ import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.HtmlConverter;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.IngredientsDataModelConverter;
 import com.gmail.elnora.fet.finalcourseproject.repo.RecipesRepositoryImpl;
-import com.gmail.elnora.fet.finalcourseproject.viewmodel.TodoRecipeViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
