@@ -16,4 +16,5 @@ public interface RecipesRepository {
     Single<List<StepDataModel>> getStepsByRecipeId(int recipeId);
     Single<JokeDataModel> getJoke();
     Single<List<SearchRecipeDataModel>> getSearchRecipes(String searchQuery);
+    Single<List<SearchRecipeDataModel>> getRandomRecipes();
 }

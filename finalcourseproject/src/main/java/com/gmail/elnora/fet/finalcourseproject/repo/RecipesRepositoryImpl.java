@@ -7,6 +7,7 @@ import com.gmail.elnora.fet.finalcourseproject.data.SearchRecipeDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.StepDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.IngredientsDataModelConverter;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.JokeDataModelConverter;
+import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.RandomRecipesDataModelConverter;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.RecipesDataModelConverter;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.SearchDataModeConverter;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.StepsDataModelConverter;
@@ -34,6 +35,7 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     private StepsDataModelConverter stepsDataModelConverter;
     private JokeDataModelConverter jokeDataModelConverter;
     private SearchDataModeConverter searchDataModeConverter;
+    private RandomRecipesDataModelConverter randomRecipesConverter;
 
     public RecipesRepositoryImpl(OkHttpClient okHttpClient, RecipesDataModelConverter recipesDataModelConverter) {
         this.okHttpClient = okHttpClient;
@@ -58,6 +60,11 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     public RecipesRepositoryImpl(OkHttpClient okHttpClient, SearchDataModeConverter searchDataModeConverter) {
         this.okHttpClient = okHttpClient;
         this.searchDataModeConverter = searchDataModeConverter;
+    }
+
+    public RecipesRepositoryImpl(OkHttpClient okHttpClient, RandomRecipesDataModelConverter randomRecipesConverter) {
+        this.okHttpClient = okHttpClient;
+        this.randomRecipesConverter = randomRecipesConverter;
     }
 
     private Request builtRequest(String url) {
@@ -124,6 +131,15 @@ public class RecipesRepositoryImpl implements RecipesRepository {
         return Single.create((SingleOnSubscribe<String>) emitter -> createResponse(emitter, request))
                 .subscribeOn(Schedulers.io())
                 .map(jsonData -> searchDataModeConverter.fromJsonToRecipeListConverter(jsonData));
+    }
+
+    @Override
+    public Single<List<SearchRecipeDataModel>> getRandomRecipes() {
+        String url = "https://api.spoonacular.com/recipes/random?number=10&apiKey=" + API_KEY;
+        Request request = builtRequest(url);
+        return Single.create((SingleOnSubscribe<String>) emitter -> createResponse(emitter, request))
+                .subscribeOn(Schedulers.io())
+                .map(jsonData -> randomRecipesConverter.fromJsonToRecipeListConverter(jsonData));
     }
 
 }

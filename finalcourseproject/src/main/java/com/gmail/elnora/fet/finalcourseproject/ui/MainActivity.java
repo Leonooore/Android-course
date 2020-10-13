@@ -19,6 +19,7 @@ import com.gmail.elnora.fet.finalcourseproject.ui.fragments.RecipesListDishByCat
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.SearchRecipesFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.TodoFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.ViewRecipeFragment;
+import com.gmail.elnora.fet.finalcourseproject.ui.fragments.ViewWebRecipeFragment;
 import com.gmail.elnora.fet.finalcourseproject.viewmodel.TodoRecipeViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -145,7 +146,8 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
 
     @Override
     public void onSearchedRecipeClick(String url) {
-        Snackbar.make(viewBottomNavigation, "Recipe was clicked", Snackbar.LENGTH_LONG).show();
+        showFragmentBackStack(ViewWebRecipeFragment.getInstance(), ViewWebRecipeFragment.TAG);
+//        Snackbar.make(viewBottomNavigation, "Recipe was clicked", Snackbar.LENGTH_LONG).show();
     }
 
 }

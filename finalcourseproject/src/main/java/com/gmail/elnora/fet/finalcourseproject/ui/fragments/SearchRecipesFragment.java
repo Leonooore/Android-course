@@ -20,6 +20,7 @@ import com.gmail.elnora.fet.finalcourseproject.R;
 import com.gmail.elnora.fet.finalcourseproject.RecipeListeners;
 import com.gmail.elnora.fet.finalcourseproject.adapter.SearchListViewAdapter;
 import com.gmail.elnora.fet.finalcourseproject.data.SearchRecipeDataModel;
+import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.RandomRecipesDataModelConverter;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.SearchDataModeConverter;
 import com.gmail.elnora.fet.finalcourseproject.repo.RecipesRepositoryImpl;
 import com.google.android.material.snackbar.Snackbar;
@@ -46,6 +47,7 @@ public class SearchRecipesFragment extends Fragment {
 
     private OkHttpClient okHttpClient = new OkHttpClient();
     private SearchDataModeConverter searchDataModeConverter = new SearchDataModeConverter();
+    private RandomRecipesDataModelConverter randomRecipesDataModelConverter = new RandomRecipesDataModelConverter();
     private Disposable disposable;
 
     public static SearchRecipesFragment getInstance() {
@@ -83,6 +85,7 @@ public class SearchRecipesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView(view);
+        initRandomRecipeList(view);
         searchView = view.findViewById(R.id.viewSearchRecipes);
         setSearchViewListener(view);
     }
@@ -94,6 +97,28 @@ public class SearchRecipesFragment extends Fragment {
             adapter = new SearchListViewAdapter(searchRecipeDataModelList, recipeClickListener);
         }
         recyclerView.setAdapter(adapter);
+    }
+
+    private void initRandomRecipeList(View view) {
+        disposable = new RecipesRepositoryImpl(okHttpClient, randomRecipesDataModelConverter).getRandomRecipes()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> {
+                    searchRecipeDataModelList.addAll(list);
+                    adapter.updateItemList(list);
+                }, throwable -> {
+                    if (throwable instanceof UnknownHostException) {
+                        Snackbar.make(view.findViewById(R.id.viewRecipesListDishByCategory),
+                                getString(R.string.error_no_internet_connection),
+                                Snackbar.LENGTH_LONG)
+                                .show();
+                    } else if (throwable.getMessage().contains("402")) {
+                        Snackbar.make(view.findViewById(R.id.viewRecipesListDishByCategory),
+                                getString(R.string.error_api_request),
+                                Snackbar.LENGTH_LONG)
+                                .show();
+                    }
+                    Log.d("SEARCH", throwable.toString());
+                });
     }
 
     private void setSearchViewListener(View view) {
