@@ -8,9 +8,9 @@ import com.gmail.elnora.fet.finalcourseproject.database.TodoRecipeEntity;
 public interface RecipeListeners {
     void onDishTypeClick(DishTypeEnum dishType);
     void onRecipeClick(RecipeDataModel recipeDataModel);
-    void onFabTodoCookClick(int recipeId);
+    void onFabTodoCookClick(int recipeId, String title);
     void onFabAddTodoListClick(TodoRecipeEntity recipe);
-    void onTodoItemClick(int recipeId);
+    void onTodoItemClick(RecipeDataModel recipeDataModel);
     void onRemoveRecipeClick(TodoRecipeEntity recipe);
     void onSearchedRecipeClick(SearchRecipeDataModel searchRecipeDataModel);
 }

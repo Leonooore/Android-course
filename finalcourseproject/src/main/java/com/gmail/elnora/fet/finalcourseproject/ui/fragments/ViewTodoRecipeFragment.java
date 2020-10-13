@@ -25,8 +25,8 @@ import com.gmail.elnora.fet.finalcourseproject.data.IngredientDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.HtmlConverter;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.IngredientsDataModelConverter;
-import com.gmail.elnora.fet.finalcourseproject.database.TodoRecipeEntity;
 import com.gmail.elnora.fet.finalcourseproject.repo.RecipesRepositoryImpl;
+import com.gmail.elnora.fet.finalcourseproject.viewmodel.TodoRecipeViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -37,16 +37,15 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import okhttp3.OkHttpClient;
 
-public class ViewRecipeFragment extends Fragment {
+public class ViewTodoRecipeFragment extends Fragment {
 
-    public static final String TAG = "ViewRecipeFragment";
+    public static final String TAG = "ViewTodoRecipeFragment";
     private static final String RECIPE_ID_BUNDLE_KEY = "RECIPE_ID_BUNDLE_KEY";
     private static final String RECIPE_TITLE_BUNDLE_KEY = "RECIPE_TITLE_BUNDLE_KEY";
     private static final String RECIPE_IMAGE_BUNDLE_KEY = "RECIPE_IMAGE_BUNDLE_KEY";
     private static final String RECIPE_SUMMARY_BUNDLE_KEY = "RECIPE_SUMMARY_BUNDLE_KEY";
-    private static final String RECIPE_TYPE_BUNDLE_KEY = "RECIPE_TYPE_BUNDLE_KEY";
 
-    private static ViewRecipeFragment instance = new ViewRecipeFragment();
+    private static ViewTodoRecipeFragment instance = new ViewTodoRecipeFragment();
     private HtmlConverter htmlConverter = new HtmlConverter();
     private List<IngredientDataModel> ingredientDataModelList = new ArrayList<>();
     private IngredientsRecipeListAdapter adapter;
@@ -60,15 +59,13 @@ public class ViewRecipeFragment extends Fragment {
     private TextView viewTextViewRecipeTitleText;
     private TextView viewTextViewRecipeDescriptionText;
     private FloatingActionButton viewFabToDoCook;
-    private FloatingActionButton viewFabAddTodoList;
 
-    public static ViewRecipeFragment getInstance(RecipeDataModel recipeDataModel) {
+    public static ViewTodoRecipeFragment getInstance(RecipeDataModel recipeDataModel) {
         Bundle bundle = new Bundle();
         bundle.putInt(RECIPE_ID_BUNDLE_KEY, recipeDataModel.getId());
         bundle.putString(RECIPE_TITLE_BUNDLE_KEY, recipeDataModel.getTitle());
         bundle.putString(RECIPE_IMAGE_BUNDLE_KEY, recipeDataModel.getUrlToImage());
         bundle.putString(RECIPE_SUMMARY_BUNDLE_KEY, recipeDataModel.getSummary());
-        bundle.putString(RECIPE_TYPE_BUNDLE_KEY, recipeDataModel.getDishTypes());
         instance.setArguments(bundle);
         return instance;
     }
@@ -113,13 +110,11 @@ public class ViewRecipeFragment extends Fragment {
         String imageUrl = getArgs(RECIPE_IMAGE_BUNDLE_KEY);
         String title = getArgs(RECIPE_TITLE_BUNDLE_KEY);
         String summary = getArgs(RECIPE_SUMMARY_BUNDLE_KEY);
-        String dishType = getArgs(RECIPE_TYPE_BUNDLE_KEY);
 
         initIngredientList(recipeId);
         initViews(view);
         setViews(imageUrl, title, summary);
         fabTodoCookClickListener(recipeId, title);
-        fabAddTodoListClickListener(recipeId, title,imageUrl, summary, dishType);
     }
 
     private void initIngredientList(int recipeId) {
@@ -136,7 +131,8 @@ public class ViewRecipeFragment extends Fragment {
         viewTextViewRecipeTitleText = view.findViewById(R.id.viewTextViewRecipeTitleText);
         viewTextViewRecipeDescriptionText = view.findViewById(R.id.viewTextViewRecipeDescriptionText);
         viewFabToDoCook = view.findViewById(R.id.viewFabToDoCook);
-        viewFabAddTodoList = view.findViewById(R.id.viewFabAddTodoList);
+        FloatingActionButton viewFabAddTodoList = view.findViewById(R.id.viewFabAddTodoList);
+        viewFabAddTodoList.setVisibility(View.GONE);
     }
 
     private void setViews(String imageUrl, String title, String description) {
@@ -150,10 +146,6 @@ public class ViewRecipeFragment extends Fragment {
 
     private void fabTodoCookClickListener(int recipeId, String title) {
         viewFabToDoCook.setOnClickListener(view -> onFabClickListener.onFabTodoCookClick(recipeId, title));
-    }
-
-    private void fabAddTodoListClickListener(int recipeId, String title, String imageUrl, String summary, String dishType) {
-        viewFabAddTodoList.setOnClickListener(view -> onFabClickListener.onFabAddTodoListClick(new TodoRecipeEntity(recipeId, title, imageUrl, summary, dishType)));
     }
 
     private String getArgs(String bundleKey) {

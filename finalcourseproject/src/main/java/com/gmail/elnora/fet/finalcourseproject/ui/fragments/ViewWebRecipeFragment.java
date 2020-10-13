@@ -33,6 +33,8 @@ public class ViewWebRecipeFragment extends Fragment {
     private static final String RECIPE_ID_BUNDLE_KEY = "RECIPE_ID_BUNDLE_KEY";
     private static final String RECIPE_TITLE_BUNDLE_KEY = "RECIPE_TITLE_BUNDLE_KEY";
     private static final String RECIPE_IMAGE_BUNDLE_KEY = "RECIPE_IMAGE_BUNDLE_KEY";
+    private static final String RECIPE_SUMMARY_BUNDLE_KEY = "RECIPE_SUMMARY_BUNDLE_KEY";
+    private static final String RECIPE_TYPE_BUNDLE_KEY = "RECIPE_TYPE_BUNDLE_KEY";
 
     private static ViewWebRecipeFragment instance = new ViewWebRecipeFragment();
     private RecipeListeners onFabClickListener = null;
@@ -46,6 +48,8 @@ public class ViewWebRecipeFragment extends Fragment {
         bundle.putInt(RECIPE_ID_BUNDLE_KEY, searchRecipeDataModel.getId());
         bundle.putString(RECIPE_TITLE_BUNDLE_KEY, searchRecipeDataModel.getTitle());
         bundle.putString(RECIPE_IMAGE_BUNDLE_KEY, searchRecipeDataModel.getUrlToImage());
+        bundle.putString(RECIPE_SUMMARY_BUNDLE_KEY, searchRecipeDataModel.getSummary());
+        bundle.putString(RECIPE_TYPE_BUNDLE_KEY, searchRecipeDataModel.getDishTypes());
         instance.setArguments(bundle);
         return instance;
     }
@@ -94,14 +98,16 @@ public class ViewWebRecipeFragment extends Fragment {
         int recipeId = getArguments() != null ? getArguments().getInt(RECIPE_ID_BUNDLE_KEY, 0) : 0;
         String imageUrl = getArgs(RECIPE_IMAGE_BUNDLE_KEY);
         String title = getArgs(RECIPE_TITLE_BUNDLE_KEY);
-        fabAddTodoListClickListener(recipeId, title,imageUrl);
+        String summary = getArgs(RECIPE_SUMMARY_BUNDLE_KEY);
+        String dishType = getArgs(RECIPE_TYPE_BUNDLE_KEY);
+        fabAddTodoListClickListener(recipeId, title,imageUrl, summary, dishType);
     }
 
-    private void fabAddTodoListClickListener(int recipeId, String title, String imageUrl) {
+    private void fabAddTodoListClickListener(int recipeId, String title, String imageUrl, String summary, String dishType) {
         viewFabAddTodoRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onFabClickListener.onFabAddTodoListClick(new TodoRecipeEntity(recipeId, title, imageUrl));
+                onFabClickListener.onFabAddTodoListClick(new TodoRecipeEntity(recipeId, title, imageUrl, summary, dishType));
             }
         });
     }

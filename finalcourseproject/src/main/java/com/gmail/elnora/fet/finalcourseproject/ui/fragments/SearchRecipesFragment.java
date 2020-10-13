@@ -117,7 +117,7 @@ public class SearchRecipesFragment extends Fragment {
                                 Snackbar.LENGTH_LONG)
                                 .show();
                     }
-                    Log.d("SEARCH", throwable.toString());
+                    Log.d("RANDOM", throwable.toString());
                 });
     }
 

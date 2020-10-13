@@ -9,11 +9,15 @@ public class TodoRecipeEntity {
     private int recipeId;
     private String title;
     private String urlToImage;
+    private String summary;
+    private String dishTypes;
 
-    public TodoRecipeEntity(int recipeId, String title, String urlToImage) {
+    public TodoRecipeEntity(int recipeId, String title, String urlToImage, String summary, String dishTypes) {
         this.recipeId = recipeId;
         this.title = title;
         this.urlToImage = urlToImage;
+        this.summary = summary;
+        this.dishTypes = dishTypes;
     }
 
     public int getRecipeId() {
@@ -40,4 +44,19 @@ public class TodoRecipeEntity {
         this.urlToImage = urlToImage;
     }
 
+    public String getDishTypes() {
+        return dishTypes;
+    }
+
+    public void setDishTypes(String dishTypes) {
+        this.dishTypes = dishTypes;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 }

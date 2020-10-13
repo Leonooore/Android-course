@@ -20,6 +20,7 @@ import com.gmail.elnora.fet.finalcourseproject.ui.fragments.RecipesListDishByCat
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.SearchRecipesFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.TodoFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.ViewRecipeFragment;
+import com.gmail.elnora.fet.finalcourseproject.ui.fragments.ViewTodoRecipeFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.ViewWebRecipeFragment;
 import com.gmail.elnora.fet.finalcourseproject.viewmodel.TodoRecipeViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -123,8 +124,8 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
     }
 
     @Override
-    public void onFabTodoCookClick(int recipeId) {
-        showFragmentBackStack(CookDishFragment.getInstance(recipeId), CookDishFragment.TAG);
+    public void onFabTodoCookClick(int recipeId, String title) {
+        showFragmentBackStack(CookDishFragment.getInstance(recipeId, title), CookDishFragment.TAG);
     }
 
     @Override
@@ -136,8 +137,8 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
     }
 
     @Override
-    public void onTodoItemClick(int recipeId) {
-        showFragmentBackStack(CookDishFragment.getInstance(recipeId), CookDishFragment.TAG);
+    public void onTodoItemClick(RecipeDataModel recipeDataModel) {
+        showFragmentBackStack(ViewTodoRecipeFragment.getInstance(recipeDataModel), ViewTodoRecipeFragment.TAG);
     }
 
     @Override

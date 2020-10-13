@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.gmail.elnora.fet.finalcourseproject.R;
 import com.gmail.elnora.fet.finalcourseproject.RecipeListeners;
+import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
 import com.gmail.elnora.fet.finalcourseproject.database.TodoRecipeEntity;
 
 import java.util.ArrayList;
@@ -108,7 +109,12 @@ public class TodoRecipeListAdapter extends RecyclerView.Adapter<TodoRecipeListAd
                     .error(R.drawable.ic_baseline_image_180)
                     .into(viewImageTodoImagePreview);
             viewTextViewTodoTitleText.setText(toDoRecipe.getTitle());
-            itemView.setOnClickListener(view -> recipeClickListener.onTodoItemClick(toDoRecipe.getRecipeId()));
+            itemView.setOnClickListener(view -> recipeClickListener.onTodoItemClick(new RecipeDataModel(
+                    toDoRecipe.getRecipeId(),
+                    toDoRecipe.getDishTypes(),
+                    toDoRecipe.getTitle(),
+                    toDoRecipe.getUrlToImage(),
+                    toDoRecipe.getSummary())));
             viewImageRemoveRecipe.setOnClickListener(remove -> recipeClickListener.onRemoveRecipeClick(toDoRecipe));
         }
     }

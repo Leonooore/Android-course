@@ -22,7 +22,9 @@ public class SearchDataModeConverter {
                         jsonArrayObject.getInt("id"),
                         jsonArrayObject.getString("title"),
                         jsonArrayObject.getString("image"),
-                        jsonArrayObject.getString("sourceUrl"));
+                        jsonArrayObject.getString("sourceUrl"),
+                        jsonArrayObject.getString("summary"),
+                        jsonArrayObject.getString("dishTypes"));
                 itemList.add(searchRecipeDataModel);
             }
             return itemList;
