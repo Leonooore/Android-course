@@ -7,6 +7,7 @@
     <string name="menu_item_title_exit" translatable="false">Exit</string>
     <string name="toolbar_text_cook_dish" translatable="false">Cooking</string>
     <string name="toolbar_text_search" translatable="false">Search</string>
+    <string name="toolbar_text_web_view" translatable="false">View recipe info</string>
     <string name="toolbar_text_todo" translatable="false">TO DO</string>
     <string name="button_text_all" translatable="false">ALL</string>
     <string name="button_text_to_do" translatable="false">TO DO</string>

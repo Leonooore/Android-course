@@ -65,7 +65,7 @@ public class SearchListViewAdapter extends RecyclerView.Adapter<SearchListViewAd
                     .error(R.drawable.ic_baseline_image_180)
                     .into(viewImageSearchImagePreview);
             viewTextViewSearchTitleText.setText(searchRecipeDataModel.getTitle());
-            itemView.setOnClickListener(view -> recipeClickListener.onSearchedRecipeClick(searchRecipeDataModel.getSourceUrl()));
+            itemView.setOnClickListener(view -> recipeClickListener.onSearchedRecipeClick(searchRecipeDataModel));
         }
 
     }

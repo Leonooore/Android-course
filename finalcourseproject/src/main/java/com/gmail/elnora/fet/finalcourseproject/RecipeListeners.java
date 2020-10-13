@@ -2,6 +2,7 @@ package com.gmail.elnora.fet.finalcourseproject;
 
 import com.gmail.elnora.fet.finalcourseproject.data.DishTypeEnum;
 import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
+import com.gmail.elnora.fet.finalcourseproject.data.SearchRecipeDataModel;
 import com.gmail.elnora.fet.finalcourseproject.database.TodoRecipeEntity;
 
 public interface RecipeListeners {
@@ -11,5 +12,5 @@ public interface RecipeListeners {
     void onFabAddTodoListClick(TodoRecipeEntity recipe);
     void onTodoItemClick(int recipeId);
     void onRemoveRecipeClick(TodoRecipeEntity recipe);
-    void onSearchedRecipeClick(String url);
+    void onSearchedRecipeClick(SearchRecipeDataModel searchRecipeDataModel);
 }

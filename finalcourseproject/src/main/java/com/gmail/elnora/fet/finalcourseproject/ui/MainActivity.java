@@ -12,6 +12,7 @@ import com.gmail.elnora.fet.finalcourseproject.R;
 import com.gmail.elnora.fet.finalcourseproject.RecipeListeners;
 import com.gmail.elnora.fet.finalcourseproject.data.DishTypeEnum;
 import com.gmail.elnora.fet.finalcourseproject.data.RecipeDataModel;
+import com.gmail.elnora.fet.finalcourseproject.data.SearchRecipeDataModel;
 import com.gmail.elnora.fet.finalcourseproject.database.TodoRecipeEntity;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.AllCategoriesRecipesFragment;
 import com.gmail.elnora.fet.finalcourseproject.ui.fragments.CookDishFragment;
@@ -145,9 +146,8 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
     }
 
     @Override
-    public void onSearchedRecipeClick(String url) {
-        showFragmentBackStack(ViewWebRecipeFragment.getInstance(), ViewWebRecipeFragment.TAG);
-//        Snackbar.make(viewBottomNavigation, "Recipe was clicked", Snackbar.LENGTH_LONG).show();
+    public void onSearchedRecipeClick(SearchRecipeDataModel searchRecipeDataModel) {
+        showFragmentBackStack(ViewWebRecipeFragment.getInstance(searchRecipeDataModel), ViewWebRecipeFragment.TAG);
     }
 
 }

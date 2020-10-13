@@ -151,9 +151,7 @@ public class ViewRecipeFragment extends Fragment {
     }
 
     private void fabAddTodoListClickListener(int recipeId, String title, String imageUrl) {
-        viewFabAddTodoList.setOnClickListener(view -> { onFabClickListener
-                .onFabAddTodoListClick(new TodoRecipeEntity(recipeId, title, imageUrl));
-        });
+        viewFabAddTodoList.setOnClickListener(view -> onFabClickListener.onFabAddTodoListClick(new TodoRecipeEntity(recipeId, title, imageUrl)));
     }
 
     private String getArgs(String bundleKey) {
