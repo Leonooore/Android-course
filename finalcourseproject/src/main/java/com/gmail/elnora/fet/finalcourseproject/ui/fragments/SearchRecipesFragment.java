@@ -23,9 +23,7 @@ import com.gmail.elnora.fet.finalcourseproject.data.SearchRecipeDataModel;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.RandomRecipesDataModelConverter;
 import com.gmail.elnora.fet.finalcourseproject.data.dataconverter.SearchDataModeConverter;
 import com.gmail.elnora.fet.finalcourseproject.repo.RecipesRepositoryImpl;
-import com.google.android.material.snackbar.Snackbar;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -85,9 +83,9 @@ public class SearchRecipesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView(view);
-        initRandomRecipeList(view);
+        initRandomRecipeList();
         searchView = view.findViewById(R.id.viewSearchRecipes);
-        setSearchViewListener(view);
+        setSearchViewListener();
     }
 
     private void initRecyclerView(View view) {
@@ -99,35 +97,22 @@ public class SearchRecipesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void initRandomRecipeList(View view) {
+    private void initRandomRecipeList() {
         disposable = new RecipesRepositoryImpl(okHttpClient, randomRecipesDataModelConverter).getRandomRecipes()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
                     searchRecipeDataModelList.addAll(list);
                     adapter.updateItemList(list);
-                }, throwable -> {
-                    if (throwable instanceof UnknownHostException) {
-                        Snackbar.make(view.findViewById(R.id.viewRecipesListDishByCategory),
-                                getString(R.string.error_no_internet_connection),
-                                Snackbar.LENGTH_LONG)
-                                .show();
-                    } else if (throwable.getMessage().contains("402")) {
-                        Snackbar.make(view.findViewById(R.id.viewRecipesListDishByCategory),
-                                getString(R.string.error_api_request),
-                                Snackbar.LENGTH_LONG)
-                                .show();
-                    }
-                    Log.d("RANDOM", throwable.toString());
-                });
+                }, throwable -> Log.d("RANDOM", throwable.toString()));
     }
 
-    private void setSearchViewListener(View view) {
+    private void setSearchViewListener() {
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchQuery = String.valueOf(searchView.getQuery());
-                initRecipeList(view, searchQuery);
+                initRecipeList(searchQuery);
                 return false;
             }
 
@@ -138,26 +123,13 @@ public class SearchRecipesFragment extends Fragment {
         });
     }
 
-    private void initRecipeList(View view, String searchQuery) {
+    private void initRecipeList(String searchQuery) {
         disposable = new RecipesRepositoryImpl(okHttpClient, searchDataModeConverter).getSearchRecipes(searchQuery)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
                     searchRecipeDataModelList.addAll(list);
                     adapter.updateItemList(list);
-                }, throwable -> {
-                    if (throwable instanceof UnknownHostException) {
-                        Snackbar.make(view.findViewById(R.id.viewRecipesListDishByCategory),
-                                getString(R.string.error_no_internet_connection),
-                                Snackbar.LENGTH_LONG)
-                                .show();
-                    } else if (throwable.getMessage().contains("402")) {
-                        Snackbar.make(view.findViewById(R.id.viewRecipesListDishByCategory),
-                                getString(R.string.error_api_request),
-                                Snackbar.LENGTH_LONG)
-                                .show();
-                    }
-                    Log.d("SEARCH", throwable.toString());
-                });
+                }, throwable -> Log.d("SEARCH", throwable.toString()));
     }
 
     @Override
