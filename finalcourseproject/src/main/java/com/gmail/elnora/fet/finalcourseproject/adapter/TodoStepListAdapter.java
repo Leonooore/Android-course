@@ -13,7 +13,7 @@ import com.gmail.elnora.fet.finalcourseproject.data.StepDataModel;
 
 import java.util.List;
 
-public class TodoStepListAdapter extends RecyclerView.Adapter<TodoStepListAdapter.TodoCheckViewHolder>{
+public class TodoStepListAdapter extends RecyclerView.Adapter<TodoStepListAdapter.TodoCheckViewHolder> {
 
     private List<StepDataModel> stepDataModelList;
 

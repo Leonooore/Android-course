@@ -35,4 +35,8 @@
     <string name="welcome_joke_text" translatable="false">Joke</string>
     <string name="error_no_internet_connection" translatable="false">No internet connection</string>
     <string name="error_api_request" translatable="false">API requests limit exceeded</string>
+    <string name="dialog_message" translatable="false">Exit?</string>
+    <string name="dialog_title" translatable="false">Exit</string>
+    <string name="dialog_ok" translatable="false">OK</string>
+    <string name="dialog_cancel" translatable="false">Cancel</string>
 </resources>

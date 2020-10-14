@@ -1,6 +1,7 @@
 package com.gmail.elnora.fet.finalcourseproject.ui;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
             case R.id.menuItemSearchRecipes : showFragment(SearchRecipesFragment.getInstance(), SearchRecipesFragment.TAG); break;
             case R.id.menuItemAllRecipes : showFragment(AllCategoriesRecipesFragment.getInstance(), AllCategoriesRecipesFragment.TAG); break;
             case R.id.menuItemToDo : showFragment(TodoFragment.getInstance(), TodoFragment.TAG); break;
-            case R.id.menuItemExit : finish(); break;
+            case R.id.menuItemExit : showExitDialog(); break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -87,6 +88,16 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
                     return false;
             }
         });
+    }
+
+    private void showExitDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.dialog_message)
+                .setTitle(R.string.dialog_title)
+                .setPositiveButton(R.string.dialog_ok, (dialogInterface, i) -> finish())
+                .setNegativeButton(R.string.dialog_cancel, (dialogInterface, i) -> { })
+                .create()
+                .show();
     }
 
     private void showMainFragmentAllRecipes(Bundle savedInstanceState) {

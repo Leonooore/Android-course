@@ -76,14 +76,15 @@ public class SearchRecipesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle(getString(R.string.toolbar_text_search));
         Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
-        return inflater.inflate(R.layout.fragment_search_recipes, container, false);
+        View view = inflater.inflate(R.layout.fragment_search_recipes, container, false);
+        initRecyclerView(view);
+        initRandomRecipeList();
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initRecyclerView(view);
-        initRandomRecipeList();
         searchView = view.findViewById(R.id.viewSearchRecipes);
         setSearchViewListener();
     }
