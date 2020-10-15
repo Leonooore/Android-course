@@ -135,7 +135,7 @@ public class RecipesRepositoryImpl implements RecipesRepository {
 
     @Override
     public Single<List<SearchRecipeDataModel>> getRandomRecipes() {
-        String url = "https://api.spoonacular.com/recipes/random?number=10&apiKey=" + API_KEY;
+        String url = "https://api.spoonacular.com/recipes/random?number=30&apiKey=" + API_KEY;
         Request request = builtRequest(url);
         return Single.create((SingleOnSubscribe<String>) emitter -> createResponse(emitter, request))
                 .subscribeOn(Schedulers.io())

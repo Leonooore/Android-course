@@ -18,7 +18,7 @@
     <string name="item_recipe_title_text" translatable="false">Title text</string>
     <string name="item_recipe_description_text" translatable="false">Description text</string>
     <string name="all_categories_title_text" translatable="false">Choose dish category</string>
-    <string name="search_text_query" translatable="false">Search dish...</string>
+    <string name="search_text_query" translatable="false">Global search dish...</string>
     <string name="recipe_info_title_ingredients" translatable="false">Ingredients</string>
     <string name="title_text_choose_dish_to_do" translatable="false">Choose dish to do</string>
     <string name="menu_item_title_search" translatable="false">Search</string>

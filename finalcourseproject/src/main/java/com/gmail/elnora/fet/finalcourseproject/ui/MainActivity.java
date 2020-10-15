@@ -114,42 +114,36 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
     private void showFragment(Fragment fragment, String tag) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainer, fragment, tag)
-                .commit();
-    }
-
-    private void showFragmentBackStack(Fragment fragment, String tag) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, fragment, tag)
                 .addToBackStack(null)
                 .commit();
     }
 
     @Override
     public void onDishTypeClick(DishTypeEnum dishType) {
-        showFragmentBackStack(RecipesListDishByCategoryFragment.getInstance(dishType), RecipesListDishByCategoryFragment.TAG);
+        showFragment(RecipesListDishByCategoryFragment.getInstance(dishType), RecipesListDishByCategoryFragment.TAG);
     }
 
     @Override
     public void onRecipeClick(RecipeDataModel recipeDataModel) {
-        showFragmentBackStack(ViewRecipeFragment.getInstance(recipeDataModel), ViewRecipeFragment.TAG);
+        showFragment(ViewRecipeFragment.getInstance(recipeDataModel), ViewRecipeFragment.TAG);
     }
 
     @Override
     public void onFabTodoCookClick(int recipeId, String title) {
-        showFragmentBackStack(CookDishFragment.getInstance(recipeId, title), CookDishFragment.TAG);
+        showFragment(CookDishFragment.getInstance(recipeId, title), CookDishFragment.TAG);
     }
 
     @Override
     public void onFabAddTodoListClick(TodoRecipeEntity recipe) {
         viewModel.insert(recipe);
         Snackbar.make(viewBottomNavigation, getString(R.string.snack_bar_text), Snackbar.LENGTH_LONG)
-                .setAction("Show", view -> showFragmentBackStack(TodoFragment.getInstance(), TodoFragment.TAG))
+                .setAction("Show", view -> showFragment(TodoFragment.getInstance(), TodoFragment.TAG))
                 .show();
     }
 
     @Override
     public void onTodoItemClick(RecipeDataModel recipeDataModel) {
-        showFragmentBackStack(ViewTodoRecipeFragment.getInstance(recipeDataModel), ViewTodoRecipeFragment.TAG);
+        showFragment(ViewTodoRecipeFragment.getInstance(recipeDataModel), ViewTodoRecipeFragment.TAG);
     }
 
     @Override
@@ -159,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements RecipeListeners {
 
     @Override
     public void onSearchedRecipeClick(SearchRecipeDataModel searchRecipeDataModel) {
-        showFragmentBackStack(ViewWebRecipeFragment.getInstance(searchRecipeDataModel), ViewWebRecipeFragment.TAG);
+        showFragment(ViewWebRecipeFragment.getInstance(searchRecipeDataModel), ViewWebRecipeFragment.TAG);
     }
 
 }

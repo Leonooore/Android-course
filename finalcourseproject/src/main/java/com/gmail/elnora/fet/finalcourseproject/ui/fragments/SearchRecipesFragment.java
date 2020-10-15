@@ -69,6 +69,16 @@ public class SearchRecipesFragment extends Fragment {
         setRetainInstance(true);
         TransitionInflater inflater = TransitionInflater.from(requireContext());
         setEnterTransition(inflater.inflateTransition(R.transition.fade));
+        initRandomRecipeList();
+    }
+
+    private void initRandomRecipeList() {
+        disposable = new RecipesRepositoryImpl(okHttpClient, randomRecipesDataModelConverter).getRandomRecipes()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> {
+                    searchRecipeDataModelList.addAll(list);
+                    adapter.updateItemList(list);
+                }, throwable -> Log.d("RANDOM", throwable.toString()));
     }
 
     @Nullable
@@ -78,7 +88,6 @@ public class SearchRecipesFragment extends Fragment {
         Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
         View view = inflater.inflate(R.layout.fragment_search_recipes, container, false);
         initRecyclerView(view);
-        initRandomRecipeList();
         return view;
     }
 
@@ -96,15 +105,6 @@ public class SearchRecipesFragment extends Fragment {
             adapter = new SearchListViewAdapter(searchRecipeDataModelList, recipeClickListener);
         }
         recyclerView.setAdapter(adapter);
-    }
-
-    private void initRandomRecipeList() {
-        disposable = new RecipesRepositoryImpl(okHttpClient, randomRecipesDataModelConverter).getRandomRecipes()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(list -> {
-                    searchRecipeDataModelList.addAll(list);
-                    adapter.updateItemList(list);
-                }, throwable -> Log.d("RANDOM", throwable.toString()));
     }
 
     private void setSearchViewListener() {
