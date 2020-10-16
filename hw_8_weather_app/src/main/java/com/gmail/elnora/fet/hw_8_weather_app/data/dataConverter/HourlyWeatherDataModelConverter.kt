@@ -1,9 +1,15 @@
 package com.gmail.elnora.fet.hw_8_weather_app.data.dataConverter
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.gmail.elnora.fet.hw_8_weather_app.data.HourlyWeatherDataModel
 import org.json.JSONObject
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatterBuilder
 
 class HourlyWeatherDataModelConverter : (String) -> List<HourlyWeatherDataModel> {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun invoke(jsonData: String): List<HourlyWeatherDataModel> {
         val jsonObject = JSONObject(jsonData)
         val jsonListArray = jsonObject.getJSONArray("list")
@@ -14,8 +20,8 @@ class HourlyWeatherDataModelConverter : (String) -> List<HourlyWeatherDataModel>
                 val jsonWeatherArray = jsonArrayListObject.getJSONArray("weather")
                 val jsonWeatherObject = jsonWeatherArray.getJSONObject(0)
                 val hoursWeatherDataModel = HourlyWeatherDataModel(
-                        time = jsonArrayListObject.getString("dt_txt").substring(11, 16),
-                        temp = jsonArrayListObject.getJSONObject("main").getString("temp"),
+                        time = timeConvert(jsonArrayListObject.getString("dt_txt")),
+                        temp = jsonArrayListObject.getJSONObject("main").getInt("temp").toString(),
                         weatherDescription = jsonWeatherObject.getString("main"),
                         icon = jsonWeatherObject.getString("icon")
                 )
@@ -24,5 +30,13 @@ class HourlyWeatherDataModelConverter : (String) -> List<HourlyWeatherDataModel>
             return itemList
         }
         return emptyList()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun timeConvert(fullTime: String): String {
+        val pattern: String = "yyyy-MM-dd HH:mm:ss"
+        val formatter = DateTimeFormatter.ofPattern(pattern)
+        val time = LocalDateTime.parse(fullTime, formatter)
+        return "${time.hour}:00"
     }
 }

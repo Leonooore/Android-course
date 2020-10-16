@@ -10,7 +10,7 @@ class CurrentWeatherDataModelConverter : (String) -> CurrentWeatherDataModel  {
         val jsonMainArray = jsonObject.getJSONObject("main")
         return CurrentWeatherDataModel(
                 city = jsonObject.getString("name"),
-                temp = jsonMainArray.getString("temp"),
+                temp = jsonMainArray.getInt("temp").toString(),
                 weatherDescription = jsonWeatherArray.getJSONObject(0).getString("description"),
                 icon = jsonWeatherArray.getJSONObject(0).getString("icon")
         )

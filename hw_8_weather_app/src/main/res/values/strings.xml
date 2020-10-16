@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Weather</string>
     <string name="weather_icon_description">weather icon</string>
+    <string name="menuSetting">Settings</string>
+    <string name="switch_unit_setting">°C / °F</string>
+    <string name="toolbar_settings_title">Settings</string>
 </resources>
