@@ -1,6 +1,6 @@
-package com.gmail.elnora.fet.hw_8_weather_app.repo
+package com.gmail.elnora.fet.hw_8_weather_app.model.repo.currentWeather
 
-import com.gmail.elnora.fet.hw_8_weather_app.data.CurrentWeatherDataModel
+import com.gmail.elnora.fet.hw_8_weather_app.model.data.CurrentWeatherDataModel
 import io.reactivex.Single
 
 interface CurrentWeatherRepository {

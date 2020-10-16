@@ -1,6 +1,6 @@
-package com.gmail.elnora.fet.hw_8_weather_app.repo
+package com.gmail.elnora.fet.hw_8_weather_app.model.repo.hourlyWeather
 
-import com.gmail.elnora.fet.hw_8_weather_app.data.HourlyWeatherDataModel
+import com.gmail.elnora.fet.hw_8_weather_app.model.data.HourlyWeatherDataModel
 import io.reactivex.Single
 
 interface HourlyWeatherRepository {

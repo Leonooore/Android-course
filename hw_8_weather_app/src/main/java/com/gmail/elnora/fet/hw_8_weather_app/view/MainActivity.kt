@@ -1,4 +1,4 @@
-package com.gmail.elnora.fet.hw_8_weather_app
+package com.gmail.elnora.fet.hw_8_weather_app.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.gmail.elnora.fet.hw_8_weather_app.R
+import com.gmail.elnora.fet.hw_8_weather_app.view.settings.SettingActivity
 
 class MainActivity : AppCompatActivity() {
 

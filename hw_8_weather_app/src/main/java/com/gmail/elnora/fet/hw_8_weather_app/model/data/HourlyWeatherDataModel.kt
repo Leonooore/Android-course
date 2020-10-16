@@ -1,4 +1,4 @@
-package com.gmail.elnora.fet.hw_8_weather_app.data
+package com.gmail.elnora.fet.hw_8_weather_app.model.data
 
 data class HourlyWeatherDataModel(
     val time: String,

@@ -1,12 +1,15 @@
-package com.gmail.elnora.fet.hw_8_weather_app
+package com.gmail.elnora.fet.hw_8_weather_app.view.settings
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.gmail.elnora.fet.hw_8_weather_app.R
 import kotlinx.android.synthetic.main.activity_setting.toolbar
 import kotlinx.android.synthetic.main.activity_setting.viewSwitchUnit
 
 class SettingActivity : AppCompatActivity() {
+
+    private val settings: SettingsPref by lazy { SettingsPref() }
     private var unit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +18,7 @@ class SettingActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         val actionBar = supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
-        unit = loadSetting()
+        unit = settings.loadSetting(this)
         viewSwitchUnit.isChecked = unit
         setOnCheckedChangeListener()
     }
@@ -28,25 +31,7 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun setOnCheckedChangeListener() {
-        viewSwitchUnit!!.setOnCheckedChangeListener { _, isChecked ->
-            saveSetting(isChecked)
-        }
+        viewSwitchUnit.setOnCheckedChangeListener { _, isChecked -> settings.saveSetting(this, isChecked) }
     }
 
-    private fun saveSetting(isChecked: Boolean) {
-        val shared = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
-        val edit = shared.edit()
-        edit.putBoolean(PREF_SAVE_KEY, isChecked)
-        edit.apply()
-    }
-
-    private fun loadSetting(): Boolean {
-        val shared = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
-        return shared.getBoolean(PREF_SAVE_KEY, false)
-    }
-
-    companion object {
-        const val PREF_SAVE_KEY = "METRIC_IMPERIAL"
-        const val PREF_NAME = "PrefSettingActivity"
-    }
 }

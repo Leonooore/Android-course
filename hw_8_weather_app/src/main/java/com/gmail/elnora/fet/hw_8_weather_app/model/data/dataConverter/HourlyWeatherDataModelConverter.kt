@@ -1,12 +1,11 @@
-package com.gmail.elnora.fet.hw_8_weather_app.data.dataConverter
+package com.gmail.elnora.fet.hw_8_weather_app.model.data.dataConverter
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.gmail.elnora.fet.hw_8_weather_app.data.HourlyWeatherDataModel
+import com.gmail.elnora.fet.hw_8_weather_app.model.data.HourlyWeatherDataModel
 import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatterBuilder
 
 class HourlyWeatherDataModelConverter : (String) -> List<HourlyWeatherDataModel> {
     @RequiresApi(Build.VERSION_CODES.O)

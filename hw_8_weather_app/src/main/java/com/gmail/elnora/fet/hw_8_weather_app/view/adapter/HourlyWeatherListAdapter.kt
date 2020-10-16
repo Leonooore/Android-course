@@ -1,4 +1,4 @@
-package com.gmail.elnora.fet.hw_8_weather_app.adapter
+package com.gmail.elnora.fet.hw_8_weather_app.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,15 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gmail.elnora.fet.hw_8_weather_app.R
-import com.gmail.elnora.fet.hw_8_weather_app.WeatherFragment
-import com.gmail.elnora.fet.hw_8_weather_app.data.HourlyWeatherDataModel
+import com.gmail.elnora.fet.hw_8_weather_app.presenter.hourlyWeather.HourlyWeatherViewModel
 import kotlinx.android.synthetic.main.item_hour_weather_list.view.viewImageHourWeatherIcon
 import kotlinx.android.synthetic.main.item_hour_weather_list.view.viewTextTime
 import kotlinx.android.synthetic.main.item_hour_weather_list.view.viewTextHourDescription
 import kotlinx.android.synthetic.main.item_hour_weather_list.view.viewTextHourTemperature
 
 class HourlyWeatherListAdapter (
-        private val itemList: MutableList<HourlyWeatherDataModel>
+        private val itemList: MutableList<HourlyWeatherViewModel>
 ) : RecyclerView.Adapter<HourlyWeatherListAdapter.HourWeatherListItemViewHolder>() {
 
     private var unit: String = "metric"
@@ -30,7 +29,7 @@ class HourlyWeatherListAdapter (
 
     override fun getItemCount(): Int = itemList.size
 
-    fun updateItemList(itemListIn: List<HourlyWeatherDataModel>, getUnit: String) {
+    fun updateItemList(itemListIn: List<HourlyWeatherViewModel>, getUnit: String) {
         itemList.apply {
             clear()
             addAll(itemListIn)
@@ -40,8 +39,8 @@ class HourlyWeatherListAdapter (
     }
 
     class HourWeatherListItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(hourlyWeatherDataModel: HourlyWeatherDataModel, unit: String) {
-            with(hourlyWeatherDataModel) {
+        fun bind(hourlyWeather: HourlyWeatherViewModel, unit: String) {
+            with(hourlyWeather) {
                 itemView.apply {
                     viewTextTime.text = time
                     viewTextHourTemperature.text = tempConvert(temp, unit)
@@ -53,7 +52,7 @@ class HourlyWeatherListAdapter (
             }
         }
 
-        private fun tempConvert(temp: String, unit: String): String = if (unit == WeatherFragment.UNITS_METRIC) "$temp °C" else "$temp °F"
+        private fun tempConvert(temp: String, unit: String): String = if (unit == "metric") "$temp °C" else "$temp °F"
     }
 
 }
