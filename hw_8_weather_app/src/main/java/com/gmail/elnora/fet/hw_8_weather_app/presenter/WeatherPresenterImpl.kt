@@ -2,10 +2,10 @@ package com.gmail.elnora.fet.hw_8_weather_app.presenter
 
 import com.gmail.elnora.fet.hw_8_weather_app.model.data.CurrentWeatherDataModel
 import com.gmail.elnora.fet.hw_8_weather_app.model.data.HourlyWeatherDataModel
-import com.gmail.elnora.fet.hw_8_weather_app.model.repo.currentWeather.CurrentWeatherRepository
-import com.gmail.elnora.fet.hw_8_weather_app.model.repo.hourlyWeather.HourlyWeatherRepository
-import com.gmail.elnora.fet.hw_8_weather_app.presenter.currentWeather.CurrentWeatherViewModel
-import com.gmail.elnora.fet.hw_8_weather_app.presenter.hourlyWeather.HourlyWeatherViewModel
+import com.gmail.elnora.fet.hw_8_weather_app.model.repo.currentweather.CurrentWeatherRepository
+import com.gmail.elnora.fet.hw_8_weather_app.model.repo.hourlyweather.HourlyWeatherRepository
+import com.gmail.elnora.fet.hw_8_weather_app.presenter.currentweather.CurrentWeatherViewModel
+import com.gmail.elnora.fet.hw_8_weather_app.presenter.hourlyweather.HourlyWeatherViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 

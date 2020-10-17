@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gmail.elnora.fet.hw_8_weather_app.R
-import com.gmail.elnora.fet.hw_8_weather_app.presenter.hourlyWeather.HourlyWeatherViewModel
+import com.gmail.elnora.fet.hw_8_weather_app.presenter.hourlyweather.HourlyWeatherViewModel
 import kotlinx.android.synthetic.main.item_hour_weather_list.view.viewImageHourWeatherIcon
 import kotlinx.android.synthetic.main.item_hour_weather_list.view.viewTextTime
 import kotlinx.android.synthetic.main.item_hour_weather_list.view.viewTextHourDescription

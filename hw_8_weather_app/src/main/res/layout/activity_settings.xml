@@ -14,17 +14,14 @@
         app:titleTextColor="@color/colorWhite"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/viewSwitchUnit"
+    <FrameLayout
+        android:id="@+id/fragmentSettingsContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/switch_unit_setting"
-        android:padding="@dimen/default_padding"
-        android:checked="false"
+        android:layout_height="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

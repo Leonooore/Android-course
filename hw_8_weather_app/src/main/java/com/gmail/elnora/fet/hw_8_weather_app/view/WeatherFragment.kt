@@ -12,16 +12,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gmail.elnora.fet.hw_8_weather_app.R
 import com.gmail.elnora.fet.hw_8_weather_app.view.adapter.HourlyWeatherListAdapter
-import com.gmail.elnora.fet.hw_8_weather_app.model.data.dataConverter.CurrentWeatherDataModelConverter
-import com.gmail.elnora.fet.hw_8_weather_app.model.data.dataConverter.HourlyWeatherDataModelConverter
-import com.gmail.elnora.fet.hw_8_weather_app.model.repo.currentWeather.CurrentWeatherRepositoryImpl
-import com.gmail.elnora.fet.hw_8_weather_app.model.repo.hourlyWeather.HoursWeatherRepositoryImpl
+import com.gmail.elnora.fet.hw_8_weather_app.model.data.dataconverter.CurrentWeatherDataModelConverter
+import com.gmail.elnora.fet.hw_8_weather_app.model.data.dataconverter.HourlyWeatherDataModelConverter
+import com.gmail.elnora.fet.hw_8_weather_app.model.repo.currentweather.CurrentWeatherRepositoryImpl
+import com.gmail.elnora.fet.hw_8_weather_app.model.repo.hourlyweather.HoursWeatherRepositoryImpl
 import com.gmail.elnora.fet.hw_8_weather_app.presenter.WeatherPresenterImpl
-import com.gmail.elnora.fet.hw_8_weather_app.presenter.hourlyWeather.HourlyWeatherViewMapper
+import com.gmail.elnora.fet.hw_8_weather_app.presenter.hourlyweather.HourlyWeatherViewMapper
 import com.gmail.elnora.fet.hw_8_weather_app.presenter.WeatherViewPresenter
-import com.gmail.elnora.fet.hw_8_weather_app.presenter.currentWeather.CurrentWeatherViewMapper
-import com.gmail.elnora.fet.hw_8_weather_app.presenter.currentWeather.CurrentWeatherViewModel
-import com.gmail.elnora.fet.hw_8_weather_app.presenter.hourlyWeather.HourlyWeatherViewModel
+import com.gmail.elnora.fet.hw_8_weather_app.presenter.currentweather.CurrentWeatherViewMapper
+import com.gmail.elnora.fet.hw_8_weather_app.presenter.currentweather.CurrentWeatherViewModel
+import com.gmail.elnora.fet.hw_8_weather_app.presenter.hourlyweather.HourlyWeatherViewModel
 import com.gmail.elnora.fet.hw_8_weather_app.view.settings.SettingsPref
 import kotlinx.android.synthetic.main.fragment_weather.viewTextCity
 import kotlinx.android.synthetic.main.fragment_weather.viewTextTemperature
@@ -31,6 +31,7 @@ import kotlinx.android.synthetic.main.fragment_weather.viewRecyclerHourWeatherLi
 import okhttp3.OkHttpClient
 
 class WeatherFragment : Fragment(), WeatherViewPresenter {
+
     private val itemList = mutableListOf<HourlyWeatherViewModel>()
     private val settings: SettingsPref by lazy { SettingsPref() }
     private var city: String =  "Minsk"

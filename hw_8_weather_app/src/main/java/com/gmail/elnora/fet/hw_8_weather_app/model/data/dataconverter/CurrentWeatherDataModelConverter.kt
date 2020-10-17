@@ -1,4 +1,4 @@
-package com.gmail.elnora.fet.hw_8_weather_app.model.data.dataConverter
+package com.gmail.elnora.fet.hw_8_weather_app.model.data.dataconverter
 
 import com.gmail.elnora.fet.hw_8_weather_app.model.data.CurrentWeatherDataModel
 import org.json.JSONObject

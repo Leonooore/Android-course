@@ -1,4 +1,4 @@
-package com.gmail.elnora.fet.hw_8_weather_app.presenter.hourlyWeather
+package com.gmail.elnora.fet.hw_8_weather_app.presenter.hourlyweather
 
 class HourlyWeatherViewModel (
         val time: String,

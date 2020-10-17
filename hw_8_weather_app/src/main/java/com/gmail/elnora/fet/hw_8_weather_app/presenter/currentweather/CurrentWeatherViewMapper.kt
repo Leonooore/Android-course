@@ -1,4 +1,4 @@
-package com.gmail.elnora.fet.hw_8_weather_app.presenter.currentWeather
+package com.gmail.elnora.fet.hw_8_weather_app.presenter.currentweather
 
 import com.gmail.elnora.fet.hw_8_weather_app.model.data.CurrentWeatherDataModel
 

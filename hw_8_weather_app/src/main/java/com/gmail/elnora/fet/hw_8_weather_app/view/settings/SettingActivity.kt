@@ -3,24 +3,27 @@ package com.gmail.elnora.fet.hw_8_weather_app.view.settings
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.gmail.elnora.fet.hw_8_weather_app.R
-import kotlinx.android.synthetic.main.activity_setting.toolbar
-import kotlinx.android.synthetic.main.activity_setting.viewSwitchUnit
+import kotlinx.android.synthetic.main.activity_settings.toolbar
 
 class SettingActivity : AppCompatActivity() {
 
-    private val settings: SettingsPref by lazy { SettingsPref() }
-    private var unit = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_setting)
+        setContentView(R.layout.activity_settings)
         setSupportActionBar(toolbar)
         val actionBar = supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
-        unit = settings.loadSetting(this)
-        viewSwitchUnit.isChecked = unit
-        setOnCheckedChangeListener()
+        showMainFragmentWeather()
+    }
+
+    private fun showMainFragmentWeather() = showFragment(SettingsFragment.newInstance(), SettingsFragment.TAG)
+
+    private fun showFragment(fragment: Fragment, tag: String) {
+        supportFragmentManager.beginTransaction()
+                .add(R.id.fragmentSettingsContainer, fragment, tag)
+                .commit()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -28,10 +31,6 @@ class SettingActivity : AppCompatActivity() {
             finish()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun setOnCheckedChangeListener() {
-        viewSwitchUnit.setOnCheckedChangeListener { _, isChecked -> settings.saveSetting(this, isChecked) }
     }
 
 }
