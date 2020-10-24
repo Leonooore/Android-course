@@ -1,5 +1,6 @@
 package com.gmail.elnora.fet.hw_5_contacts_database_kotlin.database
 
+import android.database.Cursor
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -20,4 +21,7 @@ interface ContactDao {
 
     @Query("SELECT * FROM contacts")
     fun getAllContacts(): MutableList<Contact>
+
+    @Query("SELECT * FROM contacts")
+    fun getAll(): Cursor
 }
