@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">hw_7_event_logger</string>
+    <string name="events">Events</string>
+    <string name="internal_storage">Internal storage</string>
+    <string name="external_storage">External storage</string>
+</resources>

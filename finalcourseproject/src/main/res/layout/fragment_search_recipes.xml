@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/default_padding">
+
+    <TextView
+        android:id="@+id/viewTextViewSearchRecipesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:text="@string/search_recipes_title_text"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="@dimen/default_title_text_size" />
+
+    <SearchView
+        android:id="@+id/viewSearchRecipes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow"
+        android:queryHint="@string/search_text_query"
+        android:searchIcon="@drawable/ic_baseline_search_24"
+        android:iconifiedByDefault="false"
+        android:focusable="false"
+        android:padding="@dimen/small_padding"
+        android:layout_marginBottom="@dimen/small_margin" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/viewSearchRecipesList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite" />
+
+</LinearLayout>

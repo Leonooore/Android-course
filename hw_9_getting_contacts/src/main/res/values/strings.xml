@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">hw_9_getting_contacts</string>
+    <string name="textSearchContacts">Search contacts</string>
+    <string name="textViewNoContacts">No contacts. Please add</string>
+    <string name="contact_phone">Contact phone</string>
+    <string name="contact_email">Contact email</string>
+    <string name="contactName">Contact name</string>
+    <string name="contactPhoneNumber">Phone number</string>
+</resources>

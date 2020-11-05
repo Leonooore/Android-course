@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/big_padding"
+    android:paddingHorizontal="@dimen/default_padding"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/viewImageWeatherIcon"
+        android:layout_width="@dimen/weather_icon_size"
+        android:layout_height="@dimen/weather_icon_size"
+        tools:src="@drawable/ic_baseline_wb_sunny"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@id/viewTextCity"
+        app:layout_constraintLeft_toRightOf="@id/viewTextCity"/>
+
+    <TextView
+        android:id="@+id/viewTextCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Minsk"
+        android:textSize="@dimen/city_text_size"
+        android:textColor="@color/colorGray"
+        app:layout_constraintTop_toBottomOf="@id/viewImageWeatherIcon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/viewTextTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="20C"
+        android:textSize="@dimen/city_text_size"
+        android:textColor="@color/colorBlack"
+        android:layout_marginTop="@dimen/small_margin"
+        app:layout_constraintTop_toBottomOf="@id/viewTextCity"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/viewTextWeatherDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Sunny"
+        android:textSize="@dimen/default_text_size"
+        android:textColor="@color/colorGray"
+        android:layout_marginTop="@dimen/small_margin"
+        app:layout_constraintTop_toBottomOf="@id/viewTextTemperature"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/viewRecyclerHourWeatherList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_padding"
+        android:layout_marginTop="@dimen/big_margin"
+        app:layout_constraintTop_toBottomOf="@id/viewTextWeatherDescription"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/viewFabCities"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/big_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:src="@drawable/ic_baseline_explore_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
