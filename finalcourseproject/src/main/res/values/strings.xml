@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Make best dishes</string>
+    <string name="menu_item_title_settings">Settings</string>
+    <string name="menu_item_title_all_categories_recipes">All recipes</string>
+    <string name="menu_item_to_do" translatable="false">TO DO</string>
+    <string name="menu_item_title_search_recipes">Search recipes</string>
+    <string name="menu_item_title_exit" translatable="false">Exit</string>
+    <string name="toolbar_text_cook_dish" translatable="false">Cooking</string>
+    <string name="toolbar_text_search" translatable="false">Search</string>
+    <string name="toolbar_text_web_view" translatable="false">View recipe info</string>
+    <string name="toolbar_text_todo" translatable="false">TO DO</string>
+    <string name="button_text_all" translatable="false">ALL</string>
+    <string name="button_text_to_do" translatable="false">TO DO</string>
+    <string name="button_text_search" translatable="false">SEARCH</string>
+    <string name="search_recipes_title_text" translatable="false">Find and choose your dish</string>
+    <string name="text_find_recipe" translatable="false">Find recipeDataModel</string>
+    <string name="content_description_recipe_image" translatable="false">Image</string>
+    <string name="item_recipe_title_text" translatable="false">Title text</string>
+    <string name="item_recipe_description_text" translatable="false">Description text</string>
+    <string name="all_categories_title_text" translatable="false">Choose dish category</string>
+    <string name="search_text_query" translatable="false">Global search dish...</string>
+    <string name="recipe_info_title_ingredients" translatable="false">Ingredients</string>
+    <string name="title_text_choose_dish_to_do" translatable="false">Choose dish to do</string>
+    <string name="menu_item_title_search" translatable="false">Search</string>
+    <string name="search_query_hint_categories" translatable="false">Search dish category...</string>
+    <string name="search_query_hint_recipe" translatable="false">Search recipe ...</string>
+    <string name="recipe_text_about" translatable="false">About</string>
+    <string name="text_name_of_ingredient" translatable="false">Name of ingredient</string>
+    <string name="ingredient" translatable="false">Ingredient</string>
+    <string name="ingredient_amount" translatable="false">Amount</string>
+    <string name="cook_steps_title" translatable="false">Steps</string>
+    <string name="remove_recipe_image_description" translatable="false">remove</string>
+    <string name="snack_bar_text" translatable="false">Recipe has been added in TO DO</string>
+    <string name="welcome_text" translatable="false">Welcome!</string>
+    <string name="welcome_joke_text" translatable="false">Joke</string>
+    <string name="error_no_internet_connection" translatable="false">No internet connection</string>
+    <string name="error_api_request" translatable="false">API requests limit exceeded</string>
+    <string name="dialog_message" translatable="false">Exit?</string>
+    <string name="dialog_title" translatable="false">Exit</string>
+    <string name="dialog_ok" translatable="false">OK</string>
+    <string name="dialog_cancel" translatable="false">Cancel</string>
+</resources>
