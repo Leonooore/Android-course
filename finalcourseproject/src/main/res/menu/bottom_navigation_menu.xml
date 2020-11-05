@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/pageSearchRecipes"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_search_32"
+        android:title="@string/button_text_search"/>
+    <item
+        android:id="@+id/pageAllRecipes"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_arrow_drop_up"
+        android:title="@string/button_text_all"/>
+    <item
+        android:id="@+id/pageToDoRecipes"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_turned_in"
+        android:title="@string/button_text_to_do"/>
+</menu>
