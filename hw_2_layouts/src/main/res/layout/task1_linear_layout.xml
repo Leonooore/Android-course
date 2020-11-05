@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/attractions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:drawableStart="@drawable/ic_baseline_folder_26"
+        android:drawablePadding="30dp"
+        android:gravity="start|center_vertical"
+        android:padding="16dp"
+        android:text="@string/text_folder"
+        android:textAllCaps="false"
+        android:textColor="@color/colorGray"
+        android:textSize="19sp"/>
+
+    <TextView
+        android:id="@+id/dining"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_baseline_local_dining_26"
+        android:drawablePadding="30dp"
+        android:textSize="19sp"
+        android:textColor="@color/colorGray"
+        android:text="@string/text_dining"
+        android:textAllCaps="false"
+        android:background="@color/colorWhite"
+        android:padding="16dp"
+        android:gravity="start|center_vertical"/>
+
+    <TextView
+        android:id="@+id/education"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_baseline_school_26"
+        android:drawablePadding="30dp"
+        android:textSize="19sp"
+        android:textColor="@color/colorGray"
+        android:text="@string/text_edu"
+        android:textAllCaps="false"
+        android:background="@color/colorWhite"
+        android:padding="16dp"
+        android:gravity="start|center_vertical"/>
+
+    <TextView
+        android:id="@+id/family"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_baseline_people_26"
+        android:drawablePadding="30dp"
+        android:textSize="19sp"
+        android:textColor="@color/colorGray"
+        android:text="@string/text_people"
+        android:textAllCaps="false"
+        android:background="@color/colorWhite"
+        android:padding="16dp"
+        android:gravity="start|center_vertical"/>
+
+    <TextView
+        android:id="@+id/health"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_baseline_favorite_26"
+        android:drawablePadding="30dp"
+        android:textSize="19sp"
+        android:textColor="@color/colorGray"
+        android:text="@string/text_health"
+        android:textAllCaps="false"
+        android:background="@color/colorWhite"
+        android:padding="16dp"
+        android:gravity="start|center_vertical"/>
+
+    <TextView
+        android:id="@+id/office"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_baseline_domain_26"
+        android:drawablePadding="30dp"
+        android:textSize="19sp"
+        android:textColor="@color/colorGray"
+        android:text="@string/text_office"
+        android:textAllCaps="false"
+        android:background="@color/colorWhite"
+        android:padding="16dp"
+        android:gravity="start|center_vertical"/>
+
+    <TextView
+        android:id="@+id/promotions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_baseline_shopping_cart_26"
+        android:drawablePadding="30dp"
+        android:textSize="19sp"
+        android:textColor="@color/colorGray"
+        android:text="@string/text_promotion"
+        android:textAllCaps="false"
+        android:background="@color/colorWhite"
+        android:padding="16dp"
+        android:gravity="start|center_vertical"/>
+
+    <TextView
+        android:id="@+id/radio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_baseline_radio_26"
+        android:drawablePadding="30dp"
+        android:textSize="19sp"
+        android:textColor="@color/colorGray"
+        android:text="@string/text_radio"
+        android:textAllCaps="false"
+        android:background="@color/colorWhite"
+        android:padding="16dp"
+        android:gravity="start|center_vertical"/>
+
+    <TextView
+        android:id="@+id/recipes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_baseline_class_26"
+        android:drawablePadding="30dp"
+        android:textSize="19sp"
+        android:textColor="@color/colorGray"
+        android:text="@string/text_recipes"
+        android:textAllCaps="false"
+        android:background="@color/colorWhite"
+        android:padding="16dp"
+        android:gravity="start|center_vertical"/>
+
+    <TextView
+        android:id="@+id/sports"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:drawableStart="@drawable/ic_baseline_directions_bike_26"
+        android:drawablePadding="30dp"
+        android:gravity="start|center_vertical"
+        android:padding="16dp"
+        android:text="@string/text_sport"
+        android:textAllCaps="false"
+        android:textColor="@color/colorGray"
+        android:textSize="19sp"/>
+
+</LinearLayout>

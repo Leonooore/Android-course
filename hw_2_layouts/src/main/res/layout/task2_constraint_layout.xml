@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_photo"
+            android:textSize="72sp"
+            android:textColor="@color/colorBlack"
+            android:textAllCaps="true"
+            android:background="@color/colorLightGray"
+            android:gravity="center"
+            android:padding="70dp"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_photo_camera_24"
+            android:padding="16dp"
+            android:background="@color/colorLightGray"
+            android:layout_gravity="bottom|end"
+            android:contentDescription="@string/img_camera"/>
+
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/title"
+        android:autofillHints="@string/title"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/price"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/price"
+        android:autofillHints="@string/price"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/location"
+        android:autofillHints="@string/location"
+        android:drawableEnd="@drawable/ic_baseline_location_on_24"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintLeft_toRightOf="@id/price"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/description"
+        android:autofillHints="@string/description"
+        app:layout_constraintTop_toBottomOf="@id/location"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/inventory"
+        android:autofillHints="@string/inventory"
+        android:layout_gravity="start"
+        app:layout_constraintTop_toBottomOf="@id/description"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/weight"
+        android:autofillHints="@string/weight"
+        android:layout_gravity="end"
+        app:layout_constraintTop_toBottomOf="@id/description"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="30dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
