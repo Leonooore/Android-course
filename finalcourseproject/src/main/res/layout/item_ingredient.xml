@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shadow"
+    android:padding="@dimen/small_padding"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/viewItemIngredientImage"
+        android:layout_width="@dimen/ingredient_image_size"
+        android:layout_height="@dimen/ingredient_image_size"
+        android:scaleType="fitCenter"
+        android:layout_gravity="center"
+        android:padding="@dimen/small_padding"
+        tools:src="@drawable/ic_ingredient"
+        android:contentDescription="@string/ingredient" />
+
+    <TextView
+        android:id="@+id/viewItemTextIngredientName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/text_name_of_ingredient"
+        android:textSize="@dimen/default_text_size"
+        android:textColor="@color/colorDarkGray"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/small_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/viewItemTextIngredientAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/ingredient_amount"
+        android:textSize="@dimen/default_text_size"
+        android:gravity="center"
+        android:layout_marginVertical="@dimen/small_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+</LinearLayout>

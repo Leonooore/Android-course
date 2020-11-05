@@ -1,4 +1,10 @@
+include ':finalcourseproject'
+include ':hw_9_getting_contacts'
 include ':hw_7_event_logger'
+include ':hw_5_contacts_database_kotlin'
+include ':hw_4_customview'
+include ':hw_3_contacts'
+include ':hw_2_layouts'
 include ':hw_1_localization'
 include ':app'
 rootProject.name = "AndroidCourse"

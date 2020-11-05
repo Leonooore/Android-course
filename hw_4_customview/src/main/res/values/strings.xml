@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Custom View</string>
+    <string name="menuSetting">Set how to show a message (Toast/Snackbar)</string>
+</resources>
