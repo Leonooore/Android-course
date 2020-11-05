@@ -13,7 +13,6 @@ class DataContentProvider : ContentProvider() {
     private lateinit var contactDao: ContactDao
 
     override fun onCreate(): Boolean {
-        uriMatcher.addURI(AUTHORITY, "data/contacts", URI_CONTACTS_CODE)
         contactDao = ContactDatabase.getDatabase(context!!).getContactDao()
         return true
     }
@@ -37,7 +36,9 @@ class DataContentProvider : ContentProvider() {
     companion object {
         private const val URI_CONTACTS_CODE = 111
         private const val AUTHORITY = "com.gmail.elnora.fet.hw_5_contacts_database_kotlin"
-        private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH)
+        private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
+            addURI(AUTHORITY, "data/contacts", URI_CONTACTS_CODE)
+        }
     }
 
 }
